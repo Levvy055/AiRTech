@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
 
-  <Identity Name="803e1b9d-8bac-4828-9733-752fdc069a29"
-            Publisher="CN=Lukasz"
+  <Identity Name="c298acbf-f5d6-4b6e-b5fc-3689baf2ce5c"
+            Publisher="CN=lluka"
             Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="803e1b9d-8bac-4828-9733-752fdc069a29" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="c298acbf-f5d6-4b6e-b5fc-3689baf2ce5c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>AiRTech.WinPhone</DisplayName>
-    <PublisherDisplayName>Lukasz</PublisherDisplayName>
+    <PublisherDisplayName>lluka</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

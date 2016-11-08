@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
 
-  <Identity Name="a7dfba3e-74a0-4d2f-9102-89f149a04d48"
-            Publisher="CN=Lukasz"
+  <Identity Name="c298acbf-f5d6-4b6e-b5fc-3689baf2ce5c"
+            Publisher="CN=lluka"
             Version="1.0.0.0" />
 
   <Properties>
     <DisplayName>AiRTech.Windows</DisplayName>
-    <PublisherDisplayName>Lukasz</PublisherDisplayName>
+    <PublisherDisplayName>lluka</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

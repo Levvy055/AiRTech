@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="f8767824-e346-480f-946a-2feac9f83865"
-    Publisher="CN=Lukasz"
+    Name="c298acbf-f5d6-4b6e-b5fc-3689baf2ce5c"
+    Publisher="CN=lluka"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="f8767824-e346-480f-946a-2feac9f83865" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="c298acbf-f5d6-4b6e-b5fc-3689baf2ce5c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>AiRTech.UWP</DisplayName>
-    <PublisherDisplayName>Lukasz</PublisherDisplayName>
+    <PublisherDisplayName>lluka</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
