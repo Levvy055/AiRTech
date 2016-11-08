@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace AiRTech
+namespace AiRTech.Views.ViewModels
 {
-    public partial class MainPage : ContentPage
+    public class MenuViewModel : ViewModelBase
     {
-        public MainPage()
+        public MenuViewModel(Page page) : base(page)
         {
-            InitializeComponent();
+            Title = "Main Menu";
         }
     }
 }
