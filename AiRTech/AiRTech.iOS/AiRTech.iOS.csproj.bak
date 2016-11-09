@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>AiRTech.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>AiRTechiOS</AssemblyName>
+    <AssemblyName>AiRTech.iOS</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace AiRTech.Views
         public MenuPage()
         {
             InitializeComponent();
-            BindingContext=new MenuViewModel(this);
+            BindingContext = new MenuViewModel(this);
 
             var masterPageItems = new List<MenuPageItem>
             {
@@ -41,6 +42,26 @@ namespace AiRTech.Views
             };
 
             listView.ItemsSource = masterPageItems;
+            listView.ItemSelected += ListViewOnItemSelected;
+        }
+
+        private void ListViewOnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var item = e.SelectedItem as MenuPageItem;
+            if (item == null)
+            {
+                return;
+            }
+            Debug.WriteLine("Menu List changed to: " + item.Title);
+            var newPage = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
+            ListView.SelectedItem = null;
+            var mPage = App.Current.MainPage as MasterDetailPage;
+            if (mPage == null)
+            {
+                return;
+            }
+            mPage.Detail = newPage;
+            mPage.IsPresented = false;
         }
     }
 }

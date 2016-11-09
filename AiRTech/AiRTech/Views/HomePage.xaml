@@ -7,7 +7,7 @@
         <StackLayout>
             <Label
                 HorizontalOptions="Center"
-                Text="Contacts data goes here"
+                Text="Main Page is here"
                 VerticalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
