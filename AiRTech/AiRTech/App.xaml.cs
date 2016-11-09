@@ -19,7 +19,9 @@ namespace AiRTech
                 {
                     Master = new MenuPage(),
                     Detail = new NavigationPage(new MainPage())
-                    //BarBackgroundColor = Color.Blue
+                    {
+                        BarBackgroundColor = Color.Blue
+                    }
                 };
             }
             catch (Exception e)
