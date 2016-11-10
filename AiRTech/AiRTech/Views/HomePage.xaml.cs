@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using AiRTech.Core.Subjects;
 using Xamarin.Forms;
 
 namespace AiRTech.Views
@@ -13,6 +13,7 @@ namespace AiRTech.Views
         public HomePage()
         {
             InitializeComponent();
+            listView.ItemsSource = Subject.Subjects.Values;
         }
     }
 }
