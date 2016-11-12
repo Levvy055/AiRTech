@@ -10,11 +10,6 @@ namespace AiRTech.Views
         {
             InitializeComponent();
             BindingContext = new MainViewModel(this);
-            ButtonStart.Clicked +=  (sender, e) =>
-            {
-                Debug.WriteLine("Btn Start Clicked.");
-
-            };
         }
     }
 }

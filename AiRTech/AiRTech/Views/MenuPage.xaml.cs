@@ -25,13 +25,13 @@ namespace AiRTech.Views
                 {
                     Title = "Home",
                     IconSource = "home.png",
-                    TargetType = typeof (HomePage)
+                    TargetType = typeof (MainPage)
                 },
                 new MenuPageItem
                 {
-                    Title = "Przedmiot",
+                    Title = "Przedmioty",
                     IconSource = "subjects.png",
-                    TargetType = typeof (SubjectPage)
+                    TargetType = typeof (SubjectsPage)
                 },
                 new MenuPageItem
                 {
@@ -52,16 +52,10 @@ namespace AiRTech.Views
             {
                 return;
             }
-            Debug.WriteLine("Menu List changed to: " + item.Title);
-            var newPage = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
             ListView.SelectedItem = null;
-            var mPage = App.Current.MainPage as MasterDetailPage;
-            if (mPage == null)
-            {
-                return;
-            }
-            mPage.Detail = newPage;
-            mPage.IsPresented = false;
+            Debug.WriteLine("Menu List changed to: " + item.Title);
+            var app = Application.Current as App;
+            app?.ChangePageTo(item.TargetType, item.Title,  false);
         }
     }
 }

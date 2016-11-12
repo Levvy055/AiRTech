@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +9,17 @@ using Xamarin.Forms;
 
 namespace AiRTech.Views
 {
-    public partial class HomePage : ContentPage
+    public partial class LoginView : ContentView
     {
-        public HomePage()
+        public LoginView()
         {
             InitializeComponent();
-            listView.ItemsSource = Subject.Subjects.Values;
+            LoginBtn.Clicked += (sender, e) =>
+            {
+                Debug.WriteLine("Btn Login Clicked.");
+
+            };
+
         }
     }
 }
