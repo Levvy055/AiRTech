@@ -15,13 +15,11 @@ namespace AiRTech
             InitializeComponent();
             try
             {
-                var page = new MasterDetailPage
+                MainPage = new MasterDetailPage
                 {
                     Master = new MenuPage(),
-                    Detail = new NavigationPage(),
-                    IsPresented = false
+                    Detail = new NavigationPage()
                 };
-                MainPage = page;
                 ChangePageTo(typeof(MainPage), "AiRTech", false);
             }
             catch (Exception e)
@@ -31,14 +29,14 @@ namespace AiRTech
         }
 
 
-        public async void ChangePageTo(Type page, string title, bool inner = true)
+        public async void ChangePageTo(Type page, string title, bool inner = true, params object[] args)
         {
             var mPage = MainPage as MasterDetailPage;
             if (mPage == null)
             {
                 return;
             }
-            var newPage = GetPage(page, title);
+            var newPage = GetPage(page, title, args);
             if (newPage != null)
             {
                 if (inner)
@@ -73,7 +71,7 @@ namespace AiRTech
             // Handle when your app resumes
         }
 
-        private Page GetPage(Type page, string title = null)
+        public Page GetPage(Type page, string title = null, params object[] args)
         {
             Page newPage;
             if (CreatedPages.ContainsKey(page))
@@ -82,7 +80,14 @@ namespace AiRTech
             }
             else
             {
-                newPage = Activator.CreateInstance(page) as Page;
+                if (args == null || args.Length == 0)
+                {
+                    newPage = Activator.CreateInstance(page) as Page;
+                }
+                else
+                {
+                    newPage = Activator.CreateInstance(page, args) as Page;
+                }
                 if (title != null && newPage != null)
                 {
                     newPage.Title = title;

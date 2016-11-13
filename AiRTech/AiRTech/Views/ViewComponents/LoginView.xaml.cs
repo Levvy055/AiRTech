@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AiRTech.Core.Subjects;
+﻿using System.Diagnostics;
 using Xamarin.Forms;
 
-namespace AiRTech.Views
+namespace AiRTech.Views.ViewComponents
 {
     public partial class LoginView : ContentView
     {

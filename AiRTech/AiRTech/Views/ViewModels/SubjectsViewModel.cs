@@ -4,18 +4,18 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using AiRTech.Core.Commands;
 using AiRTech.Core.Subjects;
-using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
 
-namespace AiRTech.Views
+namespace AiRTech.Views.ViewModels
 {
-    public partial class SubjectsPage : ContentPage
+    public class SubjectsViewModel :ViewModelBase
     {
-        public SubjectsPage()
+        public SubjectsViewModel(Page page) : base(page)
         {
-            InitializeComponent();
-            BindingContext = new SubjectsViewModel(this);
+            Title = "Przedmioty";
         }
 
 

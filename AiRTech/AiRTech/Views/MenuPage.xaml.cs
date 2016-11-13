@@ -12,7 +12,6 @@ namespace AiRTech.Views
 {
     public partial class MenuPage : ContentPage
     {
-        public ListView ListView { get { return listView; } }
 
         public MenuPage()
         {
@@ -23,20 +22,20 @@ namespace AiRTech.Views
             {
                 new MenuPageItem
                 {
-                    Title = "Home",
-                    IconSource = "home.png",
+                    Title = "Strona Startowa",
+                    IconSource = "AiRTech.main.png",
                     TargetType = typeof (MainPage)
                 },
                 new MenuPageItem
                 {
                     Title = "Przedmioty",
-                    IconSource = "subjects.png",
+                    IconSource = "AiRTech.subjects.png",
                     TargetType = typeof (SubjectsPage)
                 },
                 new MenuPageItem
                 {
-                    Title = "About",
-                    IconSource = "about.png",
+                    Title = "O Aplikacji",
+                    IconSource = "AiRTech.about.png",
                     TargetType = typeof (AboutPage)
                 }
             };
@@ -57,5 +56,7 @@ namespace AiRTech.Views
             var app = Application.Current as App;
             app?.ChangePageTo(item.TargetType, item.Title,  false);
         }
+
+        public ListView ListView => listView;
     }
 }

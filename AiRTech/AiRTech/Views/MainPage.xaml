@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AiRTech"
     xmlns:views="clr-namespace:AiRTech.Views;assembly=AiRTech"
+    xmlns:viewComponents="clr-namespace:AiRTech.Views.ViewComponents;assembly=AiRTech"
     Title="{Binding Title}"
     IsBusy="{Binding IsBusy}">
     <ContentPage.Content>
@@ -44,7 +45,7 @@
                 HorizontalOptions="Center"
                 Text="&#x3c;- Aby zacząć wybierz opcję z menu"
                 VerticalOptions="Start" />
-            <views:LoginView
+            <viewComponents:LoginView
                 x:Name="LoginView"
                 Grid.Row="3"
                 Grid.RowSpan="3"

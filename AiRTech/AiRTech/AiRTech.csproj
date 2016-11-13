@@ -38,13 +38,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\Commands\SubjectCommands.cs" />
+    <Compile Include="Core\Misc\ImageResourceExtension.cs" />
     <Compile Include="Core\Subjects\ElectronicBasics.cs" />
     <Compile Include="Core\Subjects\SignalTheoryBasics.cs" />
     <Compile Include="Core\Subjects\Subject.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LoginView.xaml.cs">
+    <Compile Include="Views\ViewComponents\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
@@ -54,10 +56,15 @@
     <Compile Include="Views\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SubjectPage.xaml.cs">
+      <DependentUpon>SubjectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SubjectsPage.xaml.cs">
       <DependentUpon>SubjectsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewComponents\MenuPageItem.cs" />
+    <Compile Include="Views\ViewModels\SubjectViewModel.cs" />
+    <Compile Include="Views\ViewModels\SubjectsViewModel.cs" />
     <Compile Include="Views\ViewModels\MenuViewModel.cs" />
     <Compile Include="Views\ViewModels\MainViewModel.cs" />
     <Compile Include="Views\ViewModels\ViewModelBase.cs" />
@@ -101,7 +108,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\LoginView.xaml">
+    <EmbeddedResource Include="Views\ViewComponents\LoginView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -121,6 +128,20 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\pe.png" />
     <EmbeddedResource Include="Resources\pts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\SubjectPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\definitions.png" />
+    <EmbeddedResource Include="Resources\formula.png" />
+    <EmbeddedResource Include="Resources\solver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Math\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.2.127\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />

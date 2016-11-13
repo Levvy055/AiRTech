@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,14 +9,15 @@ using Xamarin.Forms;
 
 namespace AiRTech.Views
 {
-    public partial class SubjectsPage : ContentPage
+    public partial class SubjectPage : ContentPage
     {
-        public SubjectsPage()
+        public SubjectPage(Subject subject)
         {
             InitializeComponent();
-            BindingContext = new SubjectsViewModel(this);
+            Subject = subject;
+            BindingContext=new SubjectViewModel(this);
         }
 
-
+        public Subject Subject { get; private set; }
     }
 }
