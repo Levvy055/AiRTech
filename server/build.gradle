@@ -1,22 +1,11 @@
 def vM = 0
 def vN = 1
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.3'
-    }
-}
-
 apply plugin: 'java'
 apply plugin: 'pmd'
 apply plugin: 'eclipse-wtp'
-apply plugin: 'jetty' 
 apply plugin: 'war'
-apply plugin: 'com.bmuschko.tomcat'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 
 group="eu.grmdev.airtech.server"
 description = "Java REST Server for AiRTech App."
@@ -53,6 +42,7 @@ repositories {
 dependencies {
 	def tomcatVersion = '8.5.8'
 	def jConnectorVersion = '6.0.5'
+	compile fileTree(dir: 'libs', include: '*.jar')
 	compile group: 'org.apache.logging.log4j', 				name: 'log4j-core', 				version: '2.7'
 	compile group: 'org.apache.logging.log4j', 				name: 'log4j', 						version: '2.7'
 	compile group: 'org.jboss.logging', 					name: 'jboss-logging', 				version: '3.3.0.Final'
@@ -64,11 +54,6 @@ dependencies {
 	compile group: 'com.google.guava', 						name: 'guava', 						version: '20.0'
 	compile group: 'org.apache.commons', 					name: 'commons-lang3', 				version: '3.5'
 	compile group: 'com.fasterxml.jackson.datatype', 		name: 'jackson-datatype-json-org', 	version: '2.8.4'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
-           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}",
-		   "org.apache.tomcat:tomcat-jdbc:${tomcatVersion}",
-		   "mysql:mysql-connector-java:${jConnectorVersion}"
 	compile "org.apache.tomcat:tomcat-jdbc:${tomcatVersion}"
 	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 	providedCompile "org.projectlombok:lombok:1.16.10"
@@ -79,53 +64,34 @@ dependencies {
 	testCompile 'org.assertj:assertj-core:3.5.2'
 }
 
-jettyRunWar.stopPort = 8090
-jettyRunWar.stopKey = 'stopKey'
-jettyStop.stopPort = 8090
-jettyStop.stopKey = 'stopKey'	
-
-tomcat {
-    httpPort = 8080
-    httpsPort = 8081
-    enableSSL = false
-    contextPath = 'airtech'
-
-    users {
-        user {
-            username = 'tomcat'
-            password = 'tomcat'
-            roles = ['manager-gui', 'admin']
-        }
-    }
-}
-
-[tomcatRun, tomcatRunWar, tomcatStop]*.stopPort = 8081
-[tomcatRun, tomcatRunWar, tomcatStop]*.stopKey = 'stopKey'
-
 task deployToTomcat(type: Copy) {
 	from war.archivePath
     into "P:/programy/TomCat/webapps"
 }
 
-task deploylocal(dependsOn: build) << {
-    println "Deploying to local"
-	deployToTomcat
+task deploylocal() {
+	doLast {
+		println "Deploying to local"
+		deployToTomcat
+	}
 }
 
 deployToTomcat.dependsOn build
 
-task pmd << {
-	println 'Running PMD static code analysis'
-	ant {
-		taskdef(name:'pmd', classname:'net.sourceforge.pmd.ant.PMDTask', classpath: configurations.pmdConf.asPath)
-		pmd(shortFilenames:'true', failonruleviolation:'true', rulesetfiles:'conf/pmd-rules.xml') {
-			formatter(type:'csv', tofile:'myreport.csv', toConsole:'true')
-			fileset(dir: "src/main/java") {
-				include(name: '**/*.java')
+task pmd {
+	doLast {
+		println 'Running PMD static code analysis'
+		ant {
+			taskdef(name:'pmd', classname:'net.sourceforge.pmd.ant.PMDTask', classpath: configurations.pmdConf.asPath)
+			pmd(shortFilenames:'true', failonruleviolation:'true', rulesetfiles:'conf/pmd-rules.xml') {
+				formatter(type:'csv', tofile:'myreport.csv', toConsole:'true')
+				fileset(dir: "src/main/java") {
+					include(name: '**/*.java')
+				}
+				fileset(dir: "src/test/java") {
+					include(name: '**/*.java')
+				}        
 			}
-			fileset(dir: "src/test/java") {
-				include(name: '**/*.java')
-			}        
 		}
 	}
 }

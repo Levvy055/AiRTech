@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Context antiJARLocking="true" path="/DVDStore">
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" 
+  maxActive="30" maxIdle="10" maxWait="10000" 
+  name="jdbc/airtech" password="72vzbEoFQJVSmB6T"
+  type="javax.sql.DataSource" url="jdbc:mysql://grmdev.eu/airtech" 
+  username="airtech" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" />
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" 
+  maxActive="30" maxIdle="10" maxWait="10000" 
+  name="jdbc/airtech_logs" password="nDtCSCboCz8HwdPQ"
+  type="javax.sql.DataSource" url="jdbc:mysql://grmdev.eu/airtech_logs" 
+  username="airtech_logs" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" />
+</Context>
