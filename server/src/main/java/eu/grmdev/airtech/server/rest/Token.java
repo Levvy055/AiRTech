@@ -1,7 +1,7 @@
 /**
 * 
 */
-package eu.grmdev.server.rest;
+package eu.grmdev.airtech.server.rest;
 
 import java.util.Arrays;
 import java.util.Date;

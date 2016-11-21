@@ -1,12 +1,12 @@
 /**
  *
  */
-package eu.grmdev.server.database;
+package eu.grmdev.airtech.server.database;
 
 import com.github.fluent.hibernate.cfg.Fluent;
 
-import eu.grmdev.server.rest.Token;
-import eu.grmdev.server.rest.User;
+import eu.grmdev.airtech.server.rest.Token;
+import eu.grmdev.airtech.server.rest.User;
 
 /**
  * @author Levvy055

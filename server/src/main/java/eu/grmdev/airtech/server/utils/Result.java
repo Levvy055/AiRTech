@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.grmdev.server.utils;
+package eu.grmdev.airtech.server.utils;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;

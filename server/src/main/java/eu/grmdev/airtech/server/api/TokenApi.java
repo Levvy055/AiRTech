@@ -1,7 +1,7 @@
 /**
 * 
 */
-package eu.grmdev.server.api;
+package eu.grmdev.airtech.server.api;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -27,9 +27,9 @@ import org.json.JSONObject;
 
 import com.github.fluent.hibernate.H;
 
-import eu.grmdev.server.rest.Token;
-import eu.grmdev.server.rest.User;
-import eu.grmdev.server.utils.Result;
+import eu.grmdev.airtech.server.rest.Token;
+import eu.grmdev.airtech.server.rest.User;
+import eu.grmdev.airtech.server.utils.Result;
 
 /**
  * @author Levvy055

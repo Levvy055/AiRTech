@@ -1,12 +1,10 @@
 /**
  * 
  */
-package eu.grmdev.server.rest;
+package eu.grmdev.airtech.server.rest;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,14 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +25,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 public class User {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Getter
@@ -67,18 +59,8 @@ public class User {
 	@Getter
 	@Setter
 	private List<Token> tokens;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@Getter
-	@Setter
-	@Fetch(FetchMode.SUBSELECT)
-	private Set<Character> characters;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@Getter
-	@Setter
-	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "friend_id", referencedColumnName = "id"))
-	private List<User> friends;
 	public static final String USERNAME_PATTERN = "^[a-z0-9A-Z_-]{3,15}$";
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -90,41 +72,33 @@ public class User {
 		result = prime * result + ((registerDate == null) ? 0 : registerDate.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
 		User other = (User) obj;
 		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
-			return false;
+			if (other.email != null) return false;
+		}
+		else if (!email.equals(other.email)) return false;
+		if (id != other.id) return false;
 		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
+			if (other.username != null) return false;
+		}
+		else if (!username.equals(other.username)) return false;
 		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
+			if (other.password != null) return false;
+		}
+		else if (!password.equals(other.password)) return false;
 		if (registerDate == null) {
-			if (other.registerDate != null)
-				return false;
-		} else if (!registerDate.equals(other.registerDate))
-			return false;
+			if (other.registerDate != null) return false;
+		}
+		else if (!registerDate.equals(other.registerDate)) return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -143,19 +117,6 @@ public class User {
 			builder.append("lastActive\":\"");
 			builder.append(lastActive);
 		}
-		List<User> friendsT = this.getFriends();
-		if (friendsT != null) {
-			builder.append("\",\"");
-			builder.append("friends\":[");
-			for (Iterator<User> iterator = friendsT.iterator(); iterator.hasNext();) {
-				User user = iterator.next();
-				builder.append("{\"id\":" + user.getId() + ", \"name\":\"" + user.getUsername() + "\"}");
-				if (iterator.hasNext()) {
-					builder.append(',');
-				}
-			}
-			builder.append("], \"friends_count\":\"" + friendsT.size());
-		}
 		if (email != null) {
 			builder.append("\",\"");
 			builder.append("email\":\"");
@@ -167,5 +128,5 @@ public class User {
 		builder.append("\"} ");
 		return builder.toString();
 	}
-
+	
 }

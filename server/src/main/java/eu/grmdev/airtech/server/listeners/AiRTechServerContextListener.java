@@ -1,19 +1,19 @@
 /**
  * 
  */
-package eu.grmdev.server.listeners;
+package eu.grmdev.airtech.server.listeners;
 
-import static eu.grmdev.server.utils.CLogger.closeLoggers;
-import static eu.grmdev.server.utils.CLogger.info;
-import static eu.grmdev.server.utils.CLogger.initLogger;
-import static eu.grmdev.server.utils.CLogger.warn;
+import static eu.grmdev.airtech.server.utils.CLogger.closeLoggers;
+import static eu.grmdev.airtech.server.utils.CLogger.info;
+import static eu.grmdev.airtech.server.utils.CLogger.initLogger;
+import static eu.grmdev.airtech.server.utils.CLogger.warn;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 
-import eu.grmdev.server.database.DatabaseHandler;
+import eu.grmdev.airtech.server.database.DatabaseHandler;
 
 /**
  * @author Levvy055

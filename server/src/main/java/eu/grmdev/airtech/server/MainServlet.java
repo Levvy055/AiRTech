@@ -1,7 +1,7 @@
 /**
  * 
  */
-package eu.grmdev.server;
+package eu.grmdev.airtech.server;
 
 import java.io.IOException;
 
