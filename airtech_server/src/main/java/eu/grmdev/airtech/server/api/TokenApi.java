@@ -27,8 +27,8 @@ import org.json.JSONObject;
 
 import com.github.fluent.hibernate.H;
 
-import eu.grmdev.airtech.server.rest.Token;
-import eu.grmdev.airtech.server.rest.User;
+import eu.grmdev.airtech.server.models.Token;
+import eu.grmdev.airtech.server.models.User;
 import eu.grmdev.airtech.server.utils.Result;
 
 /**

@@ -28,8 +28,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fluent.hibernate.H;
 import com.github.fluent.hibernate.request.HibernateRequest;
 
-import eu.grmdev.airtech.server.rest.Token;
-import eu.grmdev.airtech.server.rest.User;
+import eu.grmdev.airtech.server.models.Token;
+import eu.grmdev.airtech.server.models.User;
 import eu.grmdev.airtech.server.utils.Result;
 
 /**

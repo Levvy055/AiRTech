@@ -5,8 +5,9 @@ package eu.grmdev.airtech.server.database;
 
 import com.github.fluent.hibernate.cfg.Fluent;
 
-import eu.grmdev.airtech.server.rest.Token;
-import eu.grmdev.airtech.server.rest.User;
+import eu.grmdev.airtech.server.models.BaseData;
+import eu.grmdev.airtech.server.models.Token;
+import eu.grmdev.airtech.server.models.User;
 
 /**
  * @author Levvy055
@@ -25,7 +26,7 @@ public final class DatabaseHandler {
 	private static synchronized void createSessionFactory() {
 		if (configured) { return; }
 		@SuppressWarnings("rawtypes")
-		Class[] classes = new Class[]{User.class, Token.class};
+		Class[] classes = new Class[]{User.class, Token.class, BaseData.class};
 		Fluent.factory().annotatedClasses(classes).build();
 		configured = true;
 	}
