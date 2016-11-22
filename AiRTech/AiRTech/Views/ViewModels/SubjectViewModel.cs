@@ -13,12 +13,13 @@ namespace AiRTech.Views.ViewModels
 {
     public class SubjectViewModel : ViewModelBase
     {
-        public SubjectViewModel(Page page) : base(page)
+        public SubjectViewModel(Page page, Subject subject) : base(page)
         {
-            Title = "Przedmiot " + ((SubjectPage)page).Subject.Name;
-            this.page = page;
+            Title = "Przedmiot " + subject.Name;
+            Subject = subject;
         }
 
+        public Subject Subject { get; private set; }
         public ICommand DefinitionTappedCommand => SubjectCommands.DefinitionsTappedCommand;
         public ICommand FormulasTappedCommand => SubjectCommands.FormulasTappedCommand;
         public ICommand SolverTappedCommand => SubjectCommands.SolverTappedCommand;

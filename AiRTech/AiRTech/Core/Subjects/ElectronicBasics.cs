@@ -1,6 +1,6 @@
 ﻿namespace AiRTech.Core.Subjects
 {
-    public class ElectronicBasics
+    public class ElectronicBasics : SubjectBase
     {
     }
 }

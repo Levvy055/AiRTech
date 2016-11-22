@@ -6,14 +6,14 @@
     Title="{Binding Title}"
     IsBusy="{Binding IsBusy}">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="FillAndExpand">
+        <StackLayout Margin="20,10,0,0" VerticalOptions="FillAndExpand">
             <ListView
                 x:Name="listView"
                 SeparatorVisibility="None"
                 VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ImageCell ImageSource="{Binding IconSource}" Text="{Binding Title}" />
+                        <ImageCell ImageSource="{Binding IconProperty}" Text="{Binding Title}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

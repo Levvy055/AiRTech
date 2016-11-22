@@ -28,6 +28,10 @@ namespace AiRTech.Core.Subjects
 
         private Subject(string name, Type type, SubjectType subjectType, string img)
         {
+            if (type == null)
+            {
+                throw new ArgumentException("Type of subject class is null!");
+            }
             Id = subjectType.GetHashCode();
             Name = name;
             Details = "Przejdź";
@@ -41,6 +45,11 @@ namespace AiRTech.Core.Subjects
         public string Img { get; }
         public ImageSource ImgProperty => ImageSource.FromResource(Img);
         public object Obj { get; private set; }
+    }
+
+    public class SubjectBase
+    {
+
     }
 
     public enum SubjectType

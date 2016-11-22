@@ -1,6 +1,6 @@
 ﻿namespace AiRTech.Core.Subjects
 {
-    public class SignalTheoryBasics
+    public class SignalTheoryBasics : SubjectBase
     {
     }
 }

@@ -4,17 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects;
-using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
 
 namespace AiRTech.Views
 {
-    public partial class SubjectPage : ContentPage
+    public partial class SolverPage : ContentPage
     {
-        public SubjectPage(Subject subject)
+
+        public SolverPage(Subject subject)
         {
+            Subject = subject;
             InitializeComponent();
-            BindingContext = new SubjectViewModel(this, subject);
         }
+
+        public Subject Subject { get; set; }
     }
 }

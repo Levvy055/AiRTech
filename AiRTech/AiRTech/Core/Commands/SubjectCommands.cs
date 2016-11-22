@@ -14,54 +14,28 @@ namespace AiRTech.Core.Commands
 {
     public static class SubjectCommands
     {
-        public static ICommand SubjectItemClicked
-        {
-            get
-            {
-                return new Command(o =>
-                {
-                    var s = o as Subject;
-                    if (s == null) { return; }
-                    Debug.WriteLine("Subject Item Selected: " + s.Name);
-                    var app = Application.Current as App;
-                    if (app == null) { return; }
-                    app.ChangePageTo(typeof(SubjectPage), s.Name, true, s);
-                });
-            }
-        }
+        public static ICommand SubjectItemClicked => CreateBaseCommand("Subject Item Selected", typeof(SubjectPage));
+        public static ICommand DefinitionsTappedCommand => CreateBaseCommand("Definitions", typeof(DefinitionsPage));
+        public static ICommand FormulasTappedCommand => CreateBaseCommand("Formulas", typeof(FormulasPage));
+        public static ICommand SolverTappedCommand => CreateBaseCommand("Solver", typeof(SolverPage));
 
-        public static ICommand DefinitionsTappedCommand
+        private static ICommand CreateBaseCommand(string txt, Type pageType)
         {
-            get
+            return new Command(o =>
             {
-                return new Command(o =>
+                var s = o as Subject;
+                if (s == null)
                 {
-                    Debug.WriteLine("Definitions tapped");
+                    return;
                 }
-                );
-            }
-        }
-        public static ICommand FormulasTappedCommand
-        {
-            get
-            {
-                return new Command(o =>
+                Debug.WriteLine(txt + ": " + s.Name);
+                var app = Application.Current as App;
+                if (app == null)
                 {
-                    Debug.WriteLine("Formulas tapped");
+                    return;
                 }
-                );
-            }
-        }
-        public static ICommand SolverTappedCommand
-        {
-            get
-            {
-                return new Command(o =>
-                {
-                    Debug.WriteLine("Solver tapped");
-                }
-                );
-            }
+                app.ChangePageTo(pageType, s.Name, true, s);
+            });
         }
     }
 }
