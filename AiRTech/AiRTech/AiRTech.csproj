@@ -40,11 +40,18 @@
     </Compile>
     <Compile Include="Core\Commands\SubjectCommands.cs" />
     <Compile Include="Core\DataHandling\DbHandler.cs" />
-    <Compile Include="Core\DataHandling\FileHandler.cs" />
+    <Compile Include="Core\DataHandling\IDbHandler.cs" />
+    <Compile Include="Core\DataHandling\IFileHandler.cs" />
     <Compile Include="Core\Misc\ImageResourceExtension.cs" />
     <Compile Include="Core\Subjects\ElectronicBasics.cs" />
     <Compile Include="Core\Subjects\SignalTheoryBasics.cs" />
     <Compile Include="Core\Subjects\Subject.cs" />
+    <Compile Include="Core\SubjectData\SDefinition.xaml.cs">
+      <DependentUpon>SDefinition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\SubjectData\SFormula.xaml.cs">
+      <DependentUpon>SFormula.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core\Web\WebCore.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -98,6 +105,22 @@
   <ItemGroup>
     <Reference Include="MvvmHelpers, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Refractored.MvvmHelpers.1.1.0\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\MvvmHelpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\sqlite-net-pcl.1.2.0\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_green, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLitePCLRaw.bundle_green.1.1.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_v2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SQLitePCLRaw.core.1.1.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http">
@@ -177,6 +200,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\SolverPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Core\SubjectData\SDefinition.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Core\SubjectData\SFormula.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

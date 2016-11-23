@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using AiRTech.Core.DataHandling;
 using AiRTech.Views;
 using Xamarin.Forms;
 
@@ -21,13 +22,14 @@ namespace AiRTech
                     Detail = new NavigationPage()
                 };
                 ChangePageTo(typeof(MainPage), "AiRTech", false);
+                DependencyService.Get<IFileHandler>().Init();
+                Database = new DbHandler();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
         }
-
 
         public async void ChangePageTo(Type page, string title, bool inner = true, params object[] args)
         {
@@ -95,6 +97,8 @@ namespace AiRTech
             }
             return newPage;
         }
+
+        public DbHandler Database { get; set; }
 
         private Dictionary<Type, Page> CreatedPages { get; } = new Dictionary<Type, Page>();
         private NavigationPage NavPage { get; set; }

@@ -2,6 +2,7 @@
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Refractored.MvvmHelpers": "1.1.0",
+    "sqlite-net-pcl": "1.2.0",
     "Xamarin.Forms": "2.3.3.168"
   },
   "frameworks": {

@@ -15,7 +15,7 @@ namespace AiRTech.Core.Commands
     public static class SubjectCommands
     {
         public static ICommand SubjectItemClicked => CreateBaseCommand("Subject Item Selected", typeof(SubjectPage));
-        public static ICommand DefinitionsTappedCommand => CreateBaseCommand("Definitions", typeof(DefinitionsPage));
+        public static ICommand DefinitionsTappedCommand => CreateBaseCommand("SDefinition", typeof(DefinitionsPage));
         public static ICommand FormulasTappedCommand => CreateBaseCommand("Formulas", typeof(FormulasPage));
         public static ICommand SolverTappedCommand => CreateBaseCommand("Solver", typeof(SolverPage));
 
