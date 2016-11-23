@@ -17,17 +17,18 @@ namespace AiRTech.Core.Web
 
         }
 
-        private async Task<bool> IsConnected()
+        public bool Connected
         {
-            var r=await Client.GetStringAsync("status");
-            if (string.IsNullOrWhiteSpace(r))
+            get
             {
-                return false;
+                var r = Client.GetStringAsync("status").Result;
+                if (string.IsNullOrWhiteSpace(r))
+                {
+                    return false;
+                }
+                return r.Equals("Working");
             }
-            return r.Equals("Working");
         }
-
-        public bool Connected => IsConnected().Result;
 
         public HttpClient Client
         {
