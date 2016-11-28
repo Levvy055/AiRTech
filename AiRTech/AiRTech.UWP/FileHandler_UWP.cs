@@ -19,18 +19,16 @@ namespace AiRTech.UWP
 
         public void Init()
         {
-            FilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Filename);
-            if (!File.Exists(FilePath))
-            {
-                File.Create(FilePath);
-            }
+            DbFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Filename);
+            Create();
         }
-
-        public string FilePath { get; set; }
 
         public void Create()
         {
-            throw new NotImplementedException();
+            if (!File.Exists(DbFilePath))
+            {
+                File.Create(DbFilePath);
+            }
         }
 
         public string Load()
@@ -53,10 +51,11 @@ namespace AiRTech.UWP
             throw new NotImplementedException();
         }
 
-        SQLiteConnection IFileHandler.GetDatabaseConnection()
+        public string GetDatabaseFilePath()
         {
-            var conn = new SQLiteConnection(FilePath);
-            return conn;
+            return DbFilePath;
         }
+
+        public string DbFilePath { get; set; }
     }
 }

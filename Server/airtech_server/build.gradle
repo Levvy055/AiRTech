@@ -1,0 +1,64 @@
+apply plugin: 'war'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+description = "Java REST Server for AiRTech App."
+
+configurations {
+	jdbcdriver
+}
+
+if (hasProperty("teamcity")) {
+	version="0."+vM+"."+vN+"."+teamcity['build.number']
+} else {
+	version="0."+vM+"."+vN
+}
+
+dependencies {
+	def tomcatVersion = '9.0.0.M13'
+	def jConnectorVersion = '6.0.5'
+	//compile fileTree(dir: 'libs', include: '*.jar')
+	compile project(':airtech_dto')
+	compile group: 'org.jboss.logging', 					name: 'jboss-logging', 				version: '3.3.0.Final'
+	compile group: 'org.apache.logging.log4j', 				name: 'log4j-slf4j-impl', 			version: '2.7'
+	compile group: 'mysql',									name: 'mysql-connector-java', 		version: "${jConnectorVersion}"
+	compile group: 'org.hibernate', 						name: 'hibernate-core', 			version: '5.2.4.Final'
+	compile group: 'com.github.v-ladynev', 					name: 'fluent-hibernate-core', 		version: '0.3.1'
+	compile group: 'org.glassfish.jersey.containers', 		name: 'jersey-container-servlet', 	version: '2.24'
+	compile "org.apache.tomcat:tomcat-jdbc:${tomcatVersion}"
+	
+	providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+	
+	runtime 'javax.servlet:jstl:1.2'
+	jdbcdriver "mysql:mysql-connector-java:${jConnectorVersion}"
+}
+
+task deploylocal() {
+	doLast {
+		println "Deploying to local"
+		println war.archivePath
+		copy {
+			from war
+			into "P:/programy/apache-tomcat-9.0.0.M13/webapps"
+		}
+	}
+}
+
+deploylocal.dependsOn build
+
+task pmd {
+	doLast {
+		println 'Running PMD static code analysis'
+		ant {
+			taskdef(name:'pmd', classname:'net.sourceforge.pmd.ant.PMDTask', classpath: configurations.pmdConf.asPath)
+			pmd(shortFilenames:'true', failonruleviolation:'true', rulesetfiles:'conf/pmd-rules.xml') {
+				formatter(type:'csv', tofile:'myreport.csv', toConsole:'true')
+				fileset(dir: "src/main/java") {
+					include(name: '**/*.java')
+				}
+				fileset(dir: "src/test/java") {
+					include(name: '**/*.java')
+				}        
+			}
+		}
+	}
+}

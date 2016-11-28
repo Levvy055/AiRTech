@@ -22,13 +22,13 @@ namespace AiRTech.Test
         [SetUp]
         public void BeforeEachTest()
         {
-            app = AppInitializer.StartApp(platform);
+            //app = AppInitializer.StartApp(platform);
         }
 
         [Test]
         public void AppLaunches()
         {
-            app.Screenshot("First screen.");
+            //app.Screenshot("First screen.");
         }
     }
 }

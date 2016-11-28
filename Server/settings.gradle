@@ -1,0 +1,4 @@
+include 'airtech_dto'
+include 'airtech_server'
+include 'AiRTech_Admin_Panel'
+rootProject.name = 'AiRTech'

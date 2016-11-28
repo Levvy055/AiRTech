@@ -15,6 +15,6 @@ namespace AiRTech.Core.DataHandling
         string Load();
         void Save(string data);
         void RemoveAllData();
-        SQLiteConnection GetDatabaseConnection();
+        string GetDatabaseFilePath();
     }
 }

@@ -21,7 +21,5 @@ namespace AiRTech.Core.DataHandling
         bool Update(SFormula formula);
         bool RemoveAllExcept(List<SDefinition> definitions);
         bool RemoveAllExcept(List<SFormula> formulas);
-
-        SQLiteConnection DbConnection();
     }
 }

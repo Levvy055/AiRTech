@@ -13,7 +13,7 @@ namespace AiRTech.Core.DataHandling
     {
         public void Init()
         {
-            using (var db = DbConnection())
+            using (var db = Connection)
             {
                 db.CreateTable<SDefinition>();
                 db.CreateTable<SFormula>();
@@ -60,9 +60,13 @@ namespace AiRTech.Core.DataHandling
             throw new NotImplementedException();
         }
 
-        public SQLiteConnection DbConnection()
+        public SQLiteConnection Connection
         {
-            return DependencyService.Get<IFileHandler>().GetDatabaseConnection();
+            get
+            {
+                var path = DependencyService.Get<IFileHandler>().GetDatabaseFilePath();
+                return new SQLiteConnection(path);
+            }
         }
     }
 }

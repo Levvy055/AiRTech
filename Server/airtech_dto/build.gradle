@@ -1,0 +1,27 @@
+configurations {
+	rootPluginConfig
+}
+dependencies {
+	compile 'org.slf4j:slf4j-api:1.7.21'
+    compile group: 'org.glassfish.jersey.containers', 		name: 'jersey-container-servlet', 	version: '2.24'
+    compile group: 'org.hibernate', 						name: 'hibernate-core', 			version: '5.2.4.Final'
+    //compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+task pmd {
+	doLast {
+		println 'Running PMD static code analysis'
+		ant {
+			taskdef(name:'pmd', classname:'net.sourceforge.pmd.ant.PMDTask', classpath: configurations.pmdConf.asPath)
+			pmd(shortFilenames:'true', failonruleviolation:'true', rulesetfiles:'conf/pmd-rules.xml') {
+				formatter(type:'csv', tofile:'myreport.csv', toConsole:'true')
+				fileset(dir: "src/main/java") {
+					include(name: '**/*.java')
+				}
+				fileset(dir: "src/test/java") {
+					include(name: '**/*.java')
+				}        
+			}
+		}
+	}
+}

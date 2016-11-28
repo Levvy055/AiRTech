@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AiRTechTestFixture.cs" />
+    <Compile Include="PlatformIndependent\SubjectDbTests.cs" />
     <Compile Include="PlatformIndependent\SubjectWebTests.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="AppInitializer.cs" />

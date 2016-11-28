@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using AiRTech.Core.DataHandling;
+using AiRTech.Core.Web;
 using AiRTech.Views;
 using Xamarin.Forms;
 
@@ -24,12 +25,15 @@ namespace AiRTech
                 ChangePageTo(typeof(MainPage), "AiRTech", false);
                 DependencyService.Get<IFileHandler>().Init();
                 Database = new DbHandler();
+                Web = new WebCore(Database);
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
         }
+
+        public WebCore Web { get; set; }
 
         public async void ChangePageTo(Type page, string title, bool inner = true, params object[] args)
         {
@@ -98,7 +102,7 @@ namespace AiRTech
             return newPage;
         }
 
-        public DbHandler Database { get; set; }
+        public IDbHandler Database { get; set; }
 
         private Dictionary<Type, Page> CreatedPages { get; } = new Dictionary<Type, Page>();
         private NavigationPage NavPage { get; set; }
