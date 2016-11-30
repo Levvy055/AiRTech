@@ -22,7 +22,9 @@ namespace AiRTech.Core.Web
         public WebCore(IDbHandler database)
         {
             _database = database;
-            if (IsConnected())
+            var c = IsConnected();
+            c.Wait(1000);
+            if (c.IsCompleted && c.Result)
             {
                 var r = GetNewDataAsync();
             }
@@ -45,12 +47,20 @@ namespace AiRTech.Core.Web
             return null;
         }
 
-        public bool IsConnected()
+        public async Task<bool> IsConnected()
         {
-            using (var client = GetNewClient())
+            try
             {
-                var r = client.GetStringAsync("status").Result;
-                return !string.IsNullOrWhiteSpace(r) && r.Equals("Working");
+                using (var client = GetNewClient())
+                {
+                    var r = await client.GetStringAsync("status");
+                    return !string.IsNullOrWhiteSpace(r) && r.Equals("Working");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
             }
         }
 
@@ -58,6 +68,7 @@ namespace AiRTech.Core.Web
         {
             var client = new HttpClient()
             {
+                Timeout = TimeSpan.FromSeconds(7),
                 BaseAddress = new Uri(BaseUrl)
             };
             return client;

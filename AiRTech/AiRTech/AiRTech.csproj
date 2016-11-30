@@ -42,6 +42,9 @@
     <Compile Include="Core\DataHandling\DbHandler.cs" />
     <Compile Include="Core\DataHandling\IDbHandler.cs" />
     <Compile Include="Core\DataHandling\IFileHandler.cs" />
+    <Compile Include="Core\Math\Solver.cs" />
+    <Compile Include="Core\Math\Solvers\ElectronicBasicsSolver.cs" />
+    <Compile Include="Core\Math\Solvers\SignalTheoryBasicsSolver.cs" />
     <Compile Include="Core\Misc\ImageResourceExtension.cs" />
     <Compile Include="Core\Subjects\ElectronicBasics.cs" />
     <Compile Include="Core\Subjects\SignalTheoryBasics.cs" />
@@ -183,9 +186,7 @@
     <EmbeddedResource Include="Resources\formula.png" />
     <EmbeddedResource Include="Resources\solver.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Math\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\home.png" />
     <EmbeddedResource Include="Resources\about.png" />
