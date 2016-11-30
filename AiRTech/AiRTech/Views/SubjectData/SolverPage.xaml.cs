@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AiRTech.Core.Math;
+﻿using AiRTech.Core.Math;
 using AiRTech.Core.Subjects;
 using Xamarin.Forms;
 
-namespace AiRTech.Views
+namespace AiRTech.Views.SubjectData
 {
-    public partial class SolverPage : ContentPage
+    public partial class SolverPage : TabbedPage
     {
 
         public SolverPage(Subject subject)
@@ -22,6 +17,10 @@ namespace AiRTech.Views
         private void InitSolver()
         {
             Solver = Subject.Base.Solver;
+            foreach (var page in Solver.GetView().Children)
+            {
+                Children.Add(page);
+            }
         }
 
         public Subject Subject { get; set; }

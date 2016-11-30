@@ -67,7 +67,7 @@
     <Compile Include="Views\FormulasPage.xaml.cs">
       <DependentUpon>FormulasPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SolverPage.xaml.cs">
+    <Compile Include="Views\SubjectData\SolverPage.xaml.cs">
       <DependentUpon>SolverPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewComponents\LoginView.xaml.cs">
@@ -207,7 +207,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\SolverPage.xaml">
+    <EmbeddedResource Include="Views\SubjectData\SolverPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

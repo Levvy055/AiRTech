@@ -9,17 +9,18 @@ using AiRTech.Core.Subjects;
 using AiRTech.Views;
 using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
+using SolverPage = AiRTech.Views.SubjectData.SolverPage;
 
 namespace AiRTech.Core.Commands
 {
     public static class SubjectCommands
     {
-        public static ICommand SubjectItemClicked => CreateBaseCommand("Subject Item Selected", typeof(SubjectPage));
-        public static ICommand DefinitionsTappedCommand => CreateBaseCommand("SDefinition", typeof(DefinitionsPage));
-        public static ICommand FormulasTappedCommand => CreateBaseCommand("Formulas", typeof(FormulasPage));
-        public static ICommand SolverTappedCommand => CreateBaseCommand("Solver", typeof(SolverPage));
+        public static ICommand SubjectItemClicked => CreateBaseSwitchPageCommand("Subject Item Selected", typeof(SubjectPage));
+        public static ICommand DefinitionsTappedCommand => CreateBaseSwitchPageCommand("SDefinition", typeof(DefinitionsPage));
+        public static ICommand FormulasTappedCommand => CreateBaseSwitchPageCommand("Formulas", typeof(FormulasPage));
+        public static ICommand SolverTappedCommand => CreateBaseSwitchPageCommand("Solver", typeof(SolverPage));
 
-        private static ICommand CreateBaseCommand(string txt, Type pageType)
+        private static ICommand CreateBaseSwitchPageCommand(string txt, Type pageType)
         {
             return new Command(o =>
             {

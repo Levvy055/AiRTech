@@ -10,7 +10,7 @@ namespace AiRTech.Core.Math
     public abstract class Solver
     {
 
-        public abstract List<ContentView> GetView();
+        public abstract TabbedPage GetView();
 
         public static Solver GetSolverFor(Type solverType)
         {
@@ -18,12 +18,9 @@ namespace AiRTech.Core.Math
             {
                 return ActiveSolvers[solverType];
             }
-            else
-            {
-                var solver = (Solver)Activator.CreateInstance(solverType);
-                ActiveSolvers.Add(solverType, solver);
-                return solver;
-            }
+            var solver = (Solver)Activator.CreateInstance(solverType);
+            ActiveSolvers.Add(solverType, solver);
+            return solver;
         }
 
         public static Dictionary<Type, Solver> ActiveSolvers { get; } = new Dictionary<Type, Solver>();

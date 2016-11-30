@@ -9,7 +9,7 @@ namespace AiRTech.Core.Math.Solvers
 {
     public class ElectronicBasicsSolver : Solver
     {
-        public override List<ContentView> GetView()
+        public override TabbedPage GetView()
         {
             return null;
         }

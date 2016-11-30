@@ -9,9 +9,13 @@ namespace AiRTech.Core.Math.Solvers
 {
     public class SignalTheoryBasicsSolver: Solver
     {
-        public override List<ContentView> GetView()
+        public override TabbedPage GetView()
         {
-            return null;
+            var tp=new TabbedPage()
+            {
+                Title = "Solver"
+            };
+            return tp;
         }
     }
 }
