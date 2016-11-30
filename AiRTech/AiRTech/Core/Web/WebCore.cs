@@ -22,12 +22,12 @@ namespace AiRTech.Core.Web
         public WebCore(IDbHandler database)
         {
             _database = database;
-            var c = IsConnected();
-            c.Wait(1000);
-            if (c.IsCompleted && c.Result)
-            {
-                var r = GetNewDataAsync();
-            }
+            //var c = IsConnected();
+            //c.Wait(1000);
+            //if (c.IsCompleted && c.Result)
+            //{
+            //    var r = GetNewDataAsync();
+            //}
         }
 
         private Dictionary<Type, SubjectDataViewModel> GetNewDataAsync()

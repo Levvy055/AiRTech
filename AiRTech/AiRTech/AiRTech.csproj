@@ -49,6 +49,8 @@
     <Compile Include="Core\Subjects\ElectronicBasics.cs" />
     <Compile Include="Core\Subjects\SignalTheoryBasics.cs" />
     <Compile Include="Core\Subjects\Subject.cs" />
+    <Compile Include="Core\Subjects\SubjectBase.cs" />
+    <Compile Include="Core\Subjects\SubjectType.cs" />
     <Compile Include="Views\SubjectData\SDefinition.xaml.cs">
       <DependentUpon>SDefinition.xaml</DependentUpon>
     </Compile>

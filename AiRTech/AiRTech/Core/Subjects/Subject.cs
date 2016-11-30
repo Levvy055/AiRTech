@@ -16,20 +16,18 @@ namespace AiRTech.Core.Subjects
             {SubjectType.PODSTAWY_ELEKTRONIKI,
                 new Subject("Podstawy Elektroniki",
                     typeof (ElectronicBasics),
-                    typeof(ElectronicBasicsSolver),
                     SubjectType.PODSTAWY_ELEKTRONIKI,
                     "AiRTech.Resources.pe.png")},
             {SubjectType.PODSTAWY_TEORII_SYGNALOW,
                 new Subject("Podstawy Teorii Sygnałów",
                     typeof(SignalTheoryBasics),
-                    typeof(SignalTheoryBasicsSolver),
-                    SubjectType.PODSTAWY_TEORII_SYGNALOW,
+                   SubjectType.PODSTAWY_TEORII_SYGNALOW,
                     "AiRTech.Resources.pts.png")}
         };
 
         public static ICollection<Subject> SubjectAsValues => Subjects.Values;
 
-        private Subject(string name, Type type, Type solverType, SubjectType subjectType, string img)
+        private Subject(string name, Type type, SubjectType subjectType, string img)
         {
             if (type == null)
             {
@@ -39,8 +37,7 @@ namespace AiRTech.Core.Subjects
             Name = name;
             Details = "Przejdź";
             Img = img;
-            Obj = Activator.CreateInstance(type);
-            SolverType = solverType;
+            Base = (SubjectBase) Activator.CreateInstance(type);
         }
 
         public int Id { get; }
@@ -48,17 +45,6 @@ namespace AiRTech.Core.Subjects
         public string Details { get; set; }
         public string Img { get; }
         public ImageSource ImgProperty => ImageSource.FromResource(Img);
-        public object Obj { get; private set; }
-        public Type SolverType { get; }
-    }
-
-    public class SubjectBase
-    {
-
-    }
-
-    public enum SubjectType
-    {
-        PODSTAWY_ELEKTRONIKI, PODSTAWY_TEORII_SYGNALOW, MECHANIKA, PODSTAWY_AUTOMATYKI, METODY_NUMERYCZNE, ANGIELSKI, ELEMENTY_OPTYKI_I_AKUSTYKI
+        public SubjectBase Base { get; private set; }
     }
 }

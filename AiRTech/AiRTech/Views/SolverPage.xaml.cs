@@ -21,8 +21,7 @@ namespace AiRTech.Views
 
         private void InitSolver()
         {
-            Solver = Core.Math.Solver.GetSolverFor(Subject.SolverType);
-
+            Solver = Subject.Base.Solver;
         }
 
         public Subject Subject { get; set; }

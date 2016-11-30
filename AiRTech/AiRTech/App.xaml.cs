@@ -20,7 +20,8 @@ namespace AiRTech
                 MainPage = new MasterDetailPage
                 {
                     Master = new MenuPage(),
-                    Detail = new NavigationPage()
+                    Detail = new NavigationPage(),
+                    MasterBehavior = MasterBehavior.Popover
                 };
                 ChangePageTo(typeof(MainPage), "AiRTech", false);
                 DependencyService.Get<IFileHandler>().Init();
