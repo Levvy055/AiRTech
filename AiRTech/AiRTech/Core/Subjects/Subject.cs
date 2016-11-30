@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AiRTech.Core.Commands;
+using AiRTech.Core.Math.Solvers;
 using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects
@@ -15,18 +16,20 @@ namespace AiRTech.Core.Subjects
             {SubjectType.PODSTAWY_ELEKTRONIKI,
                 new Subject("Podstawy Elektroniki",
                     typeof (ElectronicBasics),
+                    typeof(ElectronicBasicsSolver),
                     SubjectType.PODSTAWY_ELEKTRONIKI,
                     "AiRTech.Resources.pe.png")},
             {SubjectType.PODSTAWY_TEORII_SYGNALOW,
                 new Subject("Podstawy Teorii Sygnałów",
                     typeof(SignalTheoryBasics),
+                    typeof(SignalTheoryBasicsSolver),
                     SubjectType.PODSTAWY_TEORII_SYGNALOW,
                     "AiRTech.Resources.pts.png")}
         };
 
         public static ICollection<Subject> SubjectAsValues => Subjects.Values;
 
-        private Subject(string name, Type type, SubjectType subjectType, string img)
+        private Subject(string name, Type type, Type solverType, SubjectType subjectType, string img)
         {
             if (type == null)
             {
@@ -37,6 +40,7 @@ namespace AiRTech.Core.Subjects
             Details = "Przejdź";
             Img = img;
             Obj = Activator.CreateInstance(type);
+            SolverType = solverType;
         }
 
         public int Id { get; }
@@ -45,6 +49,7 @@ namespace AiRTech.Core.Subjects
         public string Img { get; }
         public ImageSource ImgProperty => ImageSource.FromResource(Img);
         public object Obj { get; private set; }
+        public Type SolverType { get; }
     }
 
     public class SubjectBase

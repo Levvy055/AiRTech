@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AiRTech.Core.Math;
 using AiRTech.Core.Subjects;
 using Xamarin.Forms;
 
@@ -15,8 +16,16 @@ namespace AiRTech.Views
         {
             Subject = subject;
             InitializeComponent();
+            InitSolver();
+        }
+
+        private void InitSolver()
+        {
+            Solver = Core.Math.Solver.GetSolverFor(Subject.SolverType);
+
         }
 
         public Subject Subject { get; set; }
+        public Solver Solver { get; private set; }
     }
 }
