@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
 namespace AiRTech.Core.Math.Solvers
 {
-    public class SignalTheoryBasicsSolver: Solver
+    public class SignalTheoryBasicsSolver : Solver
     {
-        public override TabbedPage GetView()
+        public override List<SolverView> GetTabs()
         {
-            var tp=new TabbedPage()
+            var list=new List<SolverView>
             {
-                Title = "Solver"
+                new SolverView(),
+                new SolverView(),
+                new SolverView()
             };
-            return tp;
+            return list;
         }
     }
+
 }

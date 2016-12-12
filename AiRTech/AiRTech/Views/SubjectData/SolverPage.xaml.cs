@@ -17,10 +17,12 @@ namespace AiRTech.Views.SubjectData
         private void InitSolver()
         {
             Solver = Subject.Base.Solver;
-            foreach (var page in Solver.GetView().Children)
+            var tabs = Solver.GetTabs();
+            foreach (var tab in tabs)
             {
-                Children.Add(page);
-            }
+            var page = new ContentPage() { Content = tab };
+            Children.Add(page);
+                }
         }
 
         public Subject Subject { get; set; }

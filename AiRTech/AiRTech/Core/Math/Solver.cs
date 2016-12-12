@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
 namespace AiRTech.Core.Math
@@ -10,7 +11,7 @@ namespace AiRTech.Core.Math
     public abstract class Solver
     {
 
-        public abstract TabbedPage GetView();
+        public abstract List<SolverView> GetTabs();
 
         public static Solver GetSolverFor(Type solverType)
         {
