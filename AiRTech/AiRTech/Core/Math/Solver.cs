@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AiRTech.Core.Subjects;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
@@ -11,15 +12,15 @@ namespace AiRTech.Core.Math
     public abstract class Solver
     {
 
-        public abstract List<SolverView> GetTabs();
+        public abstract Dictionary<string,SolverView> GetTabs();
 
-        public static Solver GetSolverFor(Type solverType)
+        public static Solver GetSolverFor(Type solverType, SubjectType subjectType)
         {
             if (ActiveSolvers.ContainsKey(solverType))
             {
                 return ActiveSolvers[solverType];
             }
-            var solver = (Solver)Activator.CreateInstance(solverType);
+            var solver = (Solver)Activator.CreateInstance(solverType, subjectType);
             ActiveSolvers.Add(solverType, solver);
             return solver;
         }

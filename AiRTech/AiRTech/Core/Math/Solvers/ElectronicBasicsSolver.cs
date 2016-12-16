@@ -10,11 +10,11 @@ namespace AiRTech.Core.Math.Solvers
 {
     public class ElectronicBasicsSolver : Solver
     {
-        public override List<SolverView> GetTabs()
+        public override Dictionary<string, SolverView> GetTabs()
         {
-            var list = new List<SolverView>
+            var list = new Dictionary<string, SolverView>
             {
-                new SolverView()
+                {"First", new SolverView()}
             };
             return list;
         }

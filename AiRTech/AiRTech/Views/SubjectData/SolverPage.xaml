@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage
+<viewComponents:ExtendedTabbedPage
     x:Class="AiRTech.Views.SubjectData.SolverPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" />
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewComponents="clr-namespace:AiRTech.Views.ViewComponents;assembly=AiRTech">
+    <TabbedPage.BarTextColor>
+        <Color Accent="Green" />
+    </TabbedPage.BarTextColor>
+</viewComponents:ExtendedTabbedPage>

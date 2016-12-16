@@ -4,8 +4,10 @@ namespace AiRTech.Core.Subjects
 {
     public abstract class SubjectBase
     {
-        protected SubjectBase()
+        private SubjectType _subjectType;
+        protected SubjectBase(SubjectType subjectType)
         {
+            _subjectType = subjectType;
             CreateDependencies();
         }
 

@@ -70,6 +70,7 @@
     <Compile Include="Views\SubjectData\SolverPage.xaml.cs">
       <DependentUpon>SolverPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewComponents\ExtendedTabbedPage.cs" />
     <Compile Include="Views\ViewComponents\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
