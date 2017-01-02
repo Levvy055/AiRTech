@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AiRTech.Core.Math.Solvers;
 using AiRTech.Core.Subjects;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
@@ -12,19 +13,43 @@ namespace AiRTech.Core.Math
     public abstract class Solver
     {
 
-        public abstract Dictionary<string,SolverView> GetTabs();
+        public abstract Dictionary<string, SolverView> GetTabs();
 
-        public static Solver GetSolverFor(Type solverType, SubjectType subjectType)
+        public static Solver GetSolverFor(SubjectType subjectType)
         {
-            if (ActiveSolvers.ContainsKey(solverType))
+            if (ActiveSolvers.ContainsKey(subjectType))
             {
-                return ActiveSolvers[solverType];
+                return ActiveSolvers[subjectType];
             }
-            var solver = (Solver)Activator.CreateInstance(solverType, subjectType);
-            ActiveSolvers.Add(solverType, solver);
+            var solver = (Solver)Activator.CreateInstance(GetSolverType(subjectType));
+            ActiveSolvers.Add(subjectType, solver);
             return solver;
         }
 
-        public static Dictionary<Type, Solver> ActiveSolvers { get; } = new Dictionary<Type, Solver>();
+        private static Type GetSolverType(SubjectType subjectType)
+        {
+            switch (subjectType)
+            {
+                case SubjectType.PODSTAWY_ELEKTRONIKI:
+                    return typeof(ElectronicBasicsSolver);
+                case SubjectType.PODSTAWY_TEORII_SYGNALOW:
+                    return typeof(SignalTheoryBasicsSolver);
+                case SubjectType.MECHANIKA:
+                    break;
+                case SubjectType.PODSTAWY_AUTOMATYKI:
+                    break;
+                case SubjectType.METODY_NUMERYCZNE:
+                    break;
+                case SubjectType.ANGIELSKI:
+                    break;
+                case SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(subjectType), subjectType, null);
+            }
+            return null;
+        }
+
+        public static Dictionary<SubjectType, Solver> ActiveSolvers { get; } = new Dictionary<SubjectType, Solver>();
     }
 }

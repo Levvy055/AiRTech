@@ -5,13 +5,13 @@ namespace AiRTech.Core.Subjects
 {
     public class SignalTheoryBasics : SubjectBase
     {
-        public SignalTheoryBasics(SubjectType subjectType) : base(subjectType)
+        public SignalTheoryBasics() : base(SubjectType.PODSTAWY_TEORII_SYGNALOW)
         {
         }
 
-        protected override void CreateDependencies()
+        protected override void UpdateDependencies()
         {
-            Solver = Solver.GetSolverFor(typeof(SignalTheoryBasicsSolver), SubjectType.PODSTAWY_TEORII_SYGNALOW);
+            Solver = Solver.GetSolverFor(SubjectType.PODSTAWY_TEORII_SYGNALOW);
         }
     }
 }

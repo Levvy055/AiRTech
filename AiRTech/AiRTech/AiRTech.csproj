@@ -43,6 +43,12 @@
     <Compile Include="Core\DataHandling\IDbHandler.cs" />
     <Compile Include="Core\DataHandling\IFileHandler.cs" />
     <Compile Include="Core\Math\Solver.cs" />
+    <Compile Include="Core\Math\Solvers\Components\SvButton.cs" />
+    <Compile Include="Core\Math\Solvers\Components\SvLabel.cs" />
+    <Compile Include="Core\Math\Solvers\Components\SvRow.cs" />
+    <Compile Include="Core\Math\Solvers\Components\SvTxtField.cs" />
+    <Compile Include="Core\Math\Solvers\Components\ViewComponent.cs" />
+    <Compile Include="Core\Math\Solvers\Components\ViewComponentType.cs" />
     <Compile Include="Core\Math\Solvers\ElectronicBasicsSolver.cs" />
     <Compile Include="Core\Math\Solvers\SignalTheoryBasicsSolver.cs" />
     <Compile Include="Core\Misc\ImageResourceExtension.cs" />
@@ -233,6 +239,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

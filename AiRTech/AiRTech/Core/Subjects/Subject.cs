@@ -37,7 +37,7 @@ namespace AiRTech.Core.Subjects
             Name = name;
             Details = "Przejdź";
             Img = img;
-            Base = (SubjectBase) Activator.CreateInstance(type, subjectType);
+            Base = (SubjectBase) Activator.CreateInstance(type);
         }
 
         public int Id { get; }

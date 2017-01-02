@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using AiRTech.Core.Math.Solvers.Components;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewComponents
@@ -12,7 +13,7 @@ namespace AiRTech.Views.ViewComponents
 
     public partial class SolverView : ContentView
     {
-        private View[,] _contento;
+        private ViewComponent[,] _contento;
         private Dictionary<View, Delegate> _listeners;
         public event ChangedEventHandler Changed;
 
@@ -20,6 +21,8 @@ namespace AiRTech.Views.ViewComponents
         {
             InitializeComponent();
             _listeners = new Dictionary<View, Delegate>();
+            MGrid.VerticalOptions = LayoutOptions.Start;
+            MGrid.HorizontalOptions = LayoutOptions.FillAndExpand;
         }
 
         protected virtual void OnChanged(EventArgs e)
@@ -27,33 +30,47 @@ namespace AiRTech.Views.ViewComponents
             Changed?.Invoke(this, e);
         }
 
-        public View[,] Contento
+        public ViewComponent[,] Contento
         {
             get { return _contento; }
             set
             {
                 if (value == null)
                 {
-                    return;
+                    throw new InvalidOperationException("Solver Content cannot be assigned to null!");
                 }
                 MGrid.Children.Clear();
                 _contento = value;
-                for (var x = 0; x < _contento.GetLength(0); x += 1)
+                for (var y = 0; y < _contento.GetLength(0); y++)
                 {
-                    MGrid.RowDefinitions.Add(new RowDefinition());
-                    for (var y = 0; y < _contento.GetLength(1); y += 1)
+                    MGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                    for (var x = 0; x < _contento.GetLength(1); x++)
                     {
-                        if (MGrid.ColumnDefinitions.Count <= y)
+                        if (MGrid.ColumnDefinitions.Count <= x)
                         {
                             MGrid.ColumnDefinitions.Add(new ColumnDefinition());
                         }
-                        var v = _contento[x, y];
-                        if (v == null) { continue; }
-                        MGrid.Children.Add(v);
-                        Grid.SetColumn(v, y);
-                        Grid.SetRow(v, x);
+                        var v = _contento[y, x];
+                        if (v != null)
+                        {
+                            AddToGrid(v, x, y);
+                        }
                     }
                 }
+                UpdateChildrenLayout();
+            }
+        }
+
+        private void AddToGrid(ViewComponent v, int x, int y)
+        {
+            var s = v.Source;
+            if (s != null)
+            {
+                MGrid.Children.Add(s, x, y);
+            }
+            else
+            {
+                throw new ArgumentNullException("Null solver component: "+v);
             }
         }
 

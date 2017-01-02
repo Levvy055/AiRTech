@@ -5,14 +5,15 @@ namespace AiRTech.Core.Subjects
 {
     public class ElectronicBasics : SubjectBase
     {
-        public ElectronicBasics() : base()
+        public ElectronicBasics() : base(SubjectType.PODSTAWY_ELEKTRONIKI)
         {
+
 
         }
 
-        protected override void CreateDependencies()
+        protected override void UpdateDependencies()
         {
-            Solver = Solver.GetSolverFor(typeof(ElectronicBasicsSolver));
+
         }
     }
 }

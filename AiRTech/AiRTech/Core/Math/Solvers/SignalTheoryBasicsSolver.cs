@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AiRTech.Core.Math.Solvers.Components;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
@@ -29,16 +30,17 @@ namespace AiRTech.Core.Math.Solvers
 
         private static SolverView DecibelsView => new SolverView
         {
-            Contento = new View[,] {
-                { null,new Entry {Placeholder = "k"}, new Entry {Placeholder = "P_o"},null },
-                { new Entry {Placeholder = "A"}, new Button {Text = "<-"}, new Button {Text = "->"}, new Entry {Placeholder = "P"} }
+            Contento = new ViewComponent[,]
+            {
+                {new SvRow(null, new SvTxtField("k"), new SvTxtField("P_o"), null)},
+                {new SvRow(new SvTxtField("A"), new SvButton("<-"), new SvButton("->"), new SvTxtField("P"))}
             }
         };
 
         private static SolverView HistogramView => new SolverView
         {
-            Contento = new View[,] {
-                { new Label {Text = "Row, Column count"},  new Entry {Placeholder = "k"} }
+            Contento = new ViewComponent[,] {
+                { new SvLabel("Row, Column count"),  new SvTxtField("k") }
             }
         };
     }

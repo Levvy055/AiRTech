@@ -8,10 +8,10 @@ namespace AiRTech.Core.Subjects
         protected SubjectBase(SubjectType subjectType)
         {
             _subjectType = subjectType;
-            CreateDependencies();
+            Solver = Solver.GetSolverFor(_subjectType);
         }
 
-        protected abstract void CreateDependencies();
+        protected abstract void UpdateDependencies();
 
         public Solver Solver { get; protected set; }
     }
