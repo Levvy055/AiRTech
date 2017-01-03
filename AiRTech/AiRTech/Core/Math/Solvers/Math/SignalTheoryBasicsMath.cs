@@ -58,7 +58,7 @@ namespace AiRTech.Core.Math.Solvers.Math
                 {
                     var v1 = h1[i, j];
                     var v2 = h2[i, j];
-                    var t = Tuple.Create(v1, v2);
+                    var t = Tuple.Create(v2, v1);
                     if (!d.ContainsKey(t))
                     {
                         d.Add(t, 1);

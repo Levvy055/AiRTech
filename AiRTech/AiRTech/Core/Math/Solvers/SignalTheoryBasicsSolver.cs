@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AiRTech.Core.Math.Solvers.Components;
 using AiRTech.Core.Math.Solvers.Math;
+using AiRTech.Views.Other;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
@@ -13,6 +14,9 @@ namespace AiRTech.Core.Math.Solvers
 {
     public class SignalTheoryBasicsSolver : Solver
     {
+        private SolverView _decView;
+        private SolverView _histView;
+
         public override Dictionary<string, SolverView> GetTabs()
         {
             var list = new Dictionary<string, SolverView>
@@ -98,7 +102,8 @@ namespace AiRTech.Core.Math.Solvers
                     throw new NullReferenceException("h_l or h_r not found!");
                 }
                 var r = SignalTheoryBasicsMath.GetHistResults(gl.Entries, gr.Entries);
-
+                var modal = new HistResultModal(r.ToList());
+                modal.Show();
             }
             catch (Exception e)
             {
@@ -110,14 +115,19 @@ namespace AiRTech.Core.Math.Solvers
         {
             get
             {
+                if (_decView != null)
+                {
+                    return _decView;
+                }
                 var tfK = new SvTxtField("db_k", Uc, "k");
                 var tfA = new SvTxtField("db_a", Uc, "A");
                 var tfP = new SvTxtField("db_p", Uc, "P");
                 var tfPo = new SvTxtField("db_po", Uc, "P_o");
-                return new SolverView
+                _decView = new SolverView
                 {
                     Contento = new ViewComponent[,]
-                    {   {new SvLabel("A = k*log_10(P/P_o)") },
+                    {
+                        {new SvLabel("A = k*log_10(P/P_o)")},
                         {
                             new SvRow(
                                 new SvLabel("k = "),
@@ -135,7 +145,9 @@ namespace AiRTech.Core.Math.Solvers
                                 new SvLabel(" = P"))
                         }
                     }
-                };
+                }
+                    ;
+                return _decView;
             }
         }
 
@@ -143,10 +155,14 @@ namespace AiRTech.Core.Math.Solvers
         {
             get
             {
+                if (_histView != null)
+                {
+                    return _histView;
+                }
                 var tfS = new SvTxtField("h_s", Uc, "Size");
                 var gl = new SvGrid("h_l", Uc);
                 var gr = new SvGrid("h_r", Uc);
-                return new SolverView
+                _histView = new SolverView
                 {
                     Contento = new ViewComponent[,]
                     {
@@ -154,6 +170,7 @@ namespace AiRTech.Core.Math.Solvers
                         {new SvRow(gl), new SvButton("Calc", OnHistCalc), new SvRow(gr) }
                     }
                 };
+                return _histView;
             }
         }
     }

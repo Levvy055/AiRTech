@@ -60,6 +60,7 @@
     <Compile Include="Core\Subjects\Subject.cs" />
     <Compile Include="Core\Subjects\SubjectBase.cs" />
     <Compile Include="Core\Subjects\SubjectType.cs" />
+    <Compile Include="Views\Other\HistResultModal.cs" />
     <Compile Include="Views\SubjectData\SDefinition.xaml.cs">
       <DependentUpon>SDefinition.xaml</DependentUpon>
     </Compile>
@@ -253,9 +254,7 @@
     <EmbeddedResource Include="Resources\circle_empty.png" />
     <EmbeddedResource Include="Resources\circle_green.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Other\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

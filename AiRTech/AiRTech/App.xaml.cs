@@ -63,6 +63,11 @@ namespace AiRTech
             mPage.IsPresented = false;
         }
 
+        public async void NavigateToModal(ContentPage detailPage)
+        {
+            await NavPage.PushAsync(detailPage);
+        }
+
         protected override void OnStart()
         {
             // Handle when your app starts
