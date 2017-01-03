@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AiRTech.Core.Math.Solvers.Components;
+using AiRTech.Core.Math.Solvers.Math;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
@@ -29,29 +30,75 @@ namespace AiRTech.Core.Math.Solvers
             return list;
         }
 
+        private Dictionary<string, ViewComponent> Uc { get; } = new Dictionary<string, ViewComponent>();
+
         private void OnConvertLeft(object source, EventArgs args)
         {
-            Debug.WriteLine("To Left Conv");
+            try
+            {
+                Debug.WriteLine("To Left Conv");
+                var r = SignalTheoryBasicsMath.CalcDb(Uc, true).ToString();
+                Uc["db_a"].GetSourceAs<Entry>().Text = r;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         private void OnConvertRight(object source, EventArgs args)
         {
-            Debug.WriteLine("To Right Conv");
+            try
+            {
+                Debug.WriteLine("To Right Conv");
+                var r = SignalTheoryBasicsMath.CalcDb(Uc, false).ToString();
+                Uc["db_p"].GetSourceAs<Entry>().Text = r;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
-        private SolverView DecibelsView => new SolverView
+
+
+        private SolverView DecibelsView
         {
-            Contento = new ViewComponent[,]
+            get
             {
-                { new SvRow(new SvLabel("k = "), new SvTxtField("k"), new SvTxtField("P_o"), new SvLabel(" = P_o")) },
-                { new SvRow(new SvLabel("A = "),new SvTxtField("A"), new SvButton("", OnConvertLeft, "arrow_left.png"), new SvButton("", OnConvertRight,"arrow_right.png"), new SvTxtField("P"), new SvLabel(" = P")) }
+                var tfK = new SvTxtField("db_k", Uc, "k");
+                var tfA = new SvTxtField("db_a", Uc, "A");
+                var tfP = new SvTxtField("db_p", Uc, "P");
+                var tfPo = new SvTxtField("db_po", Uc, "P_o");
+                return new SolverView
+                {
+                    Contento = new ViewComponent[,]
+                    {   {new SvLabel("A = k*log_10(P/P_o)") },
+                        {
+                            new SvRow(
+                                new SvLabel("k = "),
+                                tfK,
+                                tfPo,
+                                new SvLabel(" = P_o"))
+                        },
+                        {
+                            new SvRow(
+                                new SvLabel("A = "),
+                                tfA,
+                                new SvButton("", OnConvertLeft, "arrow_left.png"),
+                                new SvButton("", OnConvertRight, "arrow_right.png"),
+                                tfP,
+                                new SvLabel(" = P"))
+                        }
+                    }
+                };
             }
-        };
+        }
 
         private SolverView HistogramView => new SolverView
         {
             Contento = new ViewComponent[,] {
-                { new SvLabel("Row, Column count"),  new SvTxtField("k") }
+                { new SvLabel("Row, Column count"),  new SvTxtField("h_k",Uc,"k") }
             }
         };
     }

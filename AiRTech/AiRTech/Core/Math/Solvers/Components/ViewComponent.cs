@@ -25,5 +25,21 @@ namespace AiRTech.Core.Math.Solvers.Components
         public ViewComponentType CompType { get; private set; }
         public View Source { get; protected set; }
         public string Name { get; private set; }
+
+        public T GetSourceAs<T>()
+        {
+            if (Source == null)
+            {
+                throw new InvalidCastException("Source is null!");
+            }
+            try
+            {
+                return (T)Convert.ChangeType(Source, typeof(T));
+            }
+            catch (InvalidCastException)
+            {
+                return default(T);
+            }
+        }
     }
 }

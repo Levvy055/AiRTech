@@ -7,19 +7,20 @@ using Xamarin.Forms;
 
 namespace AiRTech.Core.Math.Solvers.Components
 {
-    public class SvTxtField: ViewComponent
+    public class SvTxtField : ViewComponent
     {
-
-        public SvTxtField(string placeholder) : base(ViewComponentType.TextField)
+        public SvTxtField(string name, IDictionary<string, ViewComponent> uc = null, string placeholder = null, string initValue = "") : base(ViewComponentType.TextField, name)
         {
-            var tf = new Entry { Placeholder = placeholder };
+            var tf = new Entry
+            {
+                Placeholder = placeholder,
+                Text = initValue,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                WidthRequest = 10
+            };
             Source = tf;
-        }
-
-        public SvTxtField(string placeholder, string initValue) : base(ViewComponentType.TextField)
-        {
-            var tf = new Entry {Placeholder = placeholder,Text = initValue};
-            Source = tf;
+            uc?.Add(name, this);
         }
     }
 }

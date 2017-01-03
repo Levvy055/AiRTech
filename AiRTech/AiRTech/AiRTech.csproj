@@ -51,6 +51,7 @@
     <Compile Include="Core\Math\Solvers\Components\ViewComponent.cs" />
     <Compile Include="Core\Math\Solvers\Components\ViewComponentType.cs" />
     <Compile Include="Core\Math\Solvers\ElectronicBasicsSolver.cs" />
+    <Compile Include="Core\Math\Solvers\Math\SignalTheoryBasicsMath.cs" />
     <Compile Include="Core\Math\Solvers\SignalTheoryBasicsSolver.cs" />
     <Compile Include="Core\Misc\ImageResourceExtension.cs" />
     <Compile Include="Core\Subjects\ElectronicBasics.cs" />
