@@ -11,11 +11,26 @@ namespace AiRTech.Core.Math.Solvers.Components
     {
         private ViewComponent[] _components;
 
-        public SvRow(params ViewComponent[] components) : base(ViewComponentType.Row)
+
+        public SvRow(params ViewComponent[] components) : this(null, components)
         {
-            Source = new Grid();
+        }
+
+        public SvRow(string title, params ViewComponent[] components) : base(ViewComponentType.Row)
+        {
+            var g = new Grid();
+            HasTitle = !string.IsNullOrWhiteSpace(title);
+            if (HasTitle)
+            {
+                g.RowDefinitions.Add(new RowDefinition());
+                g.RowDefinitions.Add(new RowDefinition());
+                g.Children.Add(new Label { Text = title }, 0, 0);
+            }
+            Source = g;
             Components = components;
         }
+
+        public bool HasTitle { get; }
 
         private Grid MGrid => Source as Grid;
 
@@ -25,22 +40,20 @@ namespace AiRTech.Core.Math.Solvers.Components
             {
                 return _components;
             }
-            set
+            private set
             {
                 if (value == null)
                 {
                     throw new ArgumentNullException("there was null on input for " + CompType);
                 }
                 _components = value;
-                MGrid.Children.Clear();
-                MGrid.ColumnDefinitions.Clear();
                 for (var i = _components.Length - 1; i >= 0; i--)
                 {
                     MGrid.ColumnDefinitions.Add(new ColumnDefinition());
                     var vc = _components[i];
-                    if (vc != null)
+                    if (vc?.Source != null)
                     {
-                        MGrid.Children.Add(vc.Source, i, 0);
+                        MGrid.Children.Add(vc.Source, i, HasTitle ? 1 : 0);
                     }
                 }
             }

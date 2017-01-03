@@ -3,6 +3,7 @@
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Refractored.MvvmHelpers": "1.1.0",
     "sqlite-net-pcl": "1.2.1",
+    "Xam.Plugins.Forms.ImageCircle": "1.8.0.5",
     "Xamarin.Forms": "2.3.3.175"
   },
   "frameworks": {

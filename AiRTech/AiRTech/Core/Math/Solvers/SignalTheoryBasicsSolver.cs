@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,16 +29,26 @@ namespace AiRTech.Core.Math.Solvers
             return list;
         }
 
-        private static SolverView DecibelsView => new SolverView
+        private void OnConvertLeft(object source, EventArgs args)
+        {
+            Debug.WriteLine("To Left Conv");
+        }
+
+        private void OnConvertRight(object source, EventArgs args)
+        {
+            Debug.WriteLine("To Right Conv");
+        }
+
+        private SolverView DecibelsView => new SolverView
         {
             Contento = new ViewComponent[,]
             {
-                {new SvRow(null, new SvTxtField("k"), new SvTxtField("P_o"), null)},
-                {new SvRow(new SvTxtField("A"), new SvButton("<-"), new SvButton("->"), new SvTxtField("P"))}
+                { new SvRow(new SvLabel("k = "), new SvTxtField("k"), new SvTxtField("P_o"), new SvLabel(" = P_o")) },
+                { new SvRow(new SvLabel("A = "),new SvTxtField("A"), new SvButton("", OnConvertLeft, "arrow_left.png"), new SvButton("", OnConvertRight,"arrow_right.png"), new SvTxtField("P"), new SvLabel(" = P")) }
             }
         };
 
-        private static SolverView HistogramView => new SolverView
+        private SolverView HistogramView => new SolverView
         {
             Contento = new ViewComponent[,] {
                 { new SvLabel("Row, Column count"),  new SvTxtField("k") }

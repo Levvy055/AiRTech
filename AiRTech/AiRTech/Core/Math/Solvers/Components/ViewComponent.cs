@@ -9,12 +9,21 @@ namespace AiRTech.Core.Math.Solvers.Components
 {
     public class ViewComponent
     {
-        protected ViewComponent(ViewComponentType compType)
+        private static int _id;
+
+        protected ViewComponent(ViewComponentType compType, string name = null)
         {
+            _id++;
             CompType = compType;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                name = _id.ToString();
+            }
+            Name = compType + "_" + name;
         }
 
         public ViewComponentType CompType { get; private set; }
         public View Source { get; protected set; }
+        public string Name { get; private set; }
     }
 }
