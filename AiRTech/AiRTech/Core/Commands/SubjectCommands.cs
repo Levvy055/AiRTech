@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using AiRTech.Core.Subjects;
 using AiRTech.Views;
-using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
 using SolverPage = AiRTech.Views.SubjectData.SolverPage;
 

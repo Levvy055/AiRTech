@@ -13,6 +13,6 @@ namespace AiRTech.Core.Subjects
 
         protected abstract void UpdateDependencies();
 
-        public Solver Solver { get; protected set; }
+        public Solver Solver { get; private set; }
     }
 }

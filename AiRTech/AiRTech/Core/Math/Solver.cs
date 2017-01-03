@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AiRTech.Core.Math.Solvers;
 using AiRTech.Core.Subjects;
 using AiRTech.Views.ViewComponents;
-using Xamarin.Forms;
 
 namespace AiRTech.Core.Math
 {
@@ -35,19 +31,18 @@ namespace AiRTech.Core.Math
                 case SubjectType.PODSTAWY_TEORII_SYGNALOW:
                     return typeof(SignalTheoryBasicsSolver);
                 case SubjectType.MECHANIKA:
-                    break;
+
                 case SubjectType.PODSTAWY_AUTOMATYKI:
-                    break;
+
                 case SubjectType.METODY_NUMERYCZNE:
-                    break;
+
                 case SubjectType.ANGIELSKI:
-                    break;
+
                 case SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI:
-                    break;
+                    return null;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(subjectType), subjectType, null);
             }
-            return null;
         }
 
         public static Dictionary<SubjectType, Solver> ActiveSolvers { get; } = new Dictionary<SubjectType, Solver>();

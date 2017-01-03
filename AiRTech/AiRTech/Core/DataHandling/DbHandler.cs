@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AiRTech.Core.SubjectData;
 using SQLite;
 using Xamarin.Forms;

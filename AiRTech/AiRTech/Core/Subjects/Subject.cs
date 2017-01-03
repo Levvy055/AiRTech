@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AiRTech.Core.Commands;
-using AiRTech.Core.Math.Solvers;
 using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects

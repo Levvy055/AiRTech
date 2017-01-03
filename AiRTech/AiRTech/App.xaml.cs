@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using AiRTech.Core.DataHandling;
 using AiRTech.Core.Web;
 using AiRTech.Views;

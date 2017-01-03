@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AiRTech.Core.Subjects;
+﻿using AiRTech.Core.Subjects;
 using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
 

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AiRTech.Views.ViewModels;
+﻿using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
 
 namespace AiRTech.Views

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AiRTech.Core.Math.Solvers.Components;
 using AiRTech.Core.Math.Solvers.Math;
 using AiRTech.Views.Other;
@@ -14,9 +12,12 @@ namespace AiRTech.Core.Math.Solvers
 {
     public class SignalTheoryBasicsSolver : Solver
     {
+        #region view Fields
         private SolverView _decView;
         private SolverView _histView;
+        #endregion
 
+        #region Main
         public override Dictionary<string, SolverView> GetTabs()
         {
             var list = new Dictionary<string, SolverView>
@@ -35,7 +36,9 @@ namespace AiRTech.Core.Math.Solvers
         }
 
         private Dictionary<string, ViewComponent> Uc { get; } = new Dictionary<string, ViewComponent>();
+        #endregion
 
+        #region Event Handlers
         private void OnConvertLeft(object source, EventArgs args)
         {
             try
@@ -110,7 +113,9 @@ namespace AiRTech.Core.Math.Solvers
                 Debug.WriteLine(e.Message);
             }
         }
+        #endregion
 
+        #region view Properties
         private SolverView DecibelsView
         {
             get
@@ -173,6 +178,6 @@ namespace AiRTech.Core.Math.Solvers
                 return _histView;
             }
         }
+        #endregion
     }
-
 }
