@@ -61,6 +61,50 @@ namespace AiRTech.Core.Math.Solvers
         }
 
 
+        private void OnCreateHist(object o, EventArgs eventArgs)
+        {
+            try
+            {
+                var sizeS = Uc["h_s"].GetSourceAs<Entry>().Text;
+                int size;
+                if (string.IsNullOrWhiteSpace(sizeS) || !int.TryParse(sizeS, out size))
+                {
+                    throw new ArgumentException("Not a number or empty!");
+                }
+                Debug.WriteLine("Size: " + size);
+                var gl = Uc["h_l"] as SvGrid;
+                var gr = Uc["h_r"] as SvGrid;
+                if (gl == null || gr == null)
+                {
+                    throw new NullReferenceException("h_l or h_r not found!");
+                }
+                gl.ResetGridToSqEntry(size);
+                gr.ResetGridToSqEntry(size);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
+        private void OnHistCalc(object o, EventArgs eventArgs)
+        {
+            try
+            {
+                var gl = Uc["h_l"] as SvGrid;
+                var gr = Uc["h_r"] as SvGrid;
+                if (gl == null || gr == null)
+                {
+                    throw new NullReferenceException("h_l or h_r not found!");
+                }
+                var r = SignalTheoryBasicsMath.GetHistResults(gl.Entries, gr.Entries);
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
 
         private SolverView DecibelsView
         {
@@ -95,12 +139,23 @@ namespace AiRTech.Core.Math.Solvers
             }
         }
 
-        private SolverView HistogramView => new SolverView
+        private SolverView HistogramView
         {
-            Contento = new ViewComponent[,] {
-                { new SvLabel("Row, Column count"),  new SvTxtField("h_k",Uc,"k") }
+            get
+            {
+                var tfS = new SvTxtField("h_s", Uc, "Size");
+                var gl = new SvGrid("h_l", Uc);
+                var gr = new SvGrid("h_r", Uc);
+                return new SolverView
+                {
+                    Contento = new ViewComponent[,]
+                    {
+                        {new SvLabel("Write Row & Column Count (max 20):"), tfS, new SvButton("Create table", OnCreateHist), },
+                        {new SvRow(gl), new SvButton("Calc", OnHistCalc), new SvRow(gr) }
+                    }
+                };
             }
-        };
+        }
     }
 
 }

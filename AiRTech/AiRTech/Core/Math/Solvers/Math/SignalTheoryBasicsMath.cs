@@ -11,6 +11,7 @@ namespace AiRTech.Core.Math.Solvers.Math
 {
     public static class SignalTheoryBasicsMath
     {
+        #region Decibels
         public static double CalcDb(Dictionary<string, ViewComponent> uc, bool inverted)
         {
             var kS = uc["db_k"].GetSourceAs<Entry>().Text;
@@ -18,10 +19,11 @@ namespace AiRTech.Core.Math.Solvers.Math
             var aS = uc["db_a"].GetSourceAs<Entry>().Text;
             var pS = uc["db_p"].GetSourceAs<Entry>().Text;
             int k, a, p, po;
-            if (int.TryParse(kS, out k) && (int.TryParse(aS, out a) || inverted)
-                && (int.TryParse(pS, out p) || !inverted) && int.TryParse(poS, out po))
+            if (int.TryParse(kS, out k)
+                && (int.TryParse(aS, out a) || inverted)
+                && (int.TryParse(pS, out p) || !inverted)
+                && int.TryParse(poS, out po))
             {
-                Debug.WriteLine("{" + $"k: {kS}, a: {aS}, p: {pS}, P_o: {poS}" + "}");
                 return CalcDb(a, p, k, po, inverted);
             }
             throw new ArgumentException("Wrong params: {" + $"k: {kS}, a: {aS}, p: {pS}, P_o: {poS}" + "}");
@@ -40,5 +42,58 @@ namespace AiRTech.Core.Math.Solvers.Math
             }
             return res;
         }
+        #endregion
+
+        #region Histogram
+        public static IOrderedEnumerable<KeyValuePair<Tuple<double, double>, double>> GetHistResults(Entry[,] e1, Entry[,] e2)
+        {
+            var h1 = GetNumbersFromEntries(e1);
+            var h2 = GetNumbersFromEntries(e2);
+            var sx = h1.GetLength(0);
+            var sy = h1.GetLength(1);
+            var d = new Dictionary<Tuple<double, double>, double>();
+            for (var i = 0; i < sx; i++)
+            {
+                for (var j = 0; j < sy; j++)
+                {
+                    var v1 = h1[i, j];
+                    var v2 = h2[i, j];
+                    var t = Tuple.Create(v1, v2);
+                    if (!d.ContainsKey(t))
+                    {
+                        d.Add(t, 1);
+                    }
+                    else
+                    {
+                        d[t]++;
+                    }
+                }
+            }
+            var en=d.OrderBy(pair => pair.Key.Item1).ThenBy(pair => pair.Key.Item2);
+            return en;
+        }
+
+        private static double[,] GetNumbersFromEntries(Entry[,] e)
+        {
+            var sx = e.GetLength(0);
+            var sy = e.GetLength(1);
+            var n = new double[sx, sy];
+            for (var i = 0; i < sx; i++)
+            {
+                for (var j = 0; j < sy; j++)
+                {
+                    var vs = e[i, j]?.Text;
+                    if (vs == null) { continue; }
+                    double v;
+                    if (double.TryParse(vs, out v))
+                    {
+                        n[i, j] = v;
+                    }
+                }
+            }
+            return n;
+        }
+
+        #endregion
     }
 }

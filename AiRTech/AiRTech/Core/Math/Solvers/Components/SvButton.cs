@@ -27,7 +27,7 @@ namespace AiRTech.Core.Math.Solvers.Components
                 VerticalOptions = LayoutOptions.Center,
                 Source = iS
             };
-            var b = new Button { Text = text };
+            var b = new Button { Text = text, TextColor = Color.White };
             if (_action != null)
             {
                 b.Clicked += OnAction;

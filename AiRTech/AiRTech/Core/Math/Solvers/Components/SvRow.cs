@@ -18,7 +18,11 @@ namespace AiRTech.Core.Math.Solvers.Components
 
         public SvRow(string title, params ViewComponent[] components) : base(ViewComponentType.Row)
         {
-            var g = new Grid();
+            var g = new Grid
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
             HasTitle = !string.IsNullOrWhiteSpace(title);
             if (HasTitle)
             {
