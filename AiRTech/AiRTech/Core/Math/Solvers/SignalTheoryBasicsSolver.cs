@@ -115,7 +115,7 @@ namespace AiRTech.Core.Math.Solvers
             }
         }
 
-        private void OnSaProbesCountChange(object sender, TextChangedEventArgs textChangedEventArgs)
+        private void OnSaProbesCountChanged(object sender, TextChangedEventArgs textChangedEventArgs)
         {
             try
             {
@@ -130,20 +130,52 @@ namespace AiRTech.Core.Math.Solvers
                 {
                     throw new ArgumentException(txt + " is not a valid integer number!");
                 }
-                var pg = Uc["sa_probes"].Source as Grid;
-                pg.Children.Clear();
+                if (count >= 16 || count <= 0)
+                {
+                    throw new ArgumentException("Not in range <1; 16>!");
+                }
+                var entries = new Entry[1, count];
                 for (var i = 0; i < count; i++)
                 {
-                    pg.Children.Add(new Entry(), i, 0);
-                    if (i >= 16)
-                    {
-                        throw new ArgumentException("Too large!");
-                    }
+                    var e = new Entry();
+                    e.TextChanged += OnSaProbesValueChanged;
+                    entries[0, i] = e;
                 }
+                var gr = Uc["sa_probes"] as SvGrid;
+                gr?.AddNewEntries(entries);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine(e.Message);
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void OnSaProbesValueChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                var grid = Uc["sa_probes"] as SvGrid;
+                var probes = grid.Entries;
+                var list = new List<double>(probes.Length);
+                foreach (var t in from Entry p in probes select p.Text)
+                {
+                    int v;
+                    if (string.IsNullOrWhiteSpace(t))
+                    {
+                        throw new ArgumentException("Empty input");
+                    }
+                    if (!int.TryParse(t, out v))
+                    {
+                        throw new ArgumentException($"Wrong input: {v}");
+                    }
+                    list.Add(v);
+                }
+                var d = new Dictionary<SignalTheoryBasicsMath.SignalDataType, Entry>();
+                SignalTheoryBasicsMath.AnalyzeSignal(list, ref d);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -217,7 +249,7 @@ namespace AiRTech.Core.Math.Solvers
                 var tfProbes = new SvTxtField("sa_probes_count", Uc, "(max 16)");
                 var tfp = tfProbes.GetSourceAs<Entry>();
                 tfp.WidthRequest = 10;
-                tfp.TextChanged += OnSaProbesCountChange;
+                tfp.TextChanged += OnSaProbesCountChanged;
                 var gridProbes = new SvGrid("sa_probes", Uc);
                 var gridResults = new SvGrid("sa_results", Uc);
                 _signalView = new SolverView(new ViewComponent[,]
@@ -225,7 +257,7 @@ namespace AiRTech.Core.Math.Solvers
                     {new SvRow(
                         new SvLabel("Ilość próbek sygnału"),
                         tfProbes)
-                    { ColumnsRatio = new []{ 2d, 10d } }  },
+                    { ColumnsRatio = new []{ 1d, 1d, 10d } }  },
                     {new SvRow(
                         new SvLabel("Próbki: "),
                         gridProbes)

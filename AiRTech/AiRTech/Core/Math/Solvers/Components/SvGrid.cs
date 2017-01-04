@@ -50,6 +50,20 @@ namespace AiRTech.Core.Math.Solvers.Components
             SetGridComponents(Entries, true);
         }
 
+        public void AddNewEntries(Entry[,] entries)
+        {
+            Entries = entries;
+            MGrid.Children.Clear();
+            for (var i = 0; i < entries.GetLength(0); i++)
+            {
+                for (var j = 0; j < entries.GetLength(1); j++)
+                {
+                    var e = Entries[i, j];
+                    MGrid.Children.Add(e, i, j);
+                }
+            }
+        }
+
         public Entry[,] Entries { get; private set; }
 
         public Grid MGrid => (Grid)Source;
