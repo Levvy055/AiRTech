@@ -9,7 +9,7 @@ namespace AiRTech.Core.Math.Solvers
         {
             var list = new Dictionary<string, SolverView>
             {
-                {"First", new SolverView()}
+                {"First", new SolverView(null)}
             };
             return list;
         }

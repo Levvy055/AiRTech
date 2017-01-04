@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using AiRTech.Core.Math.Solvers.Components;
 using Xamarin.Forms;
 
@@ -11,14 +12,16 @@ namespace AiRTech.Views.ViewComponents
     {
         private ViewComponent[,] _contento;
         private Dictionary<View, Delegate> _listeners;
+        private double[] _rowsRatio;
         public event ChangedEventHandler Changed;
 
-        public SolverView()
+        public SolverView(ViewComponent[,] contents)
         {
             InitializeComponent();
             _listeners = new Dictionary<View, Delegate>();
             MGrid.VerticalOptions = LayoutOptions.Start;
             MGrid.HorizontalOptions = LayoutOptions.FillAndExpand;
+            Contento = contents;
         }
 
         protected virtual void OnChanged(EventArgs e)
@@ -26,17 +29,37 @@ namespace AiRTech.Views.ViewComponents
             Changed?.Invoke(this, e);
         }
 
+        private void AddToGrid(ViewComponent v, int x, int y)
+        {
+            var s = v.Source;
+            if (s != null)
+            {
+                MGrid.Children.Add(s, x, y);
+            }
+            else
+            {
+                throw new ArgumentNullException("Null solver component: " + v);
+            }
+        }
+
         public ViewComponent[,] Contento
         {
             get { return _contento; }
-            set
+            private set
             {
+                MGrid.Children.Clear();
                 if (value == null)
                 {
-                    throw new InvalidOperationException("Solver Content cannot be assigned to null!");
+                    Debug.WriteLine("Solver Content cannot be assigned to null!");
+                    _contento = new ViewComponent[,]
+                    {
+                        {new SvLabel("Not yet implemented!")}
+                    };
                 }
-                MGrid.Children.Clear();
-                _contento = value;
+                else
+                {
+                    _contento = value;
+                }
                 for (var y = 0; y < _contento.GetLength(0); y++)
                 {
                     MGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
@@ -57,16 +80,17 @@ namespace AiRTech.Views.ViewComponents
             }
         }
 
-        private void AddToGrid(ViewComponent v, int x, int y)
+        public double[] RowsRatio
         {
-            var s = v.Source;
-            if (s != null)
+            get { return _rowsRatio; }
+            set
             {
-                MGrid.Children.Add(s, x, y);
-            }
-            else
-            {
-                throw new ArgumentNullException("Null solver component: "+v);
+                _rowsRatio = value;
+                for (var i = 0; i < MGrid.RowDefinitions.Count; i++)
+                {
+                    var c = MGrid.RowDefinitions[i];
+                    c.Height = i < _rowsRatio.Length ? new GridLength(_rowsRatio[i], GridUnitType.Star) : GridLength.Auto;
+                }
             }
         }
 

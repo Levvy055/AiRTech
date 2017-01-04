@@ -15,6 +15,7 @@ namespace AiRTech.Core.Math.Solvers
         #region view Fields
         private SolverView _decView;
         private SolverView _histView;
+        private SolverView _signalView;
         #endregion
 
         #region Main
@@ -24,13 +25,13 @@ namespace AiRTech.Core.Math.Solvers
             {
                 {"Decibels", DecibelsView},
                 {"Histogram", HistogramView},
-                {"Signal Analysis", new SolverView()},
-                {"Harmoniczne", new SolverView()},
-                {"DFT", new SolverView()},
-                {"FFT", new SolverView()},
-                {"A-law", new SolverView()},
-                {"M-law", new SolverView()},
-                {"Graphs", new SolverView()}
+                {"Signal Analysis", SignalView},
+                {"Harmoniczne", new SolverView(null)},
+                {"DFT", new SolverView(null)},
+                {"FFT", new SolverView(null)},
+                {"A-law", new SolverView(null)},
+                {"M-law", new SolverView(null)},
+                {"Graphs", new SolverView(null)}
             };
             return list;
         }
@@ -113,6 +114,39 @@ namespace AiRTech.Core.Math.Solvers
                 Debug.WriteLine(e.Message);
             }
         }
+
+        private void OnSaProbesCountChange(object sender, TextChangedEventArgs textChangedEventArgs)
+        {
+            try
+            {
+                var tf = sender as Entry;
+                if (tf == null)
+                {
+                    throw new ArgumentException("Sender is null or not Entry type!");
+                }
+                var txt = tf.Text;
+                int count;
+                if (string.IsNullOrWhiteSpace(txt) || !int.TryParse(txt, out count))
+                {
+                    throw new ArgumentException(txt + " is not a valid integer number!");
+                }
+                var pg = Uc["sa_probes"].Source as Grid;
+                pg.Children.Clear();
+                for (var i = 0; i < count; i++)
+                {
+                    pg.Children.Add(new Entry(), i, 0);
+                    if (i >= 16)
+                    {
+                        throw new ArgumentException("Too large!");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
         #endregion
 
         #region view Properties
@@ -128,9 +162,7 @@ namespace AiRTech.Core.Math.Solvers
                 var tfA = new SvTxtField("db_a", Uc, "A");
                 var tfP = new SvTxtField("db_p", Uc, "P");
                 var tfPo = new SvTxtField("db_po", Uc, "P_o");
-                _decView = new SolverView
-                {
-                    Contento = new ViewComponent[,]
+                _decView = new SolverView(new ViewComponent[,]
                     {
                         {new SvLabel("A = k*log_10(P/P_o)")},
                         {
@@ -149,9 +181,7 @@ namespace AiRTech.Core.Math.Solvers
                                 tfP,
                                 new SvLabel(" = P"))
                         }
-                    }
-                }
-                    ;
+                    });
                 return _decView;
             }
         }
@@ -167,17 +197,46 @@ namespace AiRTech.Core.Math.Solvers
                 var tfS = new SvTxtField("h_s", Uc, "Size");
                 var gl = new SvGrid("h_l", Uc);
                 var gr = new SvGrid("h_r", Uc);
-                _histView = new SolverView
-                {
-                    Contento = new ViewComponent[,]
+                _histView = new SolverView(new ViewComponent[,]
                     {
                         {new SvLabel("Write Row & Column Count (max 20):"), tfS, new SvButton("Create table", OnCreateHist), },
                         {new SvRow(gl), new SvButton("Calc", OnHistCalc), new SvRow(gr) }
-                    }
-                };
+                    });
                 return _histView;
             }
         }
+
+        public SolverView SignalView
+        {
+            get
+            {
+                if (_signalView != null)
+                {
+                    return _signalView;
+                }
+                var tfProbes = new SvTxtField("sa_probes_count", Uc, "(max 16)");
+                var tfp = tfProbes.GetSourceAs<Entry>();
+                tfp.WidthRequest = 10;
+                tfp.TextChanged += OnSaProbesCountChange;
+                var gridProbes = new SvGrid("sa_probes", Uc);
+                var gridResults = new SvGrid("sa_results", Uc);
+                _signalView = new SolverView(new ViewComponent[,]
+                {
+                    {new SvRow(
+                        new SvLabel("Ilość próbek sygnału"),
+                        tfProbes)
+                    { ColumnsRatio = new []{ 2d, 10d } }  },
+                    {new SvRow(
+                        new SvLabel("Próbki: "),
+                        gridProbes)
+                    { ColumnsRatio = new []{ 2d, 10d } }  },
+                    {new SvRow(
+                        gridResults)}
+                });
+                return _signalView;
+            }
+        }
+
         #endregion
     }
 }

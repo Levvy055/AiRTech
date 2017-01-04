@@ -6,7 +6,7 @@ namespace AiRTech.Core.Math.Solvers.Components
     public class SvRow : ViewComponent
     {
         private ViewComponent[] _components;
-
+        private double[] _columnsRatio;
 
         public SvRow(params ViewComponent[] components) : this(null, components)
         {
@@ -47,7 +47,7 @@ namespace AiRTech.Core.Math.Solvers.Components
                     throw new ArgumentNullException("there was null on input for " + CompType);
                 }
                 _components = value;
-                for (var i = _components.Length - 1; i >= 0; i--)
+                for (var i = 0; i < _components.Length; i++)
                 {
                     MGrid.ColumnDefinitions.Add(new ColumnDefinition());
                     var vc = _components[i];
@@ -55,6 +55,20 @@ namespace AiRTech.Core.Math.Solvers.Components
                     {
                         MGrid.Children.Add(vc.Source, i, HasTitle ? 1 : 0);
                     }
+                }
+            }
+        }
+
+        public double[] ColumnsRatio
+        {
+            get { return _columnsRatio; }
+            set
+            {
+                _columnsRatio = value;
+                for (var i = 0; i < MGrid.ColumnDefinitions.Count; i++)
+                {
+                    var c = MGrid.ColumnDefinitions[i];
+                    c.Width = i < _columnsRatio.Length ? new GridLength(_columnsRatio[i], GridUnitType.Star) : GridLength.Auto;
                 }
             }
         }
