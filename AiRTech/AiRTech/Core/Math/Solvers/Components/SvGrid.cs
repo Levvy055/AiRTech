@@ -39,25 +39,29 @@ namespace AiRTech.Core.Math.Solvers.Components
 
         public void ResetGridToSqEntry(int size)
         {
-            Entries = new Entry[size, size];
+            Components = new Entry[size, size];
             for (var i = 0; i < size; i++)
             {
                 for (var j = 0; j < size; j++)
                 {
-                    Entries[i, j] = new Entry { Text = "0" };
+                    Components[i, j] = new Entry { Text = "0" };
                 }
             }
-            SetGridComponents(Entries, true);
+            SetGridComponents(Components, true);
         }
 
-        public void AddNewComponents(Entry[,] entries, bool vertical = false)
+        public void AddNewComponents(View[,] comps, bool replaceOld=true, bool vertical = false)
         {
-            Entries = entries;
-            for (var i = 0; i < entries.GetLength(0); i++)
+            if (replaceOld)
             {
-                for (var j = 0; j < entries.GetLength(1); j++)
+                MGrid.Children.Clear();
+            }
+            Components = comps;
+            for (var i = 0; i < comps.GetLength(0); i++)
+            {
+                for (var j = 0; j < comps.GetLength(1); j++)
                 {
-                    var e = Entries[i, j];
+                    var e = Components[i, j];
                     if (e == null)
                     {
                         continue;
@@ -73,8 +77,8 @@ namespace AiRTech.Core.Math.Solvers.Components
                 }
             }
         }
-        
-        public Entry[,] Entries { get; private set; }
+
+        public View[,] Components { get; private set; }
 
         public Grid MGrid => (Grid)Source;
     }

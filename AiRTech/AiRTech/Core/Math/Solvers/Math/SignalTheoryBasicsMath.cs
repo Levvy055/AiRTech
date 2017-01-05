@@ -42,7 +42,7 @@ namespace AiRTech.Core.Math.Solvers.Math
         #endregion
 
         #region Histogram
-        public static IOrderedEnumerable<KeyValuePair<Tuple<double, double>, double>> GetHistResults(Entry[,] e1, Entry[,] e2)
+        public static IOrderedEnumerable<KeyValuePair<Tuple<double, double>, double>> GetHistResults(View[,] e1, View[,] e2)
         {
             var h1 = GetNumbersFromEntries(e1);
             var h2 = GetNumbersFromEntries(e2);
@@ -70,16 +70,17 @@ namespace AiRTech.Core.Math.Solvers.Math
             return en;
         }
 
-        private static double[,] GetNumbersFromEntries(Entry[,] e)
+        private static double[,] GetNumbersFromEntries(View[,] es)
         {
-            var sx = e.GetLength(0);
-            var sy = e.GetLength(1);
+            var sx = es.GetLength(0);
+            var sy = es.GetLength(1);
             var n = new double[sx, sy];
             for (var i = 0; i < sx; i++)
             {
                 for (var j = 0; j < sy; j++)
                 {
-                    var vs = e[i, j]?.Text;
+                    var e = es[i, j] as Entry;
+                    var vs = e?.Text;
                     if (vs == null) { continue; }
                     double v;
                     if (double.TryParse(vs, out v))

@@ -105,7 +105,7 @@ namespace AiRTech.Core.Math.Solvers
                 {
                     throw new NullReferenceException("h_l or h_r not found!");
                 }
-                var r = SignalTheoryBasicsMath.GetHistResults(gl.Entries, gr.Entries);
+                var r = SignalTheoryBasicsMath.GetHistResults(gl.Components, gr.Components);
                 var modal = new HistResultModal(r.ToList());
                 modal.Show();
             }
@@ -155,7 +155,7 @@ namespace AiRTech.Core.Math.Solvers
             try
             {
                 var grid = Uc["sa_probes"] as SvGrid;
-                var probes = grid.Entries;
+                var probes = grid.Components;
                 var list = new List<double>(probes.Length);
                 foreach (var t in from Entry p in probes select p.Text)
                 {
@@ -172,10 +172,11 @@ namespace AiRTech.Core.Math.Solvers
                 }
                 var d = new Dictionary<SignalTheoryBasicsMath.SignalDataType, Entry>();
                 var rg = Uc["sa_results"] as SvGrid;
-                foreach (var entry in rg.Entries)
+                foreach (var v in rg.Components)
                 {
+                    var entry = v as Entry;
                     SignalTheoryBasicsMath.SignalDataType type;
-                    if (Enum.TryParse(entry.Placeholder, true, out type))
+                    if (Enum.TryParse(entry?.Placeholder, true, out type))
                     {
                         d.Add(type, entry);
                     }
@@ -261,21 +262,21 @@ namespace AiRTech.Core.Math.Solvers
                 tfp.TextChanged += OnSaProbesCountChanged;
                 var gridProbes = new SvGrid("sa_probes", Uc);
                 var gridResults = new SvGrid("sa_results", Uc);
-                var entries = new[,]{
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.DIRECT_CURRENT.ToString(),InputTransparent = true} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ALTERNATE_CURRENT.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_ALL.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_Xi.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_DC.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_AC.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.POWER_AVG.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.POWER_DC.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.POWER_AC.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.RMS.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.BIAS_STD.ToString()} },
-                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.BIAS_AVG.ToString()} },
+                var entries = new View[,]{
+                    {new Label {Text = "Wartosc srednia sygnalu X_i = u = X_DC ="}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.DIRECT_CURRENT.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Skladowa przemienna AC X_AC = "}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ALTERNATE_CURRENT.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Energia calkowita E_c = "}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_ALL.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Energia probek"}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_Xi.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Energia DC"}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_DC.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Energia AC"}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_AC.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Moc srednia P_avg = "}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.POWER_AVG.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Moc DC P_DC = "}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.POWER_DC.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Moc AC P_AC = "}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.POWER_AC.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Wartosc skuteczna RMS X_RMS = "}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.RMS.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Odchylenie standardowe"}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.BIAS_STD.ToString(),InputTransparent = true} },
+                    {new Label {Text = "Odchylenie srednie"}, new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.BIAS_AVG.ToString(),InputTransparent = true} },
                 };
-                gridResults.AddNewComponents(entries, true);
+                gridResults.AddNewComponents(entries, true, true);
                 _signalView = new SolverView(new ViewComponent[,]
                 {
                     {new SvRow(
