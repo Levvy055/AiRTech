@@ -275,7 +275,7 @@ namespace AiRTech.Core.Math.Solvers.Math
                 for (var i = 0; i < vs.Values.Length; i++)
                 {
                     var v = vs.Values[i];
-                    s += v + (i - 1 != vs.Values.Length ? "; " : "]");
+                    s += v + (i + 1 != vs.Values.Length ? "; " : "]");
                 }
                 return s;
             }

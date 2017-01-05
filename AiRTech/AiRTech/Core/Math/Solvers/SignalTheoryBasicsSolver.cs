@@ -130,19 +130,19 @@ namespace AiRTech.Core.Math.Solvers
                 {
                     throw new ArgumentException(txt + " is not a valid integer number!");
                 }
-                if (count >= 16 || count <= 0)
+                if (count > 16 || count <= 0)
                 {
                     throw new ArgumentException("Not in range <1; 16>!");
                 }
-                var entries = new Entry[1, count];
+                var entries = new Entry[count, 1];
                 for (var i = 0; i < count; i++)
                 {
                     var e = new Entry();
                     e.TextChanged += OnSaProbesValueChanged;
-                    entries[0, i] = e;
+                    entries[i, 0] = e;
                 }
                 var gr = Uc["sa_probes"] as SvGrid;
-                gr?.AddNewEntries(entries);
+                gr?.AddNewComponents(entries);
             }
             catch (Exception ex)
             {
@@ -171,6 +171,15 @@ namespace AiRTech.Core.Math.Solvers
                     list.Add(v);
                 }
                 var d = new Dictionary<SignalTheoryBasicsMath.SignalDataType, Entry>();
+                var rg = Uc["sa_results"] as SvGrid;
+                foreach (var entry in rg.Entries)
+                {
+                    SignalTheoryBasicsMath.SignalDataType type;
+                    if (Enum.TryParse(entry.Placeholder, true, out type))
+                    {
+                        d.Add(type, entry);
+                    }
+                }
                 SignalTheoryBasicsMath.AnalyzeSignal(list, ref d);
             }
             catch (Exception ex)
@@ -252,6 +261,21 @@ namespace AiRTech.Core.Math.Solvers
                 tfp.TextChanged += OnSaProbesCountChanged;
                 var gridProbes = new SvGrid("sa_probes", Uc);
                 var gridResults = new SvGrid("sa_results", Uc);
+                var entries = new[,]{
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.DIRECT_CURRENT.ToString(),InputTransparent = true} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ALTERNATE_CURRENT.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_ALL.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_Xi.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_DC.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.ENERGY_AC.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.POWER_AVG.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.POWER_DC.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.POWER_AC.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.RMS.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.BIAS_STD.ToString()} },
+                    {new Entry {Placeholder = SignalTheoryBasicsMath.SignalDataType.BIAS_AVG.ToString()} },
+                };
+                gridResults.AddNewComponents(entries, true);
                 _signalView = new SolverView(new ViewComponent[,]
                 {
                     {new SvRow(
@@ -264,7 +288,8 @@ namespace AiRTech.Core.Math.Solvers
                     { ColumnsRatio = new []{ 2d, 10d } }  },
                     {new SvRow(
                         gridResults)}
-                });
+                })
+                { RowsRatio = new[] { 1d, 1d, 10d } };
                 return _signalView;
             }
         }
