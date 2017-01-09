@@ -18,5 +18,19 @@ namespace AiRTech.Core.Math.Solvers.Components
             Source = tf;
             uc?.Add(name, this);
         }
+
+        public string Text
+        {
+            get
+            {
+                var tf = Source as Entry;
+                return tf.Text;
+            }
+            set
+            {
+                var tf = Source as Entry;
+                tf.Text=value;
+            }
+        }
     }
 }

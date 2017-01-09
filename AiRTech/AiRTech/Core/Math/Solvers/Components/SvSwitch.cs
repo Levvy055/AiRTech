@@ -11,7 +11,7 @@ namespace AiRTech.Core.Math.Solvers.Components
     {
         private readonly Switch _switch;
 
-        public SvSwitch(string name, IDictionary<string, ViewComponent> uc = null, string txt = null, Action<object, EventArgs> action = null, bool initValue = false, bool editable=true) : base(ViewComponentType.Switch, name)
+        public SvSwitch(string name, IDictionary<string, ViewComponent> uc = null, string txt = null, Action<object, EventArgs> action = null, bool initValue = false, bool editable = true) : base(ViewComponentType.Switch, name)
         {
             var lbl = new Label
             {
@@ -36,6 +36,16 @@ namespace AiRTech.Core.Math.Solvers.Components
             uc?.Add(name, this);
         }
 
-        public bool Selected => _switch.IsToggled;
+        public bool Selected
+        {
+            get
+            {
+                return _switch.IsToggled;
+            }
+            set
+            {
+                _switch.IsToggled = value;
+            }
+        }
     }
 }

@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.Windows.Input;
 using AiRTech.Core.Subjects;
 using AiRTech.Views;
+using AiRTech.Views.SubjectData;
 using Xamarin.Forms;
-using SolverPage = AiRTech.Views.SubjectData.SolverPage;
 
 namespace AiRTech.Core.Commands
 {

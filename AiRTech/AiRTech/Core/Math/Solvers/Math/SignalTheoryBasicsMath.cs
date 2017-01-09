@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AiRTech.Core.Math.Solvers.Components;
+using AiRTech.Core.Math.Solvers.Math.Utils;
 using Xamarin.Forms;
 
 namespace AiRTech.Core.Math.Solvers.Math
@@ -285,6 +286,40 @@ namespace AiRTech.Core.Math.Solvers.Math
             private int N => Samples.Count;
             private Dictionary<SignalDataType, SignalData> Outputs { get; }
         }
+        #endregion
+
+        #region Signal in Signal
+        public static bool SisFrom(string vs, string ws, bool vToW, out bool ortogonal, out bool ortonormal, out double p, out SimpleVector<double> pV, out double ev, out double ew)
+        {
+            SimpleVector<double> v1, w1;
+            if (VectorUtils.TryParseToVector(vs.Trim(), out v1) && VectorUtils.TryParseToVector(ws.Trim(), out w1) && v1.Size == w1.Size)
+            {
+                ev = v1.Sum(vl => System.Math.Pow(vl, 2));
+                ew = w1.Sum(wl => System.Math.Pow(wl, 2));
+                var v = vToW ? v1 : w1;
+                var w = !vToW ? v1 : w1;
+                var vMw = System.Math.Abs(v * w);
+                var vMv = System.Math.Abs(v * v);
+                ortogonal = vMw < 0;
+                ortonormal = ortogonal && (System.Math.Abs(vMv - 1) < 0 && System.Math.Abs(w * w - 1) < 0);
+                p = vMw / vMv;
+                p *= 100;
+                p = System.Math.Round(p, 2);
+                p /= 100;
+                pV = p * v;
+                pV.Round(2);
+                return true;
+            }
+            p = 0;
+            pV = null;
+            ev = 0;
+            ew = 0;
+            ortogonal = false;
+            ortonormal = false;
+            return false;
+        }
+
+
         #endregion
     }
 }

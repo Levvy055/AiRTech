@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using AiRTech.Core.DataHandling;
+using AiRTech.Core.Subjects;
 using AiRTech.Core.Web;
 using AiRTech.Views;
+using AiRTech.Views.SubjectData;
 using Xamarin.Forms;
 
 namespace AiRTech
@@ -25,14 +27,20 @@ namespace AiRTech
                 DependencyService.Get<IFileHandler>().Init();
                 Database = new DbHandler();
                 Web = new WebCore(Database);
+#if DEBUG
+                ChangePageTo(typeof(SubjectsPage), "Przedmioty", false);
+                var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
+                //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
+                //np?.NavigateTo(3);
+#endif
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
         }
-
-        public WebCore Web { get; set; }
 
         public async void ChangePageTo(Type page, string title, bool inner = true, params object[] args)
         {
@@ -110,5 +118,6 @@ namespace AiRTech
 
         private Dictionary<Type, Page> CreatedPages { get; } = new Dictionary<Type, Page>();
         private NavigationPage NavPage { get; set; }
+        public WebCore Web { get; set; }
     }
 }

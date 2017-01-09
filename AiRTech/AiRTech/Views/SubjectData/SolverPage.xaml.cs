@@ -22,7 +22,15 @@ namespace AiRTech.Views.SubjectData
         {
             Solver = Subject.Base.Solver;
             var tabs = Solver.GetTabs();
-            if (tabs == null || tabs.Count == 0)
+            if (tabs != null && tabs.Count != 0)
+            {
+                foreach (var tab in tabs)
+                {
+                    var page = new ContentPage { Content = tab.Value, Title = tab.Key };
+                    Children.Add(page);
+                }
+            }
+            else
             {
                 Children.Add(new ContentPage
                 {
@@ -33,13 +41,13 @@ namespace AiRTech.Views.SubjectData
                     }
                 });
             }
-            else
+        }
+
+        public void NavigateTo(int i)
+        {
+            if (Children.Count < i)
             {
-                foreach (var tab in tabs)
-                {
-                    var page = new ContentPage { Content = tab.Value, Title = tab.Key };
-                    Children.Add(page);
-                }
+                CurrentPage = Children[i];
             }
         }
 

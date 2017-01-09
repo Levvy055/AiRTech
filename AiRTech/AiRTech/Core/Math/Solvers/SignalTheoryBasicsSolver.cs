@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using AiRTech.Core.Math.Solvers.Components;
 using AiRTech.Core.Math.Solvers.Math;
+using AiRTech.Core.Math.Solvers.Math.Utils;
 using AiRTech.Views.Other;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
@@ -190,9 +191,28 @@ namespace AiRTech.Core.Math.Solvers
             }
         }
 
-        private void OnSiSVectorsChanged(object sender, TextChangedEventArgs e)
+        private void OnSiSVectorsChanged(object sender, EventArgs e)
         {
-
+            var tfV = Uc["sis_v"] as SvTField;
+            var tfW = Uc["sis_w"] as SvTField;
+            var vToW = ((SvButton)Uc["sis_btn_wv"]).IsEnabled;
+            bool og, on;
+            SimpleVector<double> pV;
+            double p, ev, ew;
+            var rd = SignalTheoryBasicsMath.SisFrom(tfV.Text, tfW.Text, vToW, out og, out on, out p, out pV, out ev, out ew);
+            if (!rd) { return; }
+            var tfog = Uc["sis_ortog"] as SvSwitch;
+            var tfon = Uc["sis_orton"] as SvSwitch;
+            var tfp = Uc["sis_p"] as SvTField;
+            var tfP = Uc["sis_P"] as SvTField;
+            var tfev = Uc["sis_ev"] as SvTField;
+            var tfew = Uc["sis_ew"] as SvTField;
+            tfog.Selected = og;
+            tfon.Selected = on;
+            tfp.Text = p.ToString();
+            tfP.Text = pV.ToString();
+            tfev.Text = ev.ToString();
+            tfew.Text = ew.ToString();
         }
 
         private void OnSiSOrientationChanged(object sender, EventArgs e)
@@ -209,6 +229,7 @@ namespace AiRTech.Core.Math.Solvers
             {
                 bvw.IsEnabled = true;
             }
+            OnSiSVectorsChanged(btn, e);
         }
         #endregion
 
@@ -322,25 +343,24 @@ namespace AiRTech.Core.Math.Solvers
             {
                 var tfv = new SvTField("sis_v", Uc, "V vector");
                 var tfvp = tfv.GetSourceAs<Entry>();
-                //tfvp.WidthRequest = 10;
                 tfvp.TextChanged += OnSiSVectorsChanged;
                 var tfw = new SvTField("sis_w", Uc, "W vector");
                 var tfwp = tfv.GetSourceAs<Entry>();
-                //tfwp.WidthRequest = 10;
                 tfwp.TextChanged += OnSiSVectorsChanged;
                 var contents = new ViewComponent[,]
                 {
                     { tfv, tfw },
                     { new SvButton("sis_btn_vw", "V in W", OnSiSOrientationChanged, null, Uc), new SvButton("sis_btn_wv", "W in V", OnSiSOrientationChanged, null, Uc) {IsEnabled = false} },
                     { new SvSwitch("sis_ortog", Uc, "Is Ortogonal", null, false, false), new SvSwitch("sis_orton", Uc, "Is Ortonormal", null, false, false) },
+                    { new SvLabel("p = "), new SvLabel("P = ") },
                     { new SvTField("sis_p", Uc, "p"), new SvTField("sis_P", Uc, "P") },
+                    { new SvLabel("E_V = "), new SvLabel("E_W = ") },
                     { new SvTField("sis_ev", Uc, "E_V"), new SvTField("sis_ew", Uc, "E_W") }
                 };
                 var slvs = new SolverView(contents);
                 return slvs;
             }
         }
-
         #endregion
     }
 }
