@@ -25,8 +25,9 @@ namespace AiRTech.Core.Math.Solvers
             {
                 {"Decibels", DecibelsView},
                 {"Histogram", HistogramView},
-                {"Signal Analysis", SignalView},
-                {"Harmoniczne", new SolverView(null)},
+                {"Signal Analysis", SignalAnalysisView},
+                {"Signal in Signal", SignalInSignalView },
+                {"Harmonics", new SolverView(null)},
                 {"DFT", new SolverView(null)},
                 {"FFT", new SolverView(null)},
                 {"A-law", new SolverView(null)},
@@ -189,6 +190,26 @@ namespace AiRTech.Core.Math.Solvers
             }
         }
 
+        private void OnSiSVectorsChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void OnSiSOrientationChanged(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            btn.IsEnabled = false;
+            var bvw = (SvButton)Uc["sis_btn_vw"];
+            var bwv = (SvButton)Uc["sis_btn_wv"];
+            if (btn == bvw.Button)
+            {
+                bwv.IsEnabled = true;
+            }
+            else
+            {
+                bvw.IsEnabled = true;
+            }
+        }
         #endregion
 
         #region view Properties
@@ -200,10 +221,10 @@ namespace AiRTech.Core.Math.Solvers
                 {
                     return _decView;
                 }
-                var tfK = new SvTxtField("db_k", Uc, "k");
-                var tfA = new SvTxtField("db_a", Uc, "A");
-                var tfP = new SvTxtField("db_p", Uc, "P");
-                var tfPo = new SvTxtField("db_po", Uc, "P_o");
+                var tfK = new SvTField("db_k", Uc, "k");
+                var tfA = new SvTField("db_a", Uc, "A");
+                var tfP = new SvTField("db_p", Uc, "P");
+                var tfPo = new SvTField("db_po", Uc, "P_o");
                 _decView = new SolverView(new ViewComponent[,]
                     {
                         {new SvLabel("A = k*log_10(P/P_o)")},
@@ -218,8 +239,8 @@ namespace AiRTech.Core.Math.Solvers
                             new SvRow(
                                 new SvLabel("A = "),
                                 tfA,
-                                new SvButton("", OnConvertLeft, "arrow_left.png"),
-                                new SvButton("", OnConvertRight, "arrow_right.png"),
+                                new SvButton("", "", OnConvertLeft, "arrow_left.png"),
+                                new SvButton("", "", OnConvertRight, "arrow_right.png"),
                                 tfP,
                                 new SvLabel(" = P"))
                         }
@@ -236,19 +257,19 @@ namespace AiRTech.Core.Math.Solvers
                 {
                     return _histView;
                 }
-                var tfS = new SvTxtField("h_s", Uc, "Size");
+                var tfS = new SvTField("h_s", Uc, "Size");
                 var gl = new SvGrid("h_l", Uc);
                 var gr = new SvGrid("h_r", Uc);
                 _histView = new SolverView(new ViewComponent[,]
                     {
-                        {new SvLabel("Write Row & Column Count (max 20):"), tfS, new SvButton("Create table", OnCreateHist), },
-                        {new SvRow(gl), new SvButton("Calc", OnHistCalc), new SvRow(gr) }
+                        {new SvLabel("Write Row & Column Count (max 20):"), tfS, new SvButton("", "Create table", OnCreateHist), },
+                        {new SvRow(gl), new SvButton("", "Calc", OnHistCalc), new SvRow(gr) }
                     });
                 return _histView;
             }
         }
 
-        public SolverView SignalView
+        public SolverView SignalAnalysisView
         {
             get
             {
@@ -256,7 +277,7 @@ namespace AiRTech.Core.Math.Solvers
                 {
                     return _signalView;
                 }
-                var tfProbes = new SvTxtField("sa_probes_count", Uc, "(max 16)");
+                var tfProbes = new SvTField("sa_probes_count", Uc, "(max 16)");
                 var tfp = tfProbes.GetSourceAs<Entry>();
                 tfp.WidthRequest = 10;
                 tfp.TextChanged += OnSaProbesCountChanged;
@@ -292,6 +313,31 @@ namespace AiRTech.Core.Math.Solvers
                 })
                 { RowsRatio = new[] { 1d, 1d, 10d } };
                 return _signalView;
+            }
+        }
+
+        public SolverView SignalInSignalView
+        {
+            get
+            {
+                var tfv = new SvTField("sis_v", Uc, "V vector");
+                var tfvp = tfv.GetSourceAs<Entry>();
+                //tfvp.WidthRequest = 10;
+                tfvp.TextChanged += OnSiSVectorsChanged;
+                var tfw = new SvTField("sis_w", Uc, "W vector");
+                var tfwp = tfv.GetSourceAs<Entry>();
+                //tfwp.WidthRequest = 10;
+                tfwp.TextChanged += OnSiSVectorsChanged;
+                var contents = new ViewComponent[,]
+                {
+                    { tfv, tfw },
+                    { new SvButton("sis_btn_vw", "V in W", OnSiSOrientationChanged, null, Uc), new SvButton("sis_btn_wv", "W in V", OnSiSOrientationChanged, null, Uc) {IsEnabled = false} },
+                    { new SvSwitch("sis_ortog", Uc, "Is Ortogonal", null, false, false), new SvSwitch("sis_orton", Uc, "Is Ortonormal", null, false, false) },
+                    { new SvTField("sis_p", Uc, "p"), new SvTField("sis_P", Uc, "P") },
+                    { new SvTField("sis_ev", Uc, "E_V"), new SvTField("sis_ew", Uc, "E_W") }
+                };
+                var slvs = new SolverView(contents);
+                return slvs;
             }
         }
 

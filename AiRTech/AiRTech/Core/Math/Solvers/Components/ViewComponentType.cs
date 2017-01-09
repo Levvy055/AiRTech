@@ -2,6 +2,6 @@
 {
     public enum ViewComponentType
     {
-        Label, TextField, Button, Empty, Row, Grid
+        Label, TextField, Button, Empty, Row, Grid, Switch
     }
 }

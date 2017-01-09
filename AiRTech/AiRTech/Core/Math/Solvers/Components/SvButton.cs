@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
@@ -8,9 +9,13 @@ namespace AiRTech.Core.Math.Solvers.Components
     {
         private readonly Action<object, EventArgs> _action;
 
-        public SvButton(string text = "", Action<object, EventArgs> action = null, string icon = "circle.png") : base(ViewComponentType.Button)
+        public SvButton(string name, string text = "", Action<object, EventArgs> action = null, string icon = "circle.png", IDictionary<string, ViewComponent> uc = null) : base(ViewComponentType.Button, name)
         {
             _action = action;
+            if (icon == null || string.IsNullOrWhiteSpace(icon))
+            {
+                icon = "circle.png";
+            }
             var iS = ImageSource.FromResource("AiRTech.Resources." + icon);
             var i = new CircleImage
             {
@@ -23,15 +28,30 @@ namespace AiRTech.Core.Math.Solvers.Components
                 VerticalOptions = LayoutOptions.Center,
                 Source = iS
             };
-            var b = new Button { Text = text, TextColor = Color.White };
+            Button = new Button { Text = text, TextColor = Color.White };
             if (_action != null)
             {
-                b.Clicked += OnAction;
+                Button.Clicked += OnAction;
             }
             var s = new AbsoluteLayout();
             s.Children.Add(i, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All);
-            s.Children.Add(b, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All);
+            s.Children.Add(Button, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All);
             Source = s;
+            uc?.Add(name, this);
+        }
+
+        public Button Button { get; }
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return Button.IsEnabled;
+            }
+            set
+            {
+                Button.IsEnabled = value;
+            }
         }
 
         private void OnAction(object sender, EventArgs e)

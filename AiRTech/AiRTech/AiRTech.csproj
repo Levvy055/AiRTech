@@ -48,7 +48,8 @@
     <Compile Include="Core\Math\Solvers\Components\SvGrid.cs" />
     <Compile Include="Core\Math\Solvers\Components\SvLabel.cs" />
     <Compile Include="Core\Math\Solvers\Components\SvRow.cs" />
-    <Compile Include="Core\Math\Solvers\Components\SvTxtField.cs" />
+    <Compile Include="Core\Math\Solvers\Components\SvSwitch.cs" />
+    <Compile Include="Core\Math\Solvers\Components\SvTField.cs" />
     <Compile Include="Core\Math\Solvers\Components\ViewComponent.cs" />
     <Compile Include="Core\Math\Solvers\Components\ViewComponentType.cs" />
     <Compile Include="Core\Math\Solvers\ElectronicBasicsSolver.cs" />

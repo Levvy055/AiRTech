@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace AiRTech.Core.Math.Solvers.Components
 {
-    public class SvTxtField : ViewComponent
+    public class SvTField : ViewComponent
     {
-        public SvTxtField(string name, IDictionary<string, ViewComponent> uc = null, string placeholder = null, string initValue = "") : base(ViewComponentType.TextField, name)
+        public SvTField(string name, IDictionary<string, ViewComponent> uc = null, string placeholder = null, string initValue = "") : base(ViewComponentType.TextField, name)
         {
             var tf = new Entry
             {
