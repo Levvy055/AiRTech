@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using AiRTech.Views.ViewModels;
+using Xamarin.Forms;
 
 namespace AiRTech.Views
 {
@@ -6,6 +7,7 @@ namespace AiRTech.Views
     {
         public AboutPage()
         {
+            BindingContext = new AboutViewModel(this);
             InitializeComponent();
         }
     }

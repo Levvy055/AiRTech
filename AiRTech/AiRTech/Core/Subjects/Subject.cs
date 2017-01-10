@@ -6,19 +6,23 @@ namespace AiRTech.Core.Subjects
 {
     public class Subject
     {
-        public static Dictionary<SubjectType, Subject> Subjects { get; } = new Dictionary<SubjectType, Subject>()
+        private static Dictionary<SubjectType, Subject> _subjects;
+        public static Dictionary<SubjectType, Subject> Subjects
         {
-            {SubjectType.PODSTAWY_ELEKTRONIKI,
-                new Subject("Podstawy Elektroniki",
-                    typeof (ElectronicBasics),
-                    SubjectType.PODSTAWY_ELEKTRONIKI,
-                    "AiRTech.Resources.pe.png")},
-            {SubjectType.PODSTAWY_TEORII_SYGNALOW,
-                new Subject("Podstawy Teorii Sygnałów",
-                    typeof(SignalTheoryBasics),
-                   SubjectType.PODSTAWY_TEORII_SYGNALOW,
-                    "AiRTech.Resources.pts.png")}
-        };
+            get
+            {
+                if (_subjects != null)
+                {
+                    return _subjects;
+                }
+                _subjects = new Dictionary<SubjectType, Subject>();
+                //new Subject("Podstawy Elektroniki", typeof(ElectronicBasics),
+                //    SubjectType.PODSTAWY_ELEKTRONIKI, "AiRTech.Resources.pe.png");
+                new Subject("Podstawy Teorii Sygnałów", typeof(SignalTheoryBasics),
+                    SubjectType.PODSTAWY_TEORII_SYGNALOW, "AiRTech.Resources.pts.png");
+                return _subjects;
+            }
+        }
 
         public static ICollection<Subject> SubjectAsValues => Subjects.Values;
 
@@ -32,7 +36,8 @@ namespace AiRTech.Core.Subjects
             Name = name;
             Details = "Przejdź";
             Img = img;
-            Base = (SubjectBase) Activator.CreateInstance(type);
+            Base = (SubjectBase)Activator.CreateInstance(type);
+            Subjects.Add(subjectType, this);
         }
 
         public int Id { get; }
