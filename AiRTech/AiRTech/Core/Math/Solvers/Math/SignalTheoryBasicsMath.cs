@@ -300,8 +300,8 @@ namespace AiRTech.Core.Math.Solvers.Math
                 var w = !vToW ? v1 : w1;
                 var vMw = System.Math.Abs(v * w);
                 var vMv = System.Math.Abs(v * v);
-                ortogonal = vMw < 0;
-                ortonormal = ortogonal && (System.Math.Abs(vMv - 1) < 0 && System.Math.Abs(w * w - 1) < 0);
+                ortogonal = vMw <= 0;
+                ortonormal = ortogonal && (System.Math.Abs(vMv - 1) <= 0 && System.Math.Abs(w * w - 1) <= 0);
                 p = vMw / vMv;
                 p *= 100;
                 p = System.Math.Round(p, 2);

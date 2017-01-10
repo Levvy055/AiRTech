@@ -14,7 +14,6 @@ namespace AiRTech
     {
         public App()
         {
-            InitializeComponent();
             try
             {
                 MainPage = new MasterDetailPage
@@ -108,10 +107,10 @@ namespace AiRTech
                 {
                     newPage = Activator.CreateInstance(page, args) as Page;
                 }
-                if (title != null && newPage != null)
-                {
-                    newPage.Title = title;
-                }
+            }
+            if (title != null && newPage != null)
+            {
+                newPage.Title = title;
             }
             return newPage;
         }

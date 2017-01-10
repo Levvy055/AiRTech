@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AiRTech.Core.Misc;
 using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects
@@ -44,7 +45,7 @@ namespace AiRTech.Core.Subjects
         public string Name { get; }
         public string Details { get; set; }
         public string Img { get; }
-        public ImageSource ImgProperty => ImageSource.FromResource(Img);
+        public ImageSource ImgProperty => ImageResourceExtension.GetImage(Img);
         public SubjectBase Base { get; private set; }
     }
 }

@@ -345,7 +345,7 @@ namespace AiRTech.Core.Math.Solvers
                 var tfvp = tfv.GetSourceAs<Entry>();
                 tfvp.TextChanged += OnSiSVectorsChanged;
                 var tfw = new SvTField("sis_w", Uc, "W vector");
-                var tfwp = tfv.GetSourceAs<Entry>();
+                var tfwp = tfw.GetSourceAs<Entry>();
                 tfwp.TextChanged += OnSiSVectorsChanged;
                 var contents = new ViewComponent[,]
                 {

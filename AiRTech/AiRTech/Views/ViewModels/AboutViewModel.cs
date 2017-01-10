@@ -11,8 +11,9 @@ namespace AiRTech.Views.ViewModels
             Subtitle = "App Alpha version";
             Dev = "Developer: Levvy";
             Icons = "Icons designed by people from Flaticon";
-            Report = "This is Alpha version so app has many bugs.";
-            Update = "Expect Update each week!";
+            Report = "This is Alpha version => many bugs.";
+            Update = "Expect updates each week!";
+            Help = "If wanna help than write to me: mizyn24@gmail.com";
         }
 
         public string Report { get; set; }
@@ -21,5 +22,6 @@ namespace AiRTech.Views.ViewModels
 
         public string Dev { get; set; }
         public string Update { get; set; }
+        public string Help { get; set; }
     }
 }

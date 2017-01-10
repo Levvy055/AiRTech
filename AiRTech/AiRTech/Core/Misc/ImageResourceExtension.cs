@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,9 +16,16 @@ namespace AiRTech.Core.Misc
             {
                 return null;
             }
+            var assembly = typeof(ImageResourceExtension).GetTypeInfo().Assembly;
+            var imageSource = ImageSource.FromResource(Source, assembly);
 
-            var imageSource = ImageSource.FromResource(Source);
+            return imageSource;
+        }
 
+        public static ImageSource GetImage(string img)
+        {
+            var assembly = typeof(ImageResourceExtension).GetTypeInfo().Assembly;
+            var imageSource = ImageSource.FromResource(img, assembly);
             return imageSource;
         }
     }

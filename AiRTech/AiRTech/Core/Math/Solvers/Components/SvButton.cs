@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AiRTech.Core.Misc;
 using ImageCircle.Forms.Plugin.Abstractions;
 using Xamarin.Forms;
 
@@ -12,11 +13,11 @@ namespace AiRTech.Core.Math.Solvers.Components
         public SvButton(string name, string text = "", Action<object, EventArgs> action = null, string icon = "circle.png", IDictionary<string, ViewComponent> uc = null) : base(ViewComponentType.Button, name)
         {
             _action = action;
-            if (icon == null || string.IsNullOrWhiteSpace(icon))
+            if (string.IsNullOrWhiteSpace(icon))
             {
                 icon = "circle.png";
             }
-            var iS = ImageSource.FromResource("AiRTech.Resources." + icon);
+            var iS = ImageResourceExtension.GetImage("AiRTech.Resources." + icon);
             var i = new CircleImage
             {
                 BorderColor = Color.White,

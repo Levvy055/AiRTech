@@ -31,6 +31,10 @@ namespace AiRTech.Views.ViewComponents
 
         private void AddToGrid(ViewComponent v, int x, int y)
         {
+            if (v == null)
+            {
+                return;
+            }
             var s = v.Source;
             if (s != null)
             {
@@ -70,10 +74,7 @@ namespace AiRTech.Views.ViewComponents
                             MGrid.ColumnDefinitions.Add(new ColumnDefinition());
                         }
                         var v = _contento[y, x];
-                        if (v != null)
-                        {
-                            AddToGrid(v, x, y);
-                        }
+                        AddToGrid(v, x, y);
                     }
                 }
                 UpdateChildrenLayout();

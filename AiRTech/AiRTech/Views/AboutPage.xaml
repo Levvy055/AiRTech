@@ -12,9 +12,12 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Label
             Grid.Row="1"
+            FontAttributes="Bold"
+            FontSize="18"
             HorizontalTextAlignment="Center"
             Text="{Binding Title}" />
         <Label
@@ -37,5 +40,10 @@
             Grid.Row="6"
             HorizontalTextAlignment="Center"
             Text="{Binding Icons}" />
+        <Label
+            Grid.Row="7"
+            FontAttributes="Italic"
+            HorizontalTextAlignment="Center"
+            Text="{Binding Help}" />
     </Grid>
 </ContentPage>
