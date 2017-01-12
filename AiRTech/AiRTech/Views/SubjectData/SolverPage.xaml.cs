@@ -1,4 +1,5 @@
-﻿using AiRTech.Core.Math;
+﻿using System.Collections.Generic;
+using AiRTech.Core.Math;
 using AiRTech.Core.Subjects;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
@@ -12,8 +13,7 @@ namespace AiRTech.Views.SubjectData
         {
             TintColor = Color.FromHex("#00806E");
             BarTintColor = Color.FromHex("#00806E");
-            BarBackgroundColor = Color.Teal;
-            BarTextColor = Color.White;
+            SwipeEnabled = true;
             Subject = subject;
             InitSolver();
         }
@@ -26,7 +26,12 @@ namespace AiRTech.Views.SubjectData
             {
                 foreach (var tab in tabs)
                 {
-                    var page = new ContentPage { Content = tab.Value, Title = tab.Key };
+                    var sv = new ScrollView
+                    {
+                        Content = tab.Value,
+                        Orientation = ScrollOrientation.Vertical
+                    };
+                    var page = new ContentPage { Content = sv, Title = tab.Key };
                     Children.Add(page);
                 }
             }

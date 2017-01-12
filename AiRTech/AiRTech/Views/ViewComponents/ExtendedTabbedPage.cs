@@ -80,9 +80,7 @@ namespace AiRTech.Views.ViewComponents
             PropertyChanged += OnPropertyChanged;
             OnSwipeLeft += SwipeLeft;
             OnSwipeRight += SwipeRight;
-
-            this.SwipeEnabled = false;
-
+            SwipeEnabled = false;
             Badges = new List<string>();
         }
 
@@ -203,11 +201,7 @@ namespace AiRTech.Views.ViewComponents
         private void RaiseCurrentPageChanged()
         {
             var handler = CurrentPageChanged;
-
-            if (handler != null)
-            {
-                handler();
-            }
+            handler?.Invoke();
         }
 
         /// <summary>
@@ -218,14 +212,11 @@ namespace AiRTech.Views.ViewComponents
         private void NextPage()
         {
             var currentPage = Children.IndexOf(CurrentPage);
-
             currentPage++;
-
             if (currentPage > Children.Count - 1)
             {
                 currentPage = 0;
             }
-
             CurrentPage = Children[currentPage];
         }
 
@@ -237,14 +228,11 @@ namespace AiRTech.Views.ViewComponents
         private void PreviousPage()
         {
             var currentPage = Children.IndexOf(CurrentPage);
-
             currentPage--;
-
             if (currentPage < 0)
             {
                 currentPage = Children.Count - 1;
             }
-
             CurrentPage = Children[currentPage];
         }
 

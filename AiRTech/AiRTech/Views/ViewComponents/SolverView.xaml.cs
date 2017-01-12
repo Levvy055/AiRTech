@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using AiRTech.Core.Math.Solvers.Components;
 using Xamarin.Forms;
@@ -11,14 +10,12 @@ namespace AiRTech.Views.ViewComponents
     public partial class SolverView : ContentView
     {
         private ViewComponent[,] _contento;
-        private Dictionary<View, Delegate> _listeners;
         private double[] _rowsRatio;
         public event ChangedEventHandler Changed;
 
         public SolverView(ViewComponent[,] contents)
         {
             InitializeComponent();
-            _listeners = new Dictionary<View, Delegate>();
             MGrid.VerticalOptions = LayoutOptions.Start;
             MGrid.HorizontalOptions = LayoutOptions.FillAndExpand;
             Contento = contents;
@@ -54,7 +51,6 @@ namespace AiRTech.Views.ViewComponents
                 MGrid.Children.Clear();
                 if (value == null)
                 {
-                    Debug.WriteLine("Solver Content cannot be assigned to null!");
                     _contento = new ViewComponent[,]
                     {
                         {new SvLabel("Not yet implemented!")}

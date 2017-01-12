@@ -5,6 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewComponents="clr-namespace:AiRTech.Views.ViewComponents;assembly=AiRTech">
     <TabbedPage.BarTextColor>
-        <Color Accent="Green" />
+        <Color Accent="White" />
     </TabbedPage.BarTextColor>
+    <TabbedPage.BarBackgroundColor>
+        <Color Accent="Teal" />
+    </TabbedPage.BarBackgroundColor>
 </viewComponents:ExtendedTabbedPage>
