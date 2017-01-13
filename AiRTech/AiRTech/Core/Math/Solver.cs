@@ -9,7 +9,7 @@ namespace AiRTech.Core.Math
     public abstract class Solver
     {
 
-        public abstract Dictionary<string, SolverView> GetTabs();
+        public abstract Dictionary<string, SolverView> Tabs { get; }
 
         public static Solver GetSolverFor(SubjectType subjectType)
         {

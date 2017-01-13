@@ -5,13 +5,16 @@ namespace AiRTech.Core.Math.Solvers
 {
     public class ElectronicBasicsSolver : Solver
     {
-        public override Dictionary<string, SolverView> GetTabs()
+        public override Dictionary<string, SolverView> Tabs
         {
-            var list = new Dictionary<string, SolverView>
+            get
+            {
+                var list = new Dictionary<string, SolverView>
             {
                 {"First", new SolverView(null)}
             };
-            return list;
+                return list;
+            }
         }
     }
 }

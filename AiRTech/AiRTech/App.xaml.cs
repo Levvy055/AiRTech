@@ -27,10 +27,10 @@ namespace AiRTech
                 Database = new DbHandler();
                 Web = new WebCore(Database);
 #if DEBUG
-                ChangePageTo(typeof(AboutPage), "Ooo", false);
-                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                //ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
-                //ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
+                ChangePageTo(typeof(SubjectsPage), "Subjects", false);
+                var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
                 //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
                 //np?.NavigateTo(3);
 #else
@@ -53,26 +53,76 @@ namespace AiRTech
             var newPage = GetPage(page, title, args);
             if (newPage != null)
             {
-                if (inner)
+                if (newPage.GetType() == typeof(SolverPage))
                 {
-                    await NavPage.PushAsync(newPage);
+                    var s = newPage as SolverPage;
+                    s.NavigateToMain();
                 }
                 else
                 {
-                    NavPage = new NavigationPage(newPage)
+                    if (inner)
                     {
-                        Title = "MainDetailNavPage",
-                        BarBackgroundColor = Color.Blue
-                    };
-                    mPage.Detail = NavPage;
+                        await NavPage.PushAsync(newPage);
+                    }
+                    else
+                    {
+                        NavPage = new NavigationPage(newPage)
+                        {
+                            Title = newPage.Title,
+                            BarBackgroundColor = Color.Blue
+                        };
+                        mPage.Detail = NavPage;
+                    }
                 }
+                mPage.IsPresented = false;
+
             }
-            mPage.IsPresented = false;
+        }
+
+        public async void ChangePageTo(Page page, bool removePrevious = false)
+        {
+            if (removePrevious)
+            {
+                await NavPage.PopAsync(false);
+            }
+            if (NavPage.CurrentPage != page)
+            {
+                await NavPage.PushAsync(page);
+            }
+            else
+            {
+                NavPage.Title = page.Title;
+            }
         }
 
         public async void NavigateToModal(ContentPage detailPage)
         {
             await NavPage.PushAsync(detailPage);
+        }
+
+        public Page GetPage(Type pageType, string title = null, params object[] args)
+        {
+            Page page;
+            if (CreatedPages.ContainsKey(pageType))
+            {
+                page = CreatedPages[pageType];
+            }
+            else
+            {
+                if (args == null || args.Length == 0)
+                {
+                    page = Activator.CreateInstance(pageType) as Page;
+                }
+                else
+                {
+                    page = Activator.CreateInstance(pageType, args) as Page;
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(title) && page != null)
+            {
+                page.Title = title;
+            }
+            return page;
         }
 
         protected override void OnStart()
@@ -88,31 +138,6 @@ namespace AiRTech
         protected override void OnResume()
         {
             // Handle when your app resumes
-        }
-
-        public Page GetPage(Type page, string title = null, params object[] args)
-        {
-            Page newPage;
-            if (CreatedPages.ContainsKey(page))
-            {
-                newPage = CreatedPages[page];
-            }
-            else
-            {
-                if (args == null || args.Length == 0)
-                {
-                    newPage = Activator.CreateInstance(page) as Page;
-                }
-                else
-                {
-                    newPage = Activator.CreateInstance(page, args) as Page;
-                }
-            }
-            if (title != null && newPage != null)
-            {
-                newPage.Title = title;
-            }
-            return newPage;
         }
 
         public IDbHandler Database { get; set; }

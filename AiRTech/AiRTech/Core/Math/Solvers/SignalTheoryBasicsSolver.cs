@@ -17,28 +17,23 @@ namespace AiRTech.Core.Math.Solvers
         private SolverView _decView;
         private SolverView _histView;
         private SolverView _signalView;
-        #endregion
+        private SolverView _sisView;
+        private Dictionary<string, SolverView> _tabs;
 
-        #region Main
-        public override Dictionary<string, SolverView> GetTabs()
+        public override Dictionary<string, SolverView> Tabs => _tabs ?? (_tabs = new Dictionary<string, SolverView>
         {
-            var list = new Dictionary<string, SolverView>
-            {
-                {"Decibels", DecibelsView},
-                {"Histogram", HistogramView},
-                {"Signal Analysis", SignalAnalysisView},
-                {"Signal in Signal", SignalInSignalView },
-                {"Harmonics", new SolverView(null)},
-                {"DFT", new SolverView(null)},
-                {"FFT", new SolverView(null)},
-                {"A-law", new SolverView(null)},
-                {"M-law", new SolverView(null)},
-                {"Graphs", new SolverView(null)}
-            };
-            return list;
-        }
+            {"Decibels", DecibelsView},
+            {"Histogram", HistogramView},
+            {"Signal Analysis", SignalAnalysisView},
+            {"Signal in Signal", SignalInSignalView},
+            {"Harmonics", new SolverView(null)},
+            {"DFT", new SolverView(null)},
+            {"FFT", new SolverView(null)},
+            {"A-law", new SolverView(null)},
+            {"M-law", new SolverView(null)},
+            {"Graphs", new SolverView(null)}
+        });
 
-        private Dictionary<string, ViewComponent> Uc { get; } = new Dictionary<string, ViewComponent>();
         #endregion
 
         #region Event Handlers
@@ -234,6 +229,9 @@ namespace AiRTech.Core.Math.Solvers
         #endregion
 
         #region view Properties
+
+        private Dictionary<string, ViewComponent> Uc { get; } = new Dictionary<string, ViewComponent>();
+
         private SolverView DecibelsView
         {
             get
@@ -341,6 +339,10 @@ namespace AiRTech.Core.Math.Solvers
         {
             get
             {
+                if (_sisView != null)
+                {
+                    return _sisView;
+                }
                 var tfv = new SvTField("sis_v", Uc, "V vector");
                 var tfvp = tfv.GetSourceAs<Entry>();
                 tfvp.TextChanged += OnSiSVectorsChanged;
@@ -358,7 +360,8 @@ namespace AiRTech.Core.Math.Solvers
                     { new SvTField("sis_ev", Uc, "E_V"), new SvTField("sis_ew", Uc, "E_W") }
                 };
                 var slvs = new SolverView(contents);
-                return slvs;
+                _sisView = slvs;
+                return _sisView;
             }
         }
         #endregion
