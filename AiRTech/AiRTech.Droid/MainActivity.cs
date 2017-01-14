@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
@@ -20,9 +20,44 @@ namespace AiRTech.Droid
 
             base.OnCreate(bundle);
 
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
+            AndroidEnvironment.UnhandledExceptionRaiser += AndroidEnvironmentOnUnhandledException;
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
             ImageCircleRenderer.Init();
-            LoadApplication(new App());
+            App = new App();
+            LoadApplication(App);
+        }
+
+        public App App { get; set; }
+
+        protected override void OnDestroy()
+        {
+            try
+            {
+                App.OnDestroy();
+                base.OnDestroy();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private void AndroidEnvironmentOnUnhandledException(object sender, RaiseThrowableEventArgs e)
+        {
+            Console.WriteLine(sender.ToString());
+        }
+
+        private void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            Console.WriteLine(sender.ToString());
+        }
+
+        private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine(sender.ToString());
         }
     }
 }

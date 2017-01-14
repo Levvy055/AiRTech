@@ -27,10 +27,10 @@ namespace AiRTech
                 Database = new DbHandler();
                 Web = new WebCore(Database);
 #if DEBUG
-                ChangePageTo(typeof(SubjectsPage), "Subjects", false);
-                var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
-                ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
+                //ChangePageTo(typeof(SubjectsPage), "Subjects", false);
+                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                //ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                //ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
                 //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
                 //np?.NavigateTo(3);
 #else
@@ -138,6 +138,11 @@ namespace AiRTech
         protected override void OnResume()
         {
             // Handle when your app resumes
+        }
+
+        public void OnDestroy()
+        {
+            MainPage=new ContentPage();
         }
 
         public IDbHandler Database { get; set; }
