@@ -25,11 +25,19 @@ namespace AiRTech.Core.Math.Solvers.Components
                 HeightRequest = 100,
                 WidthRequest = 100,
                 Aspect = Aspect.AspectFill,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
                 Source = iS
             };
-            Button = new Button { Text = text, TextColor = Color.White };
+            Button = new Button
+            {
+                Text = text,
+                TextColor = Color.White,
+                BackgroundColor = Color.Transparent,
+                BorderColor = Color.Transparent,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
             if (_action != null)
             {
                 Button.Clicked += OnAction;
