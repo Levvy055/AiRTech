@@ -183,7 +183,7 @@ namespace AiRTech.Views.ViewComponents
             }
         }
         /// <summary>
-        ///     Raises the current page changing.
+        ///     Raises the current Page changing.
         /// </summary>
         private void RaiseCurrentPageChanging()
         {
@@ -196,7 +196,7 @@ namespace AiRTech.Views.ViewComponents
         }
 
         /// <summary>
-        ///     Raises the current page changed.
+        ///     Raises the current Page changed.
         /// </summary>
         private void RaiseCurrentPageChanged()
         {
@@ -205,9 +205,9 @@ namespace AiRTech.Views.ViewComponents
         }
 
         /// <summary>
-        /// Move to the next page.
-        /// Restart at the first page should you try
-        /// to move past the last page.
+        /// Move to the next Page.
+        /// Restart at the first Page should you try
+        /// to move past the last Page.
         /// </summary>
         private void NextPage()
         {
@@ -221,9 +221,9 @@ namespace AiRTech.Views.ViewComponents
         }
 
         /// <summary>
-        /// Move to the previous page.
-        /// If you are on the first page then return
-        /// the last page in the list
+        /// Move to the previous Page.
+        /// If you are on the first Page then return
+        /// the last Page in the list
         /// </summary>
         private void PreviousPage()
         {
@@ -258,13 +258,13 @@ namespace AiRTech.Views.ViewComponents
         }
 
         /// <summary>
-        ///     Occurs when [current page changing].
+        ///     Occurs when [current Page changing].
         /// </summary>
         public event CurrentPageChangingEventHandler CurrentPageChanging;
 
 #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         /// <summary>
-        /// Occurs when [current page changed].
+        /// Occurs when [current Page changed].
         /// </summary>
         public event CurrentPageChangedEventHandler CurrentPageChanged;
 #pragma warning restore CS0108 // Member hides inherited member; missing new keyword

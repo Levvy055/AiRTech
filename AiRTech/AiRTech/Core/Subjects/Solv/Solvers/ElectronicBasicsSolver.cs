@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AiRTech.Views.ViewComponents;
 
-namespace AiRTech.Core.Math.Solvers
+namespace AiRTech.Core.Subjects.Solv.Solvers
 {
     public class ElectronicBasicsSolver : Solver
     {

@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Input;
-using AiRTech.Core.Math;
 using AiRTech.Core.Misc;
 using AiRTech.Core.Subjects;
+using AiRTech.Core.Subjects.Solv;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 

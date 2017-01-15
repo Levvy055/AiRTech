@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AiRTech.Core.SubjectData;
+using AiRTech.Views.SubjectData;
 
 namespace AiRTech.Core.DataHandling
 {

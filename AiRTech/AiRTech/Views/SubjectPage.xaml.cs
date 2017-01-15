@@ -6,10 +6,14 @@ namespace AiRTech.Views
 {
     public partial class SubjectPage : ContentPage
     {
+
         public SubjectPage(Subject subject)
         {
+            Subject = subject;
+            BindingContext = new SubjectViewModel(this);
             InitializeComponent();
-            BindingContext = new SubjectViewModel(this, subject);
         }
+
+        public Subject Subject { get; private set; }
     }
 }

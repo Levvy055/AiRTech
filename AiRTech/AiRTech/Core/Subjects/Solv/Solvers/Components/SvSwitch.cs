@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace AiRTech.Core.Math.Solvers.Components
+namespace AiRTech.Core.Subjects.Solv.Solvers.Components
 {
     public class SvSwitch : ViewComponent
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AiRTech.Core.SubjectData;
+using AiRTech.Views.SubjectData;
 using SQLite;
 using Xamarin.Forms;
 

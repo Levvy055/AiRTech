@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using AiRTech.Core.Misc;
+using AiRTech.Core.Subjects.Def;
+using AiRTech.Core.Subjects.Impl;
 using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects
@@ -8,6 +10,21 @@ namespace AiRTech.Core.Subjects
     public class Subject
     {
         private static Dictionary<SubjectType, Subject> _subjects;
+
+        private Subject(string name, Type type, SubjectType subjectType, string img)
+        {
+            if (type == null)
+            {
+                throw new ArgumentException("Type of subject class is null!");
+            }
+            Id = subjectType.GetHashCode();
+            Name = name;
+            Details = "Przejdź";
+            Img = img;
+            Base = (SubjectBase)Activator.CreateInstance(type);
+            Subjects.Add(subjectType, this);
+        }
+
         public static Dictionary<SubjectType, Subject> Subjects
         {
             get
@@ -24,22 +41,7 @@ namespace AiRTech.Core.Subjects
                 return _subjects;
             }
         }
-
         public static ICollection<Subject> SubjectAsValues => Subjects.Values;
-
-        private Subject(string name, Type type, SubjectType subjectType, string img)
-        {
-            if (type == null)
-            {
-                throw new ArgumentException("Type of subject class is null!");
-            }
-            Id = subjectType.GetHashCode();
-            Name = name;
-            Details = "Przejdź";
-            Img = img;
-            Base = (SubjectBase)Activator.CreateInstance(type);
-            Subjects.Add(subjectType, this);
-        }
 
         public int Id { get; }
         public string Name { get; }

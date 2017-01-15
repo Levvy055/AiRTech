@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using AiRTech.Core.Math.Solvers;
-using AiRTech.Core.Subjects;
+using AiRTech.Core.Subjects.Solv.Solvers;
 using AiRTech.Views.ViewComponents;
 
-namespace AiRTech.Core.Math
+namespace AiRTech.Core.Subjects.Solv
 {
     public abstract class Solver
     {

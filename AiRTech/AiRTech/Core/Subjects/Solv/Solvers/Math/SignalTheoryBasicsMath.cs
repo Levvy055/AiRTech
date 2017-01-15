@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AiRTech.Core.Math.Solvers.Components;
-using AiRTech.Core.Math.Solvers.Math.Utils;
+using AiRTech.Core.Subjects.Solv.Solvers.Components;
+using AiRTech.Core.Subjects.Solv.Solvers.Math.Utils;
 using Xamarin.Forms;
 
-namespace AiRTech.Core.Math.Solvers.Math
+namespace AiRTech.Core.Subjects.Solv.Solvers.Math
 {
     public static class SignalTheoryBasicsMath
     {

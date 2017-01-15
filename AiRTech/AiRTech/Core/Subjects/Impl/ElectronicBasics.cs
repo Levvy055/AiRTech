@@ -1,4 +1,4 @@
-﻿namespace AiRTech.Core.Subjects
+﻿namespace AiRTech.Core.Subjects.Impl
 {
     public class ElectronicBasics : SubjectBase
     {

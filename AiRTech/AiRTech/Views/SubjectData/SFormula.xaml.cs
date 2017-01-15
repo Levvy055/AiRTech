@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace AiRTech.Core.SubjectData
+namespace AiRTech.Views.SubjectData
 {
     public partial class SFormula : ContentView
     {

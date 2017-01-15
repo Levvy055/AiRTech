@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using AiRTech.Core.Math.Solvers.Components;
+using AiRTech.Core.Subjects.Solv.Solvers.Components;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewComponents

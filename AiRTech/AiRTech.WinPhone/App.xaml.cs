@@ -58,7 +58,7 @@ namespace AiRTech.WinPhone
             // just ensure that the window is active
             if (rootFrame == null)
             {
-                // Create a Frame to act as the navigation context and navigate to the first page
+                // Create a Frame to act as the navigation context and navigate to the first Page
                 rootFrame = new Frame();
 
                 // TODO: change this value to a cache size that is appropriate for your application
@@ -90,12 +90,12 @@ namespace AiRTech.WinPhone
                 rootFrame.ContentTransitions = null;
                 rootFrame.Navigated += this.RootFrame_FirstNavigated;
 
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
+                // When the navigation stack isn't restored navigate to the first Page,
+                // configuring the new Page by passing required information as a navigation
                 // parameter
                 if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
                 {
-                    throw new Exception("Failed to create initial page");
+                    throw new Exception("Failed to create initial Page");
                 }
             }
 

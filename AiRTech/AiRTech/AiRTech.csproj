@@ -42,24 +42,25 @@
     <Compile Include="Core\DataHandling\DbHandler.cs" />
     <Compile Include="Core\DataHandling\IDbHandler.cs" />
     <Compile Include="Core\DataHandling\IFileHandler.cs" />
-    <Compile Include="Core\Math\Solver.cs" />
-    <Compile Include="Core\Math\Solvers\Components\SvButton.cs" />
-    <Compile Include="Core\Math\Solvers\Components\SvEmpty.cs" />
-    <Compile Include="Core\Math\Solvers\Components\SvGrid.cs" />
-    <Compile Include="Core\Math\Solvers\Components\SvLabel.cs" />
-    <Compile Include="Core\Math\Solvers\Components\SvRow.cs" />
-    <Compile Include="Core\Math\Solvers\Components\SvSwitch.cs" />
-    <Compile Include="Core\Math\Solvers\Components\SvTField.cs" />
-    <Compile Include="Core\Math\Solvers\Components\ViewComponent.cs" />
-    <Compile Include="Core\Math\Solvers\Components\ViewComponentType.cs" />
-    <Compile Include="Core\Math\Solvers\ElectronicBasicsSolver.cs" />
-    <Compile Include="Core\Math\Solvers\Math\SignalTheoryBasicsMath.cs" />
-    <Compile Include="Core\Math\Solvers\Math\Utils\SimpleVector.cs" />
-    <Compile Include="Core\Math\Solvers\Math\Utils\VectorUtils.cs" />
-    <Compile Include="Core\Math\Solvers\SignalTheoryBasicsSolver.cs" />
+    <Compile Include="Core\Subjects\Def\Definition.cs" />
+    <Compile Include="Core\Subjects\Solv\Solver.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Components\SvButton.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Components\SvEmpty.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Components\SvGrid.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Components\SvLabel.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Components\SvRow.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Components\SvSwitch.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Components\SvTField.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Components\ViewComponent.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Components\ViewComponentType.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\ElectronicBasicsSolver.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Math\SignalTheoryBasicsMath.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Math\Utils\SimpleVector.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\Math\Utils\VectorUtils.cs" />
+    <Compile Include="Core\Subjects\Solv\Solvers\SignalTheoryBasicsSolver.cs" />
     <Compile Include="Core\Misc\ImageResourceExtension.cs" />
-    <Compile Include="Core\Subjects\ElectronicBasics.cs" />
-    <Compile Include="Core\Subjects\SignalTheoryBasics.cs" />
+    <Compile Include="Core\Subjects\Impl\ElectronicBasics.cs" />
+    <Compile Include="Core\Subjects\Impl\SignalTheoryBasics.cs" />
     <Compile Include="Core\Subjects\Subject.cs" />
     <Compile Include="Core\Subjects\SubjectBase.cs" />
     <Compile Include="Core\Subjects\SubjectType.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Views\ViewComponents\SolverView.xaml.cs">
       <DependentUpon>SolverView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewModels\DefinitionsViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectDataViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectsViewModel.cs" />
@@ -260,7 +262,9 @@
     <EmbeddedResource Include="Resources\circle_empty.png" />
     <EmbeddedResource Include="Resources\circle_green.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Subjects\Formula\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

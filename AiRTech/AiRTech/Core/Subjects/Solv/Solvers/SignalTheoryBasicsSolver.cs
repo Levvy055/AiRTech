@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using AiRTech.Core.Math.Solvers.Components;
-using AiRTech.Core.Math.Solvers.Math;
-using AiRTech.Core.Math.Solvers.Math.Utils;
+using AiRTech.Core.Subjects.Solv.Solvers.Components;
+using AiRTech.Core.Subjects.Solv.Solvers.Math;
+using AiRTech.Core.Subjects.Solv.Solvers.Math.Utils;
 using AiRTech.Views.Other;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
-namespace AiRTech.Core.Math.Solvers
+namespace AiRTech.Core.Subjects.Solv.Solvers
 {
     public class SignalTheoryBasicsSolver : Solver
     {
