@@ -232,7 +232,7 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
 
         private Dictionary<string, ViewComponent> Uc { get; } = new Dictionary<string, ViewComponent>();
 
-        private SolverView DecibelsView
+        public SolverView DecibelsView
         {
             get
             {
@@ -268,7 +268,7 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
             }
         }
 
-        private SolverView HistogramView
+        public SolverView HistogramView
         {
             get
             {

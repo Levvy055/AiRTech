@@ -268,6 +268,10 @@ namespace AiRTech.Core.Subjects.Solv.Solvers.Math
 
             public string GetOutput(SignalDataType signalDataType)
             {
+                if (!Outputs.ContainsKey(signalDataType))
+                {
+                    throw new NullReferenceException("Key not exists");
+                }
                 var vs = Outputs[signalDataType];
                 if (!vs.IsArray)
                 {

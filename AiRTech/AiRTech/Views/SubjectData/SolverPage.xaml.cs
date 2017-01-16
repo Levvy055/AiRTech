@@ -55,8 +55,8 @@ namespace AiRTech.Views.SubjectData
                     Text = "Solver not yet implemented!"
                 });
             }
-            Mpage = new ContentPage { Content = mstack, Title = "Solver - " + Subject.Name };
-            Carousel.CurrentPageChanged+=CarouselOnPageChanged;
+            Mpage = new ContentPage { Content = new ScrollView { Content = mstack }, Title = "Solver - " + Subject.Name };
+            Carousel.CurrentPageChanged += CarouselOnPageChanged;
         }
 
         private void CarouselOnPageChanged(object s, EventArgs eventArgs)
@@ -85,13 +85,30 @@ namespace AiRTech.Views.SubjectData
         {
             var c = new Command(() =>
             {
-                Carousel.CurrentPage = page;
-                Carousel.Title = page.Title+" - Solver";
-                var app = Application.Current as App;
-                app.ChangePageTo(Carousel, _isOnMain);
-                _isOnMain = false;
+                GoToTab(page);
             });
             return c;
+        }
+
+        public void NavigateToTab(View v)
+        {
+            foreach (var page in Carousel.Children)
+            {
+                var scroll = page.Content as ScrollView;
+                if (scroll?.Content == v)
+                {
+                    GoToTab(page);
+                }
+            }
+        }
+
+        private void GoToTab(ContentPage page)
+        {
+            Carousel.CurrentPage = page;
+            Carousel.Title = page.Title + " - Solver";
+            var app = Application.Current as App;
+            app.ChangePageTo(Carousel, _isOnMain);
+            _isOnMain = false;
         }
 
         public Subject Subject { get; set; }

@@ -43,6 +43,7 @@
     <Compile Include="Core\DataHandling\IDbHandler.cs" />
     <Compile Include="Core\DataHandling\IFileHandler.cs" />
     <Compile Include="Core\Subjects\Def\Definition.cs" />
+    <Compile Include="Views\SubjectData\InDef.cs" />
     <Compile Include="Core\Subjects\Solv\Solver.cs" />
     <Compile Include="Core\Subjects\Solv\Solvers\Components\SvButton.cs" />
     <Compile Include="Core\Subjects\Solv\Solvers\Components\SvEmpty.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Core\Subjects\Subject.cs" />
     <Compile Include="Core\Subjects\SubjectBase.cs" />
     <Compile Include="Core\Subjects\SubjectType.cs" />
+    <Compile Include="Views\SubjectData\InDefLayout.cs" />
     <Compile Include="Views\ViewModels\AboutViewModel.cs" />
     <Compile Include="Views\Other\HistResultModal.cs" />
     <Compile Include="Views\SubjectData\SDefinition.xaml.cs">
@@ -264,6 +266,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Subjects\Formula\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Defs\hist_s1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Defs\hist_s2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
