@@ -15,15 +15,15 @@ namespace AiRTech.UWP
 {
     public class FileHandler_UWP : IFileHandler
     {
-        private const string Filename = "subjects_data.atdb";
+        private const string DbFilename = "airtech_db.atdb";
 
         public void Init()
         {
-            DbFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Filename);
-            Create();
+            DbFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DbFilename);
+            CreateFiles();
         }
 
-        public void Create()
+        public void CreateFiles()
         {
             if (!File.Exists(DbFilePath))
             {
@@ -56,6 +56,6 @@ namespace AiRTech.UWP
             return DbFilePath;
         }
 
-        public string DbFilePath { get; set; }
+        private string DbFilePath { get; set; }
     }
 }

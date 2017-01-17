@@ -1,6 +1,9 @@
-﻿using AiRTech.Core.Subjects.Def;
+﻿using System.Threading.Tasks;
+using AiRTech.Core.Subjects.Def;
 using AiRTech.Core.Subjects.Solv.Solvers;
+using AiRTech.Core.Web;
 using AiRTech.Views.SubjectData;
+using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects.Impl
 {
@@ -10,11 +13,25 @@ namespace AiRTech.Core.Subjects.Impl
 
         public SignalTheoryBasics() : base(SubjectType.PODSTAWY_TEORII_SYGNALOW)
         {
-            Definitions.Add(Histogram);
+            GetDefinitions();
+        }
+
+        private async void GetDefinitions()
+        {
+            var app = Application.Current as App;
+            var defList = await app.Web.GetDefinitionList(SubjectType);
+            if (defList != null)
+            {
+                foreach (var def in defList)
+                {
+                    Definitions.Add(def);
+                }
+            }
         }
 
         protected override void UpdateDependencies()
         {
+
         }
 
         public Definition Histogram
@@ -34,7 +51,7 @@ namespace AiRTech.Core.Subjects.Impl
                         new InDef {Image = "hist_s1.png", Text = "Przykład histogramu"},
                         new InDef {Image = "hist_s2.png", Text = "Histogram 2D"}
                     },
-                    Solvers = {solver.HistogramView}
+                    Solvers = { solver.HistogramView }
                 });
             }
         }

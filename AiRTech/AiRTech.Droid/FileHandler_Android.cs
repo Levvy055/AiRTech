@@ -21,15 +21,15 @@ namespace AiRTech.Droid
 {
     public class FileHandler_Android : IFileHandler
     {
-        private const string Filename = "subjects_data.atdb";
+        private const string Filename = "airtech_db.atdb";
 
         public void Init()
         {
             DbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Filename);
-            Create();
+            CreateFiles();
         }
 
-        public void Create()
+        public void CreateFiles()
         {
             var file=new File(DbFilePath);
             if (!file.Exists())
@@ -58,6 +58,6 @@ namespace AiRTech.Droid
             return DbFilePath;
         }
 
-        public string DbFilePath { get; set; }
+        private string DbFilePath { get; set; }
     }
 }

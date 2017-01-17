@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel;
+using System.Reflection;
 using AiRTech.Core.Subjects;
 using Xamarin.Forms;
 using MvvmHelpers;

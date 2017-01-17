@@ -56,7 +56,7 @@ namespace AiRTech.Windows
             // just ensure that the window is active
             if (rootFrame == null)
             {
-                // Create a Frame to act as the navigation context and navigate to the first Page
+                // CreateFiles a Frame to act as the navigation context and navigate to the first Page
                 rootFrame = new Frame();
 
                 // TODO: change this value to a cache size that is appropriate for your application

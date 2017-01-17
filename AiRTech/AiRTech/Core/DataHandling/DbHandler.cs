@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AiRTech.Core.Subjects.Def;
 using AiRTech.Views.SubjectData;
 using SQLite;
 using Xamarin.Forms;
@@ -12,8 +13,9 @@ namespace AiRTech.Core.DataHandling
         {
             using (var db = Connection)
             {
-                db.CreateTable<SDefinition>();
-                db.CreateTable<SFormula>();
+                db.CreateTable<InDef>();
+                db.CreateTable<Definition>();
+                //db.CreateTable<Formula>();
             }
         }
 

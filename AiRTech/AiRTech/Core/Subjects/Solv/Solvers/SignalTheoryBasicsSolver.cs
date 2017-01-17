@@ -22,18 +22,17 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
 
         public override Dictionary<string, SolverView> Tabs => _tabs ?? (_tabs = new Dictionary<string, SolverView>
         {
-            {"Decibels", DecibelsView},
-            {"Histogram", HistogramView},
-            {"Signal Analysis", SignalAnalysisView},
-            {"Signal in Signal", SignalInSignalView},
-            {"Harmonics", new SolverView(null)},
+            {"Decybele", DecibelsView},
+            {"Histogram 2D", HistogramView},
+            {"Analiza sygnału", SignalAnalysisView},
+            {"Sygnał w Sygnale", SignalInSignalView},
+            /*{"Harmoniczne", new SolverView(null)},
             {"DFT", new SolverView(null)},
             {"FFT", new SolverView(null)},
             {"A-law", new SolverView(null)},
             {"M-law", new SolverView(null)},
-            {"Graphs", new SolverView(null)}
+            {"Grafy", new SolverView(null)}*/
         });
-
         #endregion
 
         #region Event Handlers
@@ -281,7 +280,7 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
                 var gr = new SvGrid("h_r", Uc);
                 _histView = new SolverView(new ViewComponent[,]
                     {
-                        {new SvLabel("Write Row & Column Count (max 20):"), tfS, new SvButton("", "Create table", OnCreateHist), },
+                        {new SvLabel("Write Row & Column Count (max 20):"), tfS, new SvButton("", "CreateFiles table", OnCreateHist), },
                         {new SvRow(gl), new SvButton("", "Calc", OnHistCalc), new SvRow(gr) }
                     });
                 return _histView;

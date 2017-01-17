@@ -42,7 +42,9 @@
     <Compile Include="Core\DataHandling\DbHandler.cs" />
     <Compile Include="Core\DataHandling\IDbHandler.cs" />
     <Compile Include="Core\DataHandling\IFileHandler.cs" />
+    <Compile Include="Core\Misc\GenericDictionary.cs" />
     <Compile Include="Core\Subjects\Def\Definition.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Views\SubjectData\InDef.cs" />
     <Compile Include="Core\Subjects\Solv\Solver.cs" />
     <Compile Include="Core\Subjects\Solv\Solvers\Components\SvButton.cs" />

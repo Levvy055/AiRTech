@@ -118,6 +118,7 @@ namespace AiRTech
                 {
                     page = Activator.CreateInstance(pageType, args) as Page;
                 }
+                CreatedPages.Add(pageType, page);
             }
             if (!string.IsNullOrWhiteSpace(title) && page != null)
             {

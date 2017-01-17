@@ -3,7 +3,7 @@
     public interface IFileHandler
     {
         void Init();
-        void Create();
+        void CreateFiles();
         string Load();
         void Save(string data);
         void RemoveAllData();

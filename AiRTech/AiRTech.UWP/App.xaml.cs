@@ -54,7 +54,7 @@ namespace AiRTech.UWP
             // just ensure that the window is active
             if (rootFrame == null)
             {
-                // Create a Frame to act as the navigation context and navigate to the first Page
+                // CreateFiles a Frame to act as the navigation context and navigate to the first Page
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;

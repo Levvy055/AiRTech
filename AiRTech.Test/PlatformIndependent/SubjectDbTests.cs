@@ -17,8 +17,8 @@ namespace AiRTech.Test.PlatformIndependent
         [SetUp]
         public void InitTest()
         {
-            db = new DbHandler();
-            Assert.IsNotNull(db);
+            /*db = new DbHandler();
+            Assert.IsNotNull(db);*/
         }
 
         [Test]
