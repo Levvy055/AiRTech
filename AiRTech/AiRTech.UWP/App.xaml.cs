@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -58,6 +59,14 @@ namespace AiRTech.UWP
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
+
+                var assembliesToInclude = new List<Assembly>
+                {
+                    typeof (SQLitePCL.Batteries).GetTypeInfo().Assembly,
+                    typeof (SQLite.SQLiteConnection).GetTypeInfo().Assembly
+                };
+
+                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 Xamarin.Forms.Forms.Init(e);
                 ImageCircleRenderer.Init();

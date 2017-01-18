@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using AiRTech.Core.DataHandling;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Web;
@@ -22,10 +23,27 @@ namespace AiRTech
                     Detail = new NavigationPage(),
                     MasterBehavior = MasterBehavior.Popover
                 };
-                ChangePageTo(typeof(MainPage), "AiRTech", false);
                 DependencyService.Get<IFileHandler>().Init();
-                Database = new DbHandler();
-                Web = new WebCore(Database);
+                try
+                {
+                    Database = new DbHandler();
+                }
+                catch (Exception e)
+                {
+                    MainPage.DisplayAlert("Error!", "Błąd uzyskiwania dostępu do pliku bazy!", "Zamknij");
+                    Debug.WriteLine(e);
+                    throw;
+                }
+                try
+                {
+                    Web = new WebCore(Database);
+                }
+                catch (Exception e)
+                {
+                    MainPage.DisplayAlert("Offline!", "Brak dostępu do serwera!", "Zamknij");
+                    Debug.WriteLine(e);
+                }
+                ChangePageTo(typeof(MainPage), "AiRTech", false);
 #if DEBUG
                 ChangePageTo(typeof(SubjectsPage), "Subjects", false);
                 var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
@@ -147,7 +165,7 @@ namespace AiRTech
             MainPage = new ContentPage();
         }
 
-        public IDbHandler Database { get; set; }
+        public DbHandler Database { get; set; }
 
         private Dictionary<Type, Page> CreatedPages { get; } = new Dictionary<Type, Page>();
         private NavigationPage NavPage { get; set; }

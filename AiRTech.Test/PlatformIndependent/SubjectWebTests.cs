@@ -20,7 +20,7 @@ namespace AiRTech.Test.PlatformIndependent
             Assert.IsNotNull(db);
             var core = new WebCore(db);
             Assert.IsNotNull(core);
-            Assert.IsTrue(core.IsConnected());*/
+            Assert.IsTrue(core.Online());*/
         }
     }
 }

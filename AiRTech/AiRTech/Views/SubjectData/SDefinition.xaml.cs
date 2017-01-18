@@ -16,7 +16,7 @@ namespace AiRTech.Views.SubjectData
             _subject = subject;
             BindingContext = def;
             InitializeComponent();
-            if (def.Inner != null && def.Inner.Count > 0)
+            if (def.Inner != null && def.Inner.Length > 0)
             {
                 foreach (var id in def.Inner)
                 {
@@ -82,9 +82,9 @@ namespace AiRTech.Views.SubjectData
 
         private View CreateButton(SolverView solverView)
         {
-            var b = new Button()
+            var b = new Button
             {
-                Text = solverView.ToString(),
+                Text = solverView.Title,
                 Command = SolverButton_Click(solverView)
             };
             return b;

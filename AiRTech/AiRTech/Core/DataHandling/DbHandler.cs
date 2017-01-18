@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
 using AiRTech.Views.SubjectData;
 using SQLite;
@@ -7,9 +11,11 @@ using Xamarin.Forms;
 
 namespace AiRTech.Core.DataHandling
 {
-    public class DbHandler : IDbHandler
+    public class DbHandler
     {
-        public void Init()
+        private string _path;
+
+        public DbHandler()
         {
             using (var db = Connection)
             {
@@ -19,9 +25,13 @@ namespace AiRTech.Core.DataHandling
             }
         }
 
-        public bool Exists(SDefinition definition)
+        public bool Exists(Definition def)
         {
-            throw new NotImplementedException();
+            using (var db = Connection)
+            {
+                var i = (from dbdef in db.Table<Definition>() where dbdef.Equals(def) select dbdef).FirstOrDefault();
+                return i != null;
+            }
         }
 
         public bool Exists(SFormula formula)
@@ -29,7 +39,22 @@ namespace AiRTech.Core.DataHandling
             throw new NotImplementedException();
         }
 
-        public bool Add(SDefinition definition)
+        private Definition GetDefinition(int id)
+        {
+            using (var db = Connection)
+            {
+                var definition = db.Table<Definition>().First(def => def.ID == id);
+                SubjectType st;
+                if (definition == null || !Enum.TryParse(definition.SubjectName, out st))
+                {
+                    return null;
+                }
+                definition.LinkDeserializedComponents(st);
+                return definition;
+            }
+        }
+
+        public bool Add(Definition definition)
         {
             throw new NotImplementedException();
         }
@@ -39,22 +64,69 @@ namespace AiRTech.Core.DataHandling
             throw new NotImplementedException();
         }
 
-        public bool Update(SDefinition definition)
+        public void Update(Definition definition)
+        {
+            var oldDef = GetDefinition(definition.ID);
+            definition.ID = oldDef.ID;
+
+            using (var db = Connection)
+            {
+                db.Update(definition);
+            }
+        }
+
+        public void Update(SFormula formula)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(SFormula formula)
+        public IEnumerable<Definition> UpdateDefinitions(IEnumerable<Definition> definitions)
         {
-            throw new NotImplementedException();
+            foreach (var def in definitions.Where(def => def != null))
+            {
+                if (!Exists(def))
+                {
+                    Add(def);
+                }
+                else
+                {
+                    Update(def);
+                }
+            }
+            RemoveAllExcept(definitions);
+            return GetAllDefinitions();
         }
 
-        public bool RemoveAllExcept(List<SDefinition> definitions)
+        public IEnumerable<Definition> GetAllDefinitions()
         {
-            throw new NotImplementedException();
+            using (var db = Connection)
+            {
+                var defs = db.Table<Definition>().ToList();
+                return defs;
+            }
         }
 
-        public bool RemoveAllExcept(List<SFormula> formulas)
+        public void RemoveAllExcept(IEnumerable<Definition> exceptDefinitions)
+        {
+            var lAll = GetAllDefinitions();
+            foreach (var definition in lAll)
+            {
+                if (!exceptDefinitions.Contains(definition))
+                {
+                    Remove(definition);
+                }
+            }
+        }
+
+        private void Remove(Definition definition)
+        {
+            using (var db = Connection)
+            {
+                db.Table<Definition>().Delete(def => def.ID == definition.ID);
+            }
+        }
+
+        public bool RemoveAllExcept(IEnumerable<SFormula> formulas)
         {
             throw new NotImplementedException();
         }
@@ -63,8 +135,11 @@ namespace AiRTech.Core.DataHandling
         {
             get
             {
-                var path = DependencyService.Get<IFileHandler>().GetDatabaseFilePath();
-                return new SQLiteConnection(path);
+                if (_path == null)
+                {
+                    _path = DependencyService.Get<IFileHandler>().GetDatabaseFilePath();
+                }
+                return new SQLiteConnection(_path);
             }
         }
     }

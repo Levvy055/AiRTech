@@ -43,6 +43,7 @@ namespace AiRTech.Views.ViewComponents
             }
         }
 
+        public string Title { get; set; }
         public ViewComponent[,] Contento
         {
             get { return _contento; }

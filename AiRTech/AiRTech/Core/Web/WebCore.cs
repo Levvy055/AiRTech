@@ -15,7 +15,7 @@ namespace AiRTech.Core.Web
 {
     public class WebCore
     {
-        private readonly IDbHandler _database;
+        private readonly DbHandler _database;
         private bool _connected;
         #region Http Adresses
         private const string BaseUrl = "https://airtech.grmdev.eu/f_api/";
@@ -28,15 +28,20 @@ namespace AiRTech.Core.Web
         private const string FnImgDir = "images/";
         #endregion
 
-        public WebCore(IDbHandler database)
+        public WebCore(DbHandler database)
         {
             _database = database;
-            IsConnected();
+            Online();
         }
 
         public async Task<List<Definition>> GetDefinitionList(SubjectType subjectType)
         {
-            var list = await GetData<List<Definition>>(FnDefs.Replace("*", subjectType.ToString().ToLower()));
+            var pathToDefs = FnDefs.Replace("*", subjectType.ToString().ToLower());
+            var list = await GetData<List<Definition>>(pathToDefs);
+            foreach (var def in list)
+            {
+                def.LinkDeserializedComponents(subjectType);
+            }
             return list;
         }
 
@@ -60,7 +65,7 @@ namespace AiRTech.Core.Web
             return default(T);
         }
 
-        public async Task<bool> IsConnected()
+        public async Task<bool> Online()
         {
             if (_connected)
             {

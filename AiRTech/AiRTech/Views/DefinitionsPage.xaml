@@ -6,13 +6,13 @@
     <StackLayout Orientation="Vertical" Spacing="5">
         <Label
             HorizontalOptions="Center"
-            Text="{Binding Title}"
+            Text="{Binding Title}" FontSize="20"
             VerticalOptions="Start" />
         <ListView
             x:Name="Mlist"
             BackgroundColor="SteelBlue"
             ItemsSource="{Binding Definitions}"
-            RowHeight="30"
+            RowHeight="35"
             SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -21,8 +21,8 @@
                             <Label
                                 BackgroundColor="DarkOrange"
                                 HorizontalTextAlignment="Center"
-                                Text="{Binding Title}"
-                                VerticalTextAlignment="Center" />
+                                Text="{Binding Title}" FontAttributes="Bold" FontSize="18"
+                                VerticalTextAlignment="Center" VerticalOptions="Fill"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

@@ -20,19 +20,35 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
         private SolverView _sisView;
         private Dictionary<string, SolverView> _tabs;
 
-        public override Dictionary<string, SolverView> Tabs => _tabs ?? (_tabs = new Dictionary<string, SolverView>
+        public override Dictionary<string, SolverView> Tabs
         {
-            {"Decybele", DecibelsView},
-            {"Histogram 2D", HistogramView},
-            {"Analiza sygnału", SignalAnalysisView},
-            {"Sygnał w Sygnale", SignalInSignalView},
-            /*{"Harmoniczne", new SolverView(null)},
-            {"DFT", new SolverView(null)},
-            {"FFT", new SolverView(null)},
-            {"A-law", new SolverView(null)},
-            {"M-law", new SolverView(null)},
-            {"Grafy", new SolverView(null)}*/
-        });
+            get
+            {
+                if (_tabs != null)
+                {
+                    return _tabs;
+                }
+                _tabs = new Dictionary<string, SolverView>
+                {
+                    {"Decybele", DecibelsView},
+                    {"Histogram 2D", HistogramView},
+                    {"Analiza sygnału", SignalAnalysisView},
+                    {"Sygnał w Sygnale", SignalInSignalView},
+                    /*{"Harmoniczne", new SolverView(null)},
+                        {"DFT", new SolverView(null)},
+                        {"FFT", new SolverView(null)},
+                        {"A-law", new SolverView(null)},
+                        {"M-law", new SolverView(null)},
+                        {"Grafy", new SolverView(null)}*/
+                };
+                foreach (var tabPair in _tabs)
+                {
+                    tabPair.Value.Title = tabPair.Key;
+                }
+                return _tabs;
+            }
+        }
+
         #endregion
 
         #region Event Handlers
