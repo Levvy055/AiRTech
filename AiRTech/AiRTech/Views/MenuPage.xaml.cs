@@ -19,18 +19,21 @@ namespace AiRTech.Views
                 new MenuPageItem
                 {
                     Title = "Strona Startowa",
+                    Detail = "Home",
                     IconSource = "AiRTech.Resources.home.png",
                     TargetType = typeof (MainPage)
                 },
                 new MenuPageItem
                 {
                     Title = "Przedmioty",
+                    Detail = "Wyświetl wszystkie",
                     IconSource = "AiRTech.Resources.subjects.png",
                     TargetType = typeof (SubjectsPage)
                 },
                 new MenuPageItem
                 {
                     Title = "O Aplikacji",
+                    Detail = "Informacje",
                     IconSource = "AiRTech.Resources.about.png",
                     TargetType = typeof (AboutPage)
                 }

@@ -12,13 +12,18 @@ namespace AiRTech
 {
     public partial class App : Application
     {
+        private readonly Color _mainBgColor = Color.DarkGray;
+        private readonly Color _menuBgColor = Color.CadetBlue;
+        private readonly Color _topBarColor = Color.DarkBlue;
+        private readonly Color _topBarTextColor = Color.White;
+
         public App()
         {
             try
             {
                 MainPage = new MasterDetailPage
                 {
-                    Master = new MenuPage(),
+                    Master = new MenuPage { BackgroundColor = _menuBgColor },
                     Detail = new NavigationPage(),
                     MasterBehavior = MasterBehavior.Popover
                 };
@@ -87,7 +92,9 @@ namespace AiRTech
                         NavPage = new NavigationPage(newPage)
                         {
                             Title = newPage.Title,
-                            BarBackgroundColor = Color.Blue
+                            BarBackgroundColor = _topBarColor,
+                            BarTextColor = _topBarTextColor,
+                            BackgroundColor = _mainBgColor
                         };
                         mPage.Detail = NavPage;
                     }

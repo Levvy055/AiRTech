@@ -5,7 +5,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
+using AiRTech.Views.Other;
 using Newtonsoft.Json;
+using Plugin.Connectivity;
 
 namespace AiRTech.Core.Web
 {
@@ -41,7 +43,7 @@ namespace AiRTech.Core.Web
 
         private async Task<T> GetData<T>(string path)
         {
-            using (var client = NewClient)
+            using (var client = Connection)
             {
                 try
                 {
@@ -65,12 +67,31 @@ namespace AiRTech.Core.Web
             {
                 return _connected;
             }
-            using (var client = NewClient)
+            var internetStatus = CrossConnectivity.Current.IsConnected;
+            if (!internetStatus)
+            {
+                DialogManager.ShowWarningDialog("Brak dostępu do internetu!",
+                    "Włącz INTERNETY! czyt. włącz transmisje danych.");
+                return false;
+            }
+            var isReachable = await CrossConnectivity.Current.IsReachable("google.com", 5000);
+            if (!isReachable)
+            {
+                DialogManager.ShowWarningDialog("Brak dostępu do internetu!",
+                    "Połącz się z INTERNETEM!");
+                return false;
+            }
+            using (var client = Connection)
             {
                 try
                 {
                     var r = await client.GetStringAsync("index.html");
                     _connected = !string.IsNullOrWhiteSpace(r) && r.StartsWith("<!DOCTYPE html>");
+                    if (!_connected)
+                    {
+                        DialogManager.ShowWarningDialog("Brak dostępu do serwera!",
+                    "Serwer jest wyłączony, bądź nie odpowiada.");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -84,9 +105,10 @@ namespace AiRTech.Core.Web
         {
             Debug.WriteLine(e);
             _connected = false;
+            DialogManager.ShowWarningDialog("Jesteś Offline!","Przejdź Online.");
         }
 
-        private HttpClient NewClient
+        private HttpClient Connection
         {
             get
             {

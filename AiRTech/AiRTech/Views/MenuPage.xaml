@@ -6,17 +6,19 @@
     Title="{Binding Title}"
     IsBusy="{Binding IsBusy}">
     <ContentPage.Content>
-        <StackLayout Margin="20,10,0,0" VerticalOptions="FillAndExpand">
-            <ListView
-                x:Name="listView"
-                SeparatorVisibility="None"
-                VerticalOptions="FillAndExpand">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ImageCell ImageSource="{Binding IconProperty}" Text="{Binding Title}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+        <ListView
+            x:Name="listView"
+            Margin="20,10,0,0"
+            SeparatorVisibility="None"
+            VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ImageCell
+                        Detail="{Binding Detail}"
+                        ImageSource="{Binding IconProperty}"
+                        Text="{Binding Title}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </ContentPage.Content>
 </ContentPage>
