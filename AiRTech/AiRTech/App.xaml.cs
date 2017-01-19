@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using AiRTech.Core.DataHandling;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Web;

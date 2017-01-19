@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 using System.Windows.Input;
-using AiRTech.Core.Misc;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Solv;
-using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.SubjectData

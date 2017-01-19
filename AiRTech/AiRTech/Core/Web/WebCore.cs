@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AiRTech.Core.DataHandling;
-using AiRTech.Core.Misc;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
-using AiRTech.Views.ViewModels;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace AiRTech.Core.Web
 {

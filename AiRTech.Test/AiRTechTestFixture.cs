@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AiRTech.Test
+﻿namespace AiRTech.Test
 {
     public enum AiRTechTestFixture
     {

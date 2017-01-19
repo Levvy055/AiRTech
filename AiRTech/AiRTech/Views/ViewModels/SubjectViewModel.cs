@@ -1,7 +1,5 @@
 ﻿using System.Windows.Input;
 using AiRTech.Core.Commands;
-using AiRTech.Core.Subjects;
-using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewModels
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using AiRTech.Core.Misc;
-using AiRTech.Core.Subjects.Def;
 using AiRTech.Core.Subjects.Impl;
 using Xamarin.Forms;
 

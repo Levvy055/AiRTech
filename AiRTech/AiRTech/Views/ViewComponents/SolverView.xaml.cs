@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using AiRTech.Core.Subjects.Solv.Solvers.Components;
 using Xamarin.Forms;
 

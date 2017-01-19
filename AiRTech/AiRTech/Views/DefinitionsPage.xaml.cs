@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AiRTech.Core.Subjects;
-using AiRTech.Core.Subjects.Def;
-using AiRTech.Views.SubjectData;
 using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
 
