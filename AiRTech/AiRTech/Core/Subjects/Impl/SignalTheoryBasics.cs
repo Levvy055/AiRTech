@@ -18,7 +18,6 @@ namespace AiRTech.Core.Subjects.Impl
 
         private async void GetDefinitions()
         {
-            await Task.Delay(10000);
             var app = Application.Current as App;
             var newDefList = await app.Web.GetDefinitionList(SubjectType);
             var defList = app.Database.UpdateDefinitions(newDefList);

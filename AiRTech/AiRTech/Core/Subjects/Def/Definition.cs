@@ -43,15 +43,16 @@ namespace AiRTech.Core.Subjects.Def
         public override bool Equals(object o)
         {
             var y = o as Definition;
-            return !ReferenceEquals(y, null) && Equals(y);
+            return !ReferenceEquals(y, null) && Equals(y, true);
         }
 
-        protected bool Equals(Definition y)
+        public bool Equals(Definition y, bool withId)
         {
             if (ReferenceEquals(this, y)) { return true; }
             if (this.GetType() != y.GetType()) { return false; }
-            return this.ID == y.ID && string.Equals(this.Title, y.Title)
-                && string.Equals(this.Desc, y.Desc) && Equals(this.Inner, y.Inner)
+            return (!withId || this.ID == y.ID)
+                && string.Equals(this.Title, y.Title)
+                && string.Equals(this.Desc, y.Desc)
                 && Equals(this.SolverNames, y.SolverNames);
         }
 

@@ -29,7 +29,17 @@ namespace AiRTech.Core.DataHandling
         {
             using (var db = Connection)
             {
-                var i = (from dbdef in db.Table<Definition>() where dbdef.Equals(def) select dbdef).FirstOrDefault();
+                var i = (from dbdef in db.Table<Definition>() where dbdef.Equals(def, false) select dbdef).FirstOrDefault();
+                return i != null;
+            }
+        }
+
+        private bool Exists(InDef idef)
+        {
+            using (var db = Connection)
+            {
+                var l = db.Table<InDef>().ToList();
+                var i = db.Table<InDef>().Where(dbidef => idef.Equals(dbidef, false)).FirstOrDefault();
                 return i != null;
             }
         }
@@ -56,7 +66,18 @@ namespace AiRTech.Core.DataHandling
 
         public bool Add(Definition definition)
         {
-            throw new NotImplementedException();
+            using (var db = Connection)
+            {
+                return db.Insert(definition) > 0;
+            }
+        }
+
+        private bool Add(InDef idef)
+        {
+            using (var db = Connection)
+            {
+                return db.Insert(idef) > 0;
+            }
         }
 
         public bool Add(SFormula formula)
@@ -75,6 +96,17 @@ namespace AiRTech.Core.DataHandling
             }
         }
 
+        private void Update(InDef idef)
+        {
+            var oldDef = GetDefinition(idef.ID);
+            idef.ID = oldDef.ID;
+
+            using (var db = Connection)
+            {
+                db.Update(idef);
+            }
+        }
+
         public void Update(SFormula formula)
         {
             throw new NotImplementedException();
@@ -84,6 +116,20 @@ namespace AiRTech.Core.DataHandling
         {
             foreach (var def in definitions.Where(def => def != null))
             {
+                if (def.Inner != null && def.Inner.Length > 0)
+                {
+                    foreach (var idef in def.Inner)
+                    {
+                        if (!Exists(idef))
+                        {
+                            Add(idef);
+                        }
+                        else
+                        {
+                            Update(idef);
+                        }
+                    }
+                }
                 if (!Exists(def))
                 {
                     Add(def);
@@ -102,10 +148,23 @@ namespace AiRTech.Core.DataHandling
             using (var db = Connection)
             {
                 var defs = db.Table<Definition>().ToList();
+                foreach (var def in defs)
+                {
+                    var idefList = (from idef in db.Table<InDef>() where idef.DefinitionId == def.ID select idef).ToArray();
+                    if (idefList != null && idefList.Length > 0)
+                    {
+                        def.Inner = idefList;
+                    }
+                    SubjectType st;
+                    if(Enum.TryParse(def.SubjectName, out st))
+                    {
+                        def.LinkDeserializedComponents(st);
+                    }
+                }
                 return defs;
             }
         }
-
+        
         public void RemoveAllExcept(IEnumerable<Definition> exceptDefinitions)
         {
             var lAll = GetAllDefinitions();
