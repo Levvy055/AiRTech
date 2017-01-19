@@ -1,12 +1,15 @@
-﻿namespace AiRTech.Core.DataHandling
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AiRTech.Core.Subjects;
+using AiRTech.Core.Subjects.Def;
+
+namespace AiRTech.Core.DataHandling
 {
     public interface IFileHandler
     {
         void Init();
-        void CreateFiles();
-        string Load();
-        void Save(string data);
-        void RemoveAllData();
-        string GetDatabaseFilePath();
+        void CreateDefaultFilesAndDirs(bool overrideFiles=false);
+        Task<IEnumerable<Definition>> GetDefinitions(SubjectType subjectType);
+        void UpdateDefinitions(List<Definition> newDefList, SubjectType subjectType);
     }
 }

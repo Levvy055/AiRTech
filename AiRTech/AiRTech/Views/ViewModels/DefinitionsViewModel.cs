@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using AiRTech.Core.Subjects.Def;
 using AiRTech.Views.SubjectData;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace AiRTech.Views.ViewModels
 {
@@ -17,7 +18,13 @@ namespace AiRTech.Views.ViewModels
         public DefinitionsViewModel(DefinitionsPage page) : base(page)
         {
             Title = "Definicje";
-            page.Subject.Base.PropertyChanged += SubjectOnPropertyChanged;
+            page.Subject.Base.PropertyChanged += (sender, args) =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    SubjectOnPropertyChanged(sender, args);
+                });
+            };
         }
 
         private void SubjectOnPropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -25,16 +32,17 @@ namespace AiRTech.Views.ViewModels
             var p = Page as DefinitionsPage;
             if (args.PropertyName == nameof(Definitions) && p?.DefListView != null)
             {
-                p.DefListView.ItemsSource = Definitions;
-                if (Definitions != null && Definitions.Count > 0)
+                var defs = Definitions.ToArray();
+                p.DefListView.ItemsSource = defs;
+                if (defs != null && defs.Length > 0)
                 {
                     p.DefListView.ItemSelected += MlistOnItemSelected;
-                    foreach (var def in Definitions)
+                    foreach (var def in defs)
                     {
                         if (!p.DefViews.ContainsKey(def.Title))
                         {
                             var sd = new SDefinition(def, Subject);
-                            var sdp = new ContentPage {Title = def.Title, Content = sd};
+                            var sdp = new ContentPage { Title = def.Title, Content = sd };
                             p.DefViews.Add(def.Title, sdp);
                         }
                     }
@@ -52,6 +60,6 @@ namespace AiRTech.Views.ViewModels
             p.DefListView.SelectedItem = -1;
         }
 
-        public ObservableCollection<Definition> Definitions => Subject.Base.Definitions;
+        public List<Definition> Definitions => Subject.Base.Definitions;
     }
 }

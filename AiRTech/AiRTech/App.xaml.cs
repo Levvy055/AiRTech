@@ -23,10 +23,10 @@ namespace AiRTech
                     Detail = new NavigationPage(),
                     MasterBehavior = MasterBehavior.Popover
                 };
-                DependencyService.Get<IFileHandler>().Init();
                 try
                 {
-                    Database = new DbHandler();
+                    FileHandler = DependencyService.Get<IFileHandler>();
+                    FileHandler.Init();
                 }
                 catch (Exception e)
                 {
@@ -36,7 +36,7 @@ namespace AiRTech
                 }
                 try
                 {
-                    Web = new WebCore(Database);
+                    Web = new WebCore();
                 }
                 catch (Exception e)
                 {
@@ -165,10 +165,9 @@ namespace AiRTech
             MainPage = new ContentPage();
         }
 
-        public DbHandler Database { get; set; }
-
         private Dictionary<Type, Page> CreatedPages { get; } = new Dictionary<Type, Page>();
         private NavigationPage NavPage { get; set; }
+        public IFileHandler FileHandler { get; set; }
         public WebCore Web { get; set; }
     }
 }

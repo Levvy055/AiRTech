@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using AiRTech.Core.DataHandling;
+using AiRTech.Core.Subjects;
+using AiRTech.Core.Subjects.Def;
 using AiRTech.UWP;
-using SQLite;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(FileHandler_UWP))]
@@ -15,47 +17,57 @@ namespace AiRTech.UWP
 {
     public class FileHandler_UWP : IFileHandler
     {
-        private const string DbFilename = "airtech_db.atdb";
+        private const string DirNameDefs = "Defs";
 
         public void Init()
         {
-            DbFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, DbFilename);
-            CreateFiles();
+            DirDefs = Path.Combine(ApplicationData.Current.LocalFolder.Path, DirNameDefs);
+            CreateDefaultFilesAndDirs();
         }
 
-        public void CreateFiles()
+        public void CreateDefaultFilesAndDirs(bool overrideFiles = false)
         {
-            if (!File.Exists(DbFilePath))
+            if (!Directory.Exists(DirDefs))
             {
-                File.Create(DbFilePath);
+                Directory.CreateDirectory(DirDefs);
             }
         }
 
-        public string Load()
+        public async Task<IEnumerable<Definition>> GetDefinitions(SubjectType subjectType)
         {
-            throw new NotImplementedException();
+            var filename = Path.Combine(DirDefs, subjectType + ".json");
+            var fc = GetFileContent(filename);
+            if (string.IsNullOrWhiteSpace(fc))
+            {
+                return null;
+            }
+            var list = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<List<Definition>>(fc));
+            foreach (var def in list)
+            {
+                def.LinkDeserializedComponents(subjectType);
+            }
+            return list;
         }
 
-        public void Save(string data)
+        public void UpdateDefinitions(List<Definition> list, SubjectType subjectType)
         {
-            throw new NotImplementedException();
+            var filename = Path.Combine(DirDefs, subjectType + ".json");
+            GetFileContent(filename);
+            var sList = JsonConvert.SerializeObject(list);
+            File.WriteAllText(filename, sList);
         }
 
-        public void RemoveAllData()
+        private static string GetFileContent(string filePath)
         {
-            throw new NotImplementedException();
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath);
+                return "";
+            }
+            var content = File.ReadAllText(filePath);
+            return content;
         }
 
-        public SQLiteConnection GetDatabaseConnection()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetDatabaseFilePath()
-        {
-            return DbFilePath;
-        }
-
-        private string DbFilePath { get; set; }
+        public string DirDefs { get; private set; }
     }
 }

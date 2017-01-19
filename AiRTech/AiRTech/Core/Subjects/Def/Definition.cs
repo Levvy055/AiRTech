@@ -3,11 +3,9 @@ using AiRTech.Core.Subjects.Solv;
 using AiRTech.Views.SubjectData;
 using AiRTech.Views.ViewComponents;
 using Newtonsoft.Json;
-using SQLite;
 
 namespace AiRTech.Core.Subjects.Def
 {
-    [Table("definitions")]
     public class Definition
     {
         public Definition()
@@ -16,14 +14,6 @@ namespace AiRTech.Core.Subjects.Def
 
         public void LinkDeserializedComponents(SubjectType st)
         {
-            SubjectName = st.ToString();
-            if (Inner != null && Inner.Length > 0)
-            {
-                foreach (var inDef in Inner)
-                {
-                    inDef.DefinitionId = ID;
-                }
-            }
             if (!string.IsNullOrEmpty(SolverNames))
             {
                 var sTabs = Solver.GetSolverFor(st).Tabs;
@@ -43,15 +33,14 @@ namespace AiRTech.Core.Subjects.Def
         public override bool Equals(object o)
         {
             var y = o as Definition;
-            return !ReferenceEquals(y, null) && Equals(y, true);
+            return !ReferenceEquals(y, null) && Equals(y);
         }
 
-        public bool Equals(Definition y, bool withId)
+        public bool Equals(Definition y)
         {
             if (ReferenceEquals(this, y)) { return true; }
             if (this.GetType() != y.GetType()) { return false; }
-            return (!withId || this.ID == y.ID)
-                && string.Equals(this.Title, y.Title)
+            return string.Equals(this.Title, y.Title)
                 && string.Equals(this.Desc, y.Desc)
                 && Equals(this.SolverNames, y.SolverNames);
         }
@@ -60,7 +49,7 @@ namespace AiRTech.Core.Subjects.Def
         {
             unchecked
             {
-                var hashCode = ID;
+                var hashCode = 0;
                 hashCode = (hashCode * 397) ^ (Title?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (Desc?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (Inner?.GetHashCode() ?? 0);
@@ -69,31 +58,18 @@ namespace AiRTech.Core.Subjects.Def
             }
         }
 
-        public int GetHashCode(Definition obj)
+        public static int GetHashCode(Definition obj)
         {
-            unchecked
-            {
-                var hashCode = obj.ID;
-                hashCode = (hashCode * 397) ^ (obj.Title?.GetHashCode() ?? 0);
-                hashCode = (hashCode * 397) ^ (obj.Desc?.GetHashCode() ?? 0);
-                hashCode = (hashCode * 397) ^ (obj.Inner?.GetHashCode() ?? 0);
-                hashCode = (hashCode * 397) ^ (obj.SolverNames?.GetHashCode() ?? 0);
-                return hashCode;
-            }
+            return obj.GetHashCode();
         }
         #endregion
 
-        [PrimaryKey, AutoIncrement, NotNull, Unique]
-        public int ID { get; set; }
-        [NotNull]
         public string Title { get; set; }
-        public string SubjectName { get; set; }
         public string Desc { get; set; }
-        [Ignore]
         public InDef[] Inner { get; set; }
         [JsonProperty(PropertyName = "Calcs")]
         public string SolverNames { get; set; }
-        [Ignore]
+        [JsonIgnore]
         public List<SolverView> Solvers { get; } = new List<SolverView>();
     }
 }

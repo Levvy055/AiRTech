@@ -12,32 +12,15 @@ namespace AiRTech.Core.Subjects.Impl
 
         public SignalTheoryBasics() : base(SubjectType.PODSTAWY_TEORII_SYGNALOW)
         {
-            UpdateDependencies();
-            GetDefinitions();
-        }
-
-        private async void GetDefinitions()
-        {
-            var app = Application.Current as App;
-            var newDefList = await app.Web.GetDefinitionList(SubjectType);
-            var defList = app.Database.UpdateDefinitions(newDefList);
-            foreach (var def in defList)
+            LoadDefinitionsFromFile().ContinueWith(task =>
             {
-                Definitions.Add(def);
-            }
+                LoadDefinitionsFromServer();
+            });
         }
 
         protected sealed override void UpdateDependencies()
         {
-            var app = Application.Current as App;
-            var defList = app.Database.GetAllDefinitions();
-            if (defList != null)
-            {
-                foreach (var def in defList)
-                {
-                    Definitions.Add(def);
-                }
-            }
+
         }
     }
 }

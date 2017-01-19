@@ -55,18 +55,17 @@ namespace AiRTech.UWP
             // just ensure that the window is active
             if (rootFrame == null)
             {
-                // CreateFiles a Frame to act as the navigation context and navigate to the first Page
+                // CreateDefaultFilesAndDirs a Frame to act as the navigation context and navigate to the first Page
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                var assembliesToInclude = new List<Assembly>
-                {
-                    typeof (SQLitePCL.Batteries).GetTypeInfo().Assembly,
-                    typeof (SQLite.SQLiteConnection).GetTypeInfo().Assembly
-                };
+                //var assembliesToInclude = new List<Assembly>
+                //{
+                //    typeof (SQLite.SQLiteConnection).GetTypeInfo().Assembly
+                //};
 
-                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
+                //Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 Xamarin.Forms.Forms.Init(e);
                 ImageCircleRenderer.Init();

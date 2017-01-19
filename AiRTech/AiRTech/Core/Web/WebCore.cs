@@ -15,7 +15,6 @@ namespace AiRTech.Core.Web
 {
     public class WebCore
     {
-        private readonly DbHandler _database;
         private bool _connected;
         #region Http Adresses
         private const string BaseUrl = "https://airtech.grmdev.eu/f_api/";
@@ -28,9 +27,8 @@ namespace AiRTech.Core.Web
         private const string FnImgDir = "images/";
         #endregion
 
-        public WebCore(DbHandler database)
+        public WebCore()
         {
-            _database = database;
             Online();
         }
 

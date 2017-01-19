@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using AiRTech.Annotations;
 using AiRTech.Core.Subjects.Def;
 using AiRTech.Core.Subjects.Solv;
+using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects
 {
@@ -15,24 +17,51 @@ namespace AiRTech.Core.Subjects
         protected SubjectBase(SubjectType subjectType)
         {
             SubjectType = subjectType;
-            Definitions = new ObservableCollection<Definition>();
-            Definitions.CollectionChanged += UpdateDependencies;
+            Definitions = new List<Definition>();
             Solver = Solver.GetSolverFor(SubjectType);
-            PropertyChanged += UpdateDependencies;
+            PropertyChanged += (sender, args) => UpdateDependencies();
         }
-
-        private void UpdateDependencies(object sender, PropertyChangedEventArgs e)
-        {
-            UpdateDependencies();
-        }
-
-        private void UpdateDependencies(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            UpdateDependencies();
-            OnPropertyChanged(nameof(Definitions));
-        }
-
+        
         protected abstract void UpdateDependencies();
+
+        protected async Task LoadDefinitionsFromFile()
+        {
+            try
+            {
+                var app = Application.Current as App;
+                var defList = await app.FileHandler.GetDefinitions(SubjectType);
+                if (defList != null)
+                {
+                    foreach (var def in defList)
+                    {
+                        if (!Definitions.Contains(def))
+                        {
+                            Definitions.Add(def);
+                        }
+                    }
+                    OnPropertyChanged(nameof(Definitions));
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
+        protected async void LoadDefinitionsFromServer()
+        {
+            var app = Application.Current as App;
+            try
+            {
+                var newDefList = await app.Web.GetDefinitionList(SubjectType);
+                app.FileHandler.UpdateDefinitions(newDefList, SubjectType);
+                await LoadDefinitionsFromFile();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -41,7 +70,7 @@ namespace AiRTech.Core.Subjects
         }
 
         public Solver Solver { get; private set; }
-        public ObservableCollection<Definition> Definitions { get; protected set; }
+        public List<Definition> Definitions { get; protected set; }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
