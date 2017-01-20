@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
@@ -28,12 +29,17 @@ namespace AiRTech.Views.SubjectData
             }
             if (def.Solvers.Count > 0)
             {
-                foreach (var s in def.Solvers)
+                Sl.Children.Add(new Label
                 {
-                    if (s != null)
-                    {
-                        Sl.Children.Add(CreateButton(s));
-                    }
+                    Text = "Powiązane Solvery",
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    FontSize = 18,
+                    FontAttributes = FontAttributes.Bold
+
+                });
+                foreach (var s in def.Solvers.Where(s => s != null))
+                {
+                    Sl.Children.Add(CreateButton(s));
                 }
             }
         }

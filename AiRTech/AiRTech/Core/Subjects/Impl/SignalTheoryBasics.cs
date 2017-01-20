@@ -7,7 +7,7 @@
         {
             LoadDefinitionsFromFile().ContinueWith(task =>
             {
-                LoadDefinitionsFromServer();
+                LoadDefinitionsFromServerAndSave();
             });
         }
 

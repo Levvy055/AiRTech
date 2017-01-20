@@ -34,6 +34,10 @@ namespace AiRTech.Core.Web
         {
             var pathToDefs = FnDefs.Replace("*", subjectType.ToString().ToLower());
             var list = await GetData<List<Definition>>(pathToDefs);
+            if (list == null)
+            {
+                return null;
+            }
             foreach (var def in list)
             {
                 def.LinkDeserializedComponents(subjectType);
@@ -53,10 +57,15 @@ namespace AiRTech.Core.Web
                     var obj = JsonConvert.DeserializeObject<T>(respBody);
                     return obj;
                 }
+                catch (JsonException e)
+                {
+                    HandleWebException(e, "Błędna odpowiedź serwera! Spróbuj ponownie później.");
+                }
                 catch (Exception e)
                 {
                     HandleWebException(e);
                 }
+
             }
             return default(T);
         }
@@ -101,11 +110,15 @@ namespace AiRTech.Core.Web
             return _connected;
         }
 
-        public void HandleWebException(Exception e)
+        public void HandleWebException(Exception e, string msg = null)
         {
             Debug.WriteLine(e);
             _connected = false;
-            DialogManager.ShowWarningDialog("Jesteś Offline!","Przejdź Online.");
+            if (msg == null)
+            {
+                msg = "Problem podczas próby pobrania zawartości online.";
+            }
+            DialogManager.ShowWarningDialog("Błąd pobierania!", msg);
         }
 
         private HttpClient Connection

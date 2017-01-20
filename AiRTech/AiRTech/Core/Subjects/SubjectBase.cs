@@ -21,7 +21,7 @@ namespace AiRTech.Core.Subjects
             Solver = Solver.GetSolverFor(SubjectType);
             PropertyChanged += (sender, args) => UpdateDependencies();
         }
-        
+
         protected abstract void UpdateDependencies();
 
         protected async Task LoadDefinitionsFromFile()
@@ -32,12 +32,10 @@ namespace AiRTech.Core.Subjects
                 var defList = await app.FileHandler.GetDefinitions(SubjectType);
                 if (defList != null)
                 {
+                    Definitions.Clear();
                     foreach (var def in defList)
                     {
-                        if (!Definitions.Contains(def))
-                        {
-                            Definitions.Add(def);
-                        }
+                        Definitions.Add(def);
                     }
                     OnPropertyChanged(nameof(Definitions));
                 }
@@ -48,12 +46,16 @@ namespace AiRTech.Core.Subjects
             }
         }
 
-        protected async void LoadDefinitionsFromServer()
+        protected async void LoadDefinitionsFromServerAndSave()
         {
             var app = Application.Current as App;
             try
             {
                 var newDefList = await app.Web.GetDefinitionList(SubjectType);
+                if (newDefList == null)
+                {
+                    return;
+                }
                 app.FileHandler.UpdateDefinitions(newDefList, SubjectType);
                 await LoadDefinitionsFromFile();
             }

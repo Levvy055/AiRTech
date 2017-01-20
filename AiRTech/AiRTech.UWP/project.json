@@ -3,6 +3,7 @@
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Newtonsoft.Json": "9.0.1",
     "Refractored.MvvmHelpers": "1.2.0",
+    "Xam.Plugin.Connectivity": "2.3.0",
     "Xam.Plugins.Forms.ImageCircle": "1.8.1",
     "Xamarin.Forms": "2.3.4.184-pre1"
   },
