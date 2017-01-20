@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects;
@@ -15,14 +17,14 @@ namespace AiRTech.Core.Web
     {
         private bool _connected;
         #region Http Adresses
-        private const string BaseUrl = "https://airtech.grmdev.eu/f_api/";
-        //private const string BaseUrl = "http://localhost:8080/airtech_server/api/";
-        private const string FnDefDir = "defs/";
-        private const string FnDefs = "defs_*.json";
-        private const string FnFmlsDir = "fmls/";
-        private const string FnFmls = "fmls_*.json";
-        private const string FnImgDir = "images/";
-        private const string FnLinker = "linker.json";
+        public const string BaseUrl = "https://airtech.grmdev.eu/f_api/";
+        //public const string BaseUrl = "http://localhost:8080/airtech_server/api/";
+        public const string FnDefDir = "defs";
+        public const string FnDefs = "defs_*.json";
+        public const string FnFmlsDir = "fmls/";
+        public const string FnFmls = "fmls_*.json";
+        public const string FnImgDir = "images";
+        public const string FnLinker = "linker.json";
         #endregion
 
         public WebCore()
@@ -32,7 +34,7 @@ namespace AiRTech.Core.Web
 
         public async Task<List<Definition>> GetDefinitionList(SubjectType subjectType)
         {
-            var pathToDefs = FnDefDir+FnDefs.Replace("*", subjectType.ToString().ToLower());
+            var pathToDefs = Path.Combine(FnDefDir, FnDefs.Replace("*", subjectType.ToString().ToLower()));
             var list = await GetData<List<Definition>>(pathToDefs);
             if (list == null)
             {
@@ -68,6 +70,29 @@ namespace AiRTech.Core.Web
 
             }
             return default(T);
+        }
+
+        public async Task<bool> GetImage(string path, Stream fileStream)
+        {
+            using (var client = Connection)
+            {
+                try
+                {
+                    var resp = await client.GetAsync(path).ConfigureAwait(false);
+                    //resp.EnsureSuccessStatusCode();
+                    if (resp.StatusCode == HttpStatusCode.OK
+                        || resp.StatusCode == HttpStatusCode.NotModified
+                        || resp.StatusCode == HttpStatusCode.Found)
+                    {
+                        await resp.Content.CopyToAsync(fileStream);
+                        return true;
+                    }
+                }
+                catch (HttpRequestException)
+                {
+                }
+                return false;
+            }
         }
 
         public async Task<bool> Online()

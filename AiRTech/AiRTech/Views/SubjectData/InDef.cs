@@ -1,4 +1,6 @@
-﻿using AiRTech.Core.Misc;
+﻿using System.IO;
+using AiRTech.Core.Misc;
+using AiRTech.Core.Web;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
@@ -38,6 +40,14 @@ namespace AiRTech.Views.SubjectData
         public string Text { get; set; }
         public InDefLayout Layout { get; set; } = InDefLayout.TextOverImage;
         [JsonIgnore]
-        public ImageSource ImageSource => ImageResourceExtension.GetImage("AiRTech.Resources.Defs." + Image);
+        public ImageSource ImageSource
+        {
+            get
+            {
+                var path = Path.Combine(WebCore.FnDefDir, WebCore.FnImgDir, Image);
+                var imageSource = ImageResourceExtension.GetImageFromUri(path).Result;
+                return imageSource;
+            }
+        }
     }
 }

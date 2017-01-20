@@ -296,7 +296,7 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
                 var gr = new SvGrid("h_r", Uc);
                 _histView = new SolverView(new ViewComponent[,]
                     {
-                        {new SvLabel("Write Row & Column Count (max 20):"), tfS, new SvButton("", "CreateDefaultFilesAndDirs table", OnCreateHist), },
+                        {new SvLabel("Write Row & Column Count (max 20):"), tfS, new SvButton("", "Create table", OnCreateHist), },
                         {new SvRow(gl), new SvButton("", "Calc", OnHistCalc), new SvRow(gr) }
                     });
                 return _histView;

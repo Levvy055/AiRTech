@@ -46,7 +46,7 @@ namespace AiRTech.Core.Subjects
         public string Name { get; }
         public string Details { get; set; }
         public string Img { get; }
-        public ImageSource ImgProperty => ImageResourceExtension.GetImage(Img);
+        public ImageSource ImgProperty => ImageResourceExtension.GetEmbeddedImage(Img);
         public SubjectBase Base { get; private set; }
     }
 }

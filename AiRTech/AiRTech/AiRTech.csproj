@@ -39,6 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Commands\SubjectCommands.cs" />
+    <Compile Include="Core\DataHandling\FileHelper.cs" />
     <Compile Include="Core\DataHandling\IFileHandler.cs" />
     <Compile Include="Core\Misc\GenericDictionary.cs" />
     <Compile Include="Core\Subjects\Def\Definition.cs" />
@@ -269,10 +270,7 @@
     <Folder Include="Core\Subjects\Formula\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Defs\hist_s1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Defs\hist_s2.png" />
+    <EmbeddedResource Include="Resources\no-image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

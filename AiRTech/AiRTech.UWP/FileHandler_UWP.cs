@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -14,11 +15,11 @@ namespace AiRTech.UWP
 {
     public class FileHandler_UWP : IFileHandler
     {
-        private const string DirNameDefs = "Defs";
+        private const string DirNameDefs = "defs";
 
         public void Init()
         {
-            DirDefs = Path.Combine(ApplicationData.Current.LocalFolder.Path, DirNameDefs);
+            DirDefs = Path.Combine(RootAppPath(), DirNameDefs);
             CreateDefaultFilesAndDirs();
         }
 
@@ -28,6 +29,16 @@ namespace AiRTech.UWP
             {
                 Directory.CreateDirectory(DirDefs);
             }
+            var dirImg = Path.Combine(DirDefs, "images");
+            if (!Directory.Exists(dirImg))
+            {
+                Directory.CreateDirectory(dirImg);
+            }
+        }
+
+        public string RootAppPath()
+        {
+            return ApplicationData.Current.LocalFolder.Path;
         }
 
         public async Task<IEnumerable<Definition>> GetDefinitions(SubjectType subjectType)
@@ -58,9 +69,47 @@ namespace AiRTech.UWP
             File.WriteAllText(filename, sList);
         }
 
-        private static string GetFileContent(string filePath)
+        public bool Exists(Uri uri)
         {
-            if (!File.Exists(filePath))
+            var u = FileHelper.GetAboslutePath(uri);
+            return Exists(u);
+        }
+
+        public bool Exists(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return false;
+            }
+            return File.Exists(path);
+        }
+
+        public bool IsEmpty(Uri uri)
+        {
+            var fileInfo = new FileInfo(FileHelper.GetAboslutePath(uri));
+            return fileInfo.Length == 0;
+        }
+
+        public void RemoveFile(Uri uri)
+        {
+            RemoveFile(FileHelper.GetAboslutePath(uri));
+        }
+
+        public void RemoveFile(string path)
+        {
+            File.Delete(path);
+        }
+
+        public Stream GetFileStream(string path, bool readOnly = false)
+        {
+            var fileAccess = readOnly ? FileAccess.Read : FileAccess.ReadWrite;
+            path = Path.Combine(RootAppPath(), path);
+            return File.Open(path, FileMode.OpenOrCreate, fileAccess);
+        }
+
+        private string GetFileContent(string filePath)
+        {
+            if (!Exists(filePath))
             {
                 using (File.Create(filePath))
                 {

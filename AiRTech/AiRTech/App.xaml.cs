@@ -101,9 +101,9 @@ namespace AiRTech
             }
         }
 
-        public async void NavigateToModal(ContentPage detailPage)
+        public async void NavigateToModal(ContentPage modal)
         {
-            await NavPage.PushAsync(detailPage);
+            await NavPage.PushAsync(modal);
         }
 
         public Page GetPage(Type pageType, string title = null, params object[] args)
@@ -134,7 +134,7 @@ namespace AiRTech
 
         protected override async void OnStart()
         {
-            //await Task.Delay(7000);
+            //await Task.Delay(5000);
             try
             {
                 try
@@ -162,10 +162,10 @@ namespace AiRTech
                 menuPage.IsBusy = false;
                 menuPage.IsDisabled = false;
 #if DEBUG
-                //ChangePageTo(typeof(SubjectsPage), "Subjects", false);
-                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                //ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
-                //ChangePageTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
+                ChangePageTo(typeof(SubjectsPage), "Subjects", false);
+                var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                ChangePageTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
                 //ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
                 //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
                 //np?.NavigateTo(3);

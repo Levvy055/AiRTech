@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using AiRTech.Core.Subjects.Def;
 using AiRTech.Views.SubjectData;
 using Xamarin.Forms;
@@ -46,9 +48,19 @@ namespace AiRTech.Views.ViewModels
         {
             var p = Page as DefinitionsPage;
             var d = p.DefListView.SelectedItem as Definition;
-            if (d == null) { return; }
-            var app = Application.Current as App;
-            app.NavigateToModal(p.DefViews[d.Title]);
+            if (d == null)
+            {
+                return;
+            }
+            try
+            {
+                var app = Application.Current as App;
+                app.NavigateToModal(p.DefViews[d.Title]);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Err: " + e);
+            }
             p.DefListView.SelectedItem = -1;
         }
 

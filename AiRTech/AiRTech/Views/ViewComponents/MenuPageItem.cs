@@ -9,7 +9,7 @@ namespace AiRTech.Views.ViewComponents
         public string Title { get; set; }
         public string IconSource { get; set; }
         public string Detail { get; set; }
-        public ImageSource IconProperty => ImageResourceExtension.GetImage(IconSource);
+        public ImageSource IconProperty => ImageResourceExtension.GetEmbeddedImage(IconSource);
         public Type TargetType { get; set; }
     }
 }
