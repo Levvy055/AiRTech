@@ -5,6 +5,10 @@ namespace AiRTech.Views.ViewModels
 {
     public class SubjectViewModel : ViewModelBase
     {
+        private ICommand _defTappedCommand;
+        private ICommand _frmlTappedCommand;
+        private ICommand _solverTappedCommand;
+
         public SubjectViewModel(SubjectPage page) : base(page)
         {
             Title = "Przedmiot " + Subject.Name;
@@ -13,8 +17,12 @@ namespace AiRTech.Views.ViewModels
         public string DefinitionTxt => "Definicje";
         public string FormulaTxt => "Wzory";
         public string TaskSolverTxt => "Solver";
-        public ICommand DefinitionTappedCommand => SubjectCommands.DefinitionsTappedCommand;
-        public ICommand FormulasTappedCommand => SubjectCommands.FormulasTappedCommand;
-        public ICommand SolverTappedCommand => SubjectCommands.SolverTappedCommand;
+        public ICommand DefinitionTappedCommand =>
+            _defTappedCommand ?? (_defTappedCommand = SubjectCommands.DefinitionsTappedCommand);
+
+        public ICommand FormulasTappedCommand =>
+            _frmlTappedCommand ?? (_frmlTappedCommand = SubjectCommands.FormulasTappedCommand);
+        public ICommand SolverTappedCommand =>
+            _solverTappedCommand ?? (_solverTappedCommand = SubjectCommands.SolverTappedCommand);
     }
 }

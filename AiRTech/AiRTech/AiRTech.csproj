@@ -70,8 +70,8 @@
     <Compile Include="Views\SubjectData\InDefLayout.cs" />
     <Compile Include="Views\ViewModels\AboutViewModel.cs" />
     <Compile Include="Views\Other\HistResultModal.cs" />
-    <Compile Include="Views\SubjectData\SDefinition.xaml.cs">
-      <DependentUpon>SDefinition.xaml</DependentUpon>
+    <Compile Include="Views\SubjectData\DefinitionView.xaml.cs">
+      <DependentUpon>DefinitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SubjectData\SFormula.xaml.cs">
       <DependentUpon>SFormula.xaml</DependentUpon>
@@ -248,7 +248,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\SubjectData\SDefinition.xaml">
+    <EmbeddedResource Include="Views\SubjectData\DefinitionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

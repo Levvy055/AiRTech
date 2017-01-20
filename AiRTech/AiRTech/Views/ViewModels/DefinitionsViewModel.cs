@@ -35,7 +35,7 @@ namespace AiRTech.Views.ViewModels
                     {
                         if (!p.DefViews.ContainsKey(def.Title))
                         {
-                            var sd = new SDefinition(def, Subject);
+                            var sd = new DefinitionView(def, Subject);
                             var sdp = new ContentPage { Title = def.Title, Content = sd };
                             p.DefViews.Add(def.Title, sdp);
                         }

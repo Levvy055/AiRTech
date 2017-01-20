@@ -11,7 +11,7 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
             {
                 var list = new Dictionary<string, SolverView>
             {
-                {"First", new SolverView(null)}
+                //{"First", new SolverView(null)}
             };
                 return list;
             }

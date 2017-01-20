@@ -5,10 +5,7 @@
 
         public SignalTheoryBasics() : base(SubjectType.PODSTAWY_TEORII_SYGNALOW)
         {
-            LoadDefinitionsFromFile().ContinueWith(task =>
-            {
-                LoadDefinitionsFromServerAndSave();
-            });
+
         }
 
         protected sealed override void UpdateDependencies()

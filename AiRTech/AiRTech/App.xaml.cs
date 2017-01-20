@@ -47,7 +47,7 @@ namespace AiRTech
             };
         }
 
-        public async void ChangePageTo(Type page, string title, bool inner = true, params object[] args)
+        public async void NavigateTo(Type page, string title, bool inner = true, params object[] args)
         {
             var mPage = MainPage as MasterDetailPage;
             if (mPage == null)
@@ -85,7 +85,7 @@ namespace AiRTech
             }
         }
 
-        public async void ChangePageTo(Page page, bool removePrevious = false)
+        public async void NavigateTo(Page page, bool removePrevious = false)
         {
             if (removePrevious)
             {
@@ -111,24 +111,54 @@ namespace AiRTech
             Page page;
             if (CreatedPages.ContainsKey(pageType))
             {
-                page = CreatedPages[pageType];
-            }
-            else
-            {
-                if (args == null || args.Length == 0)
+                if (pageType == typeof(SubjectPage) || pageType == typeof(DefinitionsPage) || pageType == typeof(SolverPage))
                 {
-                    page = Activator.CreateInstance(pageType) as Page;
+                    page = GetPage(pageType, args);
                 }
                 else
                 {
-                    page = Activator.CreateInstance(pageType, args) as Page;
+                    page = CreatedPages[pageType][0];
                 }
-                CreatedPages.Add(pageType, page);
+            }
+            else
+            {
+                page = CreatePage(pageType, args);
             }
             if (!string.IsNullOrWhiteSpace(title) && page != null)
             {
                 page.Title = title;
             }
+            return page;
+        }
+
+        private Page GetPage(Type pageType, object[] args)
+        {
+            var pages = CreatedPages[pageType];
+            Page page = null;
+            foreach (var p in pages)
+            {
+                dynamic sp = p;
+                if (sp.Subject == args[0])
+                {
+                    page = p;
+                }
+            }
+            return page ?? CreatePage(pageType, args);
+        }
+
+        private Page CreatePage(Type pageType, object[] args)
+        {
+            Page page;
+            if (args == null || args.Length == 0)
+            {
+                page = Activator.CreateInstance(pageType) as Page;
+            }
+            else
+            {
+                page = Activator.CreateInstance(pageType, args) as Page;
+            }
+            var list = new List<Page> { page };
+            CreatedPages[pageType] = list;
             return page;
         }
 
@@ -157,16 +187,16 @@ namespace AiRTech
                     MainPage.DisplayAlert("Offline!", "Brak dostępu do serwera!", "Zamknij");
                     Debug.WriteLine(e);
                 }
-                ChangePageTo(typeof(MainPage), "AiRTech", false);
+                NavigateTo(typeof(MainPage), "AiRTech", false);
                 var menuPage = (MenuPage)((MasterDetailPage)MainPage).Master;
                 menuPage.IsBusy = false;
                 menuPage.IsDisabled = false;
 #if DEBUG
-                ChangePageTo(typeof(SubjectsPage), "Subjects", false);
-                var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
-                ChangePageTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
-                //ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
+                //NavigateTo(typeof(SubjectsPage), "Subjects", false);
+                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                //NavigateTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                //NavigateTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
+                //NavigateTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
                 //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
                 //np?.NavigateTo(3);
 #else
@@ -194,7 +224,7 @@ namespace AiRTech
             MainPage = new ContentPage();
         }
 
-        private Dictionary<Type, Page> CreatedPages { get; } = new Dictionary<Type, Page>();
+        private Dictionary<Type, List<Page>> CreatedPages { get; } = new Dictionary<Type, List<Page>>();
         private NavigationPage NavPage { get; set; }
         public IFileHandler FileHandler { get; set; }
         public WebCore Web { get; set; }

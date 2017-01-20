@@ -20,6 +20,10 @@ namespace AiRTech.Core.Subjects
             Definitions = new List<Definition>();
             Solver = Solver.GetSolverFor(SubjectType);
             PropertyChanged += (sender, args) => UpdateDependencies();
+            LoadDefinitionsFromFile().ContinueWith(task =>
+            {
+                LoadDefinitionsFromServerAndSave();
+            });
         }
 
         protected abstract void UpdateDependencies();

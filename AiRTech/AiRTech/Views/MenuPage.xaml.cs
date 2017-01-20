@@ -53,7 +53,7 @@ namespace AiRTech.Views
             ListView.SelectedItem = null;
             Debug.WriteLine("Menu List changed to: " + item.Title);
             var app = Application.Current as App;
-            app?.ChangePageTo(item.TargetType, item.Title,  false);
+            app?.NavigateTo(item.TargetType, item.Title,  false);
         }
 
         public ListView ListView => listView;

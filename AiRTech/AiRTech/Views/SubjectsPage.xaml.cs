@@ -7,10 +7,9 @@ namespace AiRTech.Views
     {
         public SubjectsPage()
         {
-            InitializeComponent();
             BindingContext = new SubjectsViewModel(this);
+            InitializeComponent();
         }
-
 
     }
 }

@@ -8,11 +8,11 @@ using Xamarin.Forms;
 
 namespace AiRTech.Views.SubjectData
 {
-    public partial class SDefinition : ContentView
+    public partial class DefinitionView : ContentView
     {
         private readonly Subject _subject;
 
-        public SDefinition(Definition def, Subject subject)
+        public DefinitionView(Definition def, Subject subject)
         {
             _subject = subject;
             BindingContext = def;

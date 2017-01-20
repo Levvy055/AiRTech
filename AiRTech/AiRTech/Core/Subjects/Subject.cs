@@ -33,8 +33,8 @@ namespace AiRTech.Core.Subjects
                     return _subjects;
                 }
                 _subjects = new Dictionary<SubjectType, Subject>();
-                //new Subject("Podstawy Elektroniki", typeof(ElectronicBasics),
-                //    SubjectType.PODSTAWY_ELEKTRONIKI, "AiRTech.Resources.pe.png");
+                new Subject("Podstawy Elektroniki", typeof(ElectronicBasics),
+                    SubjectType.PODSTAWY_ELEKTRONIKI, "AiRTech.Resources.pe.png");
                 new Subject("Podstawy Teorii Sygnałów", typeof(SignalTheoryBasics),
                     SubjectType.PODSTAWY_TEORII_SYGNALOW, "AiRTech.Resources.pts.png");
                 return _subjects;

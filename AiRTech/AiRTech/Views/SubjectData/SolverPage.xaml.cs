@@ -60,7 +60,7 @@ namespace AiRTech.Views.SubjectData
                 var t = Carousel.CurrentPage.Title;
                 Carousel.Title = t;
                 var app = Application.Current as App;
-                app.ChangePageTo(Carousel);
+                app.NavigateTo(Carousel);
             }
             catch (Exception e)
             {
@@ -71,7 +71,7 @@ namespace AiRTech.Views.SubjectData
         public void NavigateToMain()
         {
             var app = Application.Current as App;
-            app.ChangePageTo(Mpage);
+            app.NavigateTo(Mpage);
             _isOnMain = true;
         }
 
@@ -101,7 +101,7 @@ namespace AiRTech.Views.SubjectData
             Carousel.CurrentPage = page;
             Carousel.Title = page.Title + " - Solver";
             var app = Application.Current as App;
-            app.ChangePageTo(Carousel, _isOnMain);
+            app.NavigateTo(Carousel, _isOnMain);
             _isOnMain = false;
         }
 
