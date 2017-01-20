@@ -11,7 +11,7 @@ namespace AiRTech.Views.ViewModels
         public DefinitionsViewModel(DefinitionsPage page) : base(page)
         {
             Title = "Definicje";
-            page.Subject.Base.PropertyChanged += (sender, args) =>
+            Subject.Base.PropertyChanged += (sender, args) =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -29,7 +29,6 @@ namespace AiRTech.Views.ViewModels
                 p.DefListView.ItemsSource = defs;
                 if (defs != null && defs.Length > 0)
                 {
-                    p.DefListView.ItemSelected += MlistOnItemSelected;
                     foreach (var def in defs)
                     {
                         if (!p.DefViews.ContainsKey(def.Title))
@@ -43,7 +42,7 @@ namespace AiRTech.Views.ViewModels
             }
         }
 
-        private void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs)
+        public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs)
         {
             var p = Page as DefinitionsPage;
             var d = p.DefListView.SelectedItem as Definition;

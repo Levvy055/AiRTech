@@ -17,12 +17,12 @@ namespace AiRTech.Core.Web
         #region Http Adresses
         private const string BaseUrl = "https://airtech.grmdev.eu/f_api/";
         //private const string BaseUrl = "http://localhost:8080/airtech_server/api/";
-        private const string FnDefs = "defs_*.json";
-        private const string FnFmls = "fmls_*.json";
-        private const string FnLinker = "linker.json";
         private const string FnDefDir = "defs/";
+        private const string FnDefs = "defs_*.json";
         private const string FnFmlsDir = "fmls/";
+        private const string FnFmls = "fmls_*.json";
         private const string FnImgDir = "images/";
+        private const string FnLinker = "linker.json";
         #endregion
 
         public WebCore()
@@ -32,7 +32,7 @@ namespace AiRTech.Core.Web
 
         public async Task<List<Definition>> GetDefinitionList(SubjectType subjectType)
         {
-            var pathToDefs = FnDefs.Replace("*", subjectType.ToString().ToLower());
+            var pathToDefs = FnDefDir+FnDefs.Replace("*", subjectType.ToString().ToLower());
             var list = await GetData<List<Definition>>(pathToDefs);
             if (list == null)
             {

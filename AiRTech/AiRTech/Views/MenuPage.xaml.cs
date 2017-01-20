@@ -14,7 +14,7 @@ namespace AiRTech.Views
             InitializeComponent();
             BindingContext = new MenuViewModel(this);
 
-            var masterPageItems = new List<MenuPageItem>
+            MasterPageItems = new List<MenuPageItem>
             {
                 new MenuPageItem
                 {
@@ -39,7 +39,7 @@ namespace AiRTech.Views
                 }
             };
 
-            listView.ItemsSource = masterPageItems;
+            listView.ItemsSource = MasterPageItems;
             listView.ItemSelected += ListViewOnItemSelected;
         }
 
@@ -57,5 +57,16 @@ namespace AiRTech.Views
         }
 
         public ListView ListView => listView;
+        public List<MenuPageItem> MasterPageItems { get; }
+
+        public bool IsDisabled
+        {
+            get { return !IsEnabled; }
+            set
+            {
+                IsEnabled = !value;
+                listView.IsEnabled = !value;
+            }
+        }
     }
 }

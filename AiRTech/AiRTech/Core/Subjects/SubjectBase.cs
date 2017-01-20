@@ -65,6 +65,12 @@ namespace AiRTech.Core.Subjects
             }
         }
 
+        public void Sort()
+        {
+            Definitions.Sort();
+            OnPropertyChanged(nameof(Definitions));
+        }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

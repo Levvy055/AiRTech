@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using AiRTech.Core.DataHandling;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Web;
@@ -19,51 +20,31 @@ namespace AiRTech
 
         public App()
         {
-            try
+            NavPage = new NavigationPage(new ContentPage
             {
-                MainPage = new MasterDetailPage
+                Title = "Ładowanie",
+                Content = new ActivityIndicator
                 {
-                    Master = new MenuPage { BackgroundColor = _menuBgColor },
-                    Detail = new NavigationPage(),
-                    MasterBehavior = MasterBehavior.Popover
-                };
-                try
-                {
-                    FileHandler = DependencyService.Get<IFileHandler>();
-                    FileHandler.Init();
+                    IsRunning = true,
+                    Color = Color.DarkRed
                 }
-                catch (Exception e)
-                {
-                    MainPage.DisplayAlert("Error!", "Błąd uzyskiwania dostępu do pliku bazy!", "Zamknij");
-                    Debug.WriteLine(e);
-                    throw;
-                }
-                try
-                {
-                    Web = new WebCore();
-                }
-                catch (Exception e)
-                {
-                    MainPage.DisplayAlert("Offline!", "Brak dostępu do serwera!", "Zamknij");
-                    Debug.WriteLine(e);
-                }
-                ChangePageTo(typeof(MainPage), "AiRTech", false);
-#if DEBUG
-                //ChangePageTo(typeof(SubjectsPage), "Subjects", false);
-                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                //ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
-                //ChangePageTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
-                //ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
-                //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
-                //np?.NavigateTo(3);
-#else
-                ((MasterDetailPage)MainPage).IsPresented = true;
-#endif
-            }
-            catch (Exception e)
+            })
             {
-                Debug.WriteLine(e.Message);
-            }
+                BarBackgroundColor = _topBarColor,
+                BarTextColor = _topBarTextColor,
+                BackgroundColor = _mainBgColor
+            };
+            MainPage = new MasterDetailPage
+            {
+                Master = new MenuPage
+                {
+                    BackgroundColor = _menuBgColor,
+                    IsBusy = true,
+                    IsDisabled = true
+                },
+                Detail = NavPage,
+                MasterBehavior = MasterBehavior.Popover
+            };
         }
 
         public async void ChangePageTo(Type page, string title, bool inner = true, params object[] args)
@@ -78,8 +59,8 @@ namespace AiRTech
             {
                 if (newPage.GetType() == typeof(SolverPage))
                 {
-                    var s = newPage as SolverPage;
-                    s.NavigateToMain();
+                    var solverPage = newPage as SolverPage;
+                    solverPage.NavigateToMain();
                 }
                 else
                 {
@@ -151,9 +132,51 @@ namespace AiRTech
             return page;
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
-            // Handle when your app starts
+            //await Task.Delay(7000);
+            try
+            {
+                try
+                {
+                    FileHandler = DependencyService.Get<IFileHandler>();
+                    FileHandler.Init();
+                }
+                catch (Exception e)
+                {
+                    MainPage.DisplayAlert("Error!", "Błąd uzyskiwania dostępu do pliku bazy!", "Zamknij");
+                    Debug.WriteLine(e);
+                    throw;
+                }
+                try
+                {
+                    Web = new WebCore();
+                }
+                catch (Exception e)
+                {
+                    MainPage.DisplayAlert("Offline!", "Brak dostępu do serwera!", "Zamknij");
+                    Debug.WriteLine(e);
+                }
+                ChangePageTo(typeof(MainPage), "AiRTech", false);
+                var menuPage = (MenuPage)((MasterDetailPage)MainPage).Master;
+                menuPage.IsBusy = false;
+                menuPage.IsDisabled = false;
+#if DEBUG
+                //ChangePageTo(typeof(SubjectsPage), "Subjects", false);
+                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                //ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                //ChangePageTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
+                //ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
+                //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
+                //np?.NavigateTo(3);
+#else
+                ((MasterDetailPage)MainPage).IsPresented = true;
+#endif
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         protected override void OnSleep()

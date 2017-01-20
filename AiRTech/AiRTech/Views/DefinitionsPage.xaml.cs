@@ -11,8 +11,11 @@ namespace AiRTech.Views
         public DefinitionsPage(Subject subject)
         {
             Subject = subject;
-            BindingContext = new DefinitionsViewModel(this);
+            var defVm = new DefinitionsViewModel(this);
+            BindingContext = defVm;
             InitializeComponent();
+            Subject.Base.Sort();
+            DefListView.ItemSelected += defVm.MlistOnItemSelected;
         }
 
         public Subject Subject { get; set; }

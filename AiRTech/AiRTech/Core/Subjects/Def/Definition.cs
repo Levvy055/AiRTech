@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AiRTech.Core.Subjects.Solv;
 using AiRTech.Views.SubjectData;
 using AiRTech.Views.ViewComponents;
@@ -6,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace AiRTech.Core.Subjects.Def
 {
-    public class Definition
+    public class Definition : IComparable
     {
         public Definition()
         {
@@ -61,6 +62,15 @@ namespace AiRTech.Core.Subjects.Def
         public static int GetHashCode(Definition obj)
         {
             return obj.GetHashCode();
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+            var otherTemperature = obj as Definition;
+            if (otherTemperature != null)
+                return string.Compare(Title, otherTemperature.Title, StringComparison.Ordinal);
+            throw new ArgumentException("Object is not a Definition");
         }
         #endregion
 

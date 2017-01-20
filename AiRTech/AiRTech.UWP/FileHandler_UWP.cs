@@ -62,7 +62,9 @@ namespace AiRTech.UWP
         {
             if (!File.Exists(filePath))
             {
-                File.Create(filePath);
+                using (File.Create(filePath))
+                {
+                }
                 return "";
             }
             var content = File.ReadAllText(filePath);
