@@ -83,7 +83,7 @@ namespace AiRTech.Core.Web
                     "Włącz INTERNETY! czyt. włącz transmisje danych.");
                 return false;
             }
-            var isReachable = await CrossConnectivity.Current.IsReachable("google.com", 5000);
+            var isReachable = await CrossConnectivity.Current.IsRemoteReachable("http://www.google.com");
             if (!isReachable)
             {
                 DialogManager.ShowWarningDialog("Brak dostępu do internetu!",

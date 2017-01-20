@@ -40,6 +40,10 @@ namespace AiRTech.Droid
                 return null;
             }
             var list = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<List<Definition>>(fc));
+            if (list == null)
+            {
+                return null;
+            }
             foreach (var def in list)
             {
                 def.LinkDeserializedComponents(subjectType);

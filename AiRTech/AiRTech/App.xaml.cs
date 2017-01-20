@@ -12,10 +12,10 @@ namespace AiRTech
 {
     public partial class App : Application
     {
-        private readonly Color _mainBgColor = Color.DarkGray;
-        private readonly Color _menuBgColor = Color.CadetBlue;
-        private readonly Color _topBarColor = Color.DarkBlue;
-        private readonly Color _topBarTextColor = Color.White;
+        private readonly Color _mainBgColor = Color.FromRgb(169, 169, 169);
+        private readonly Color _menuBgColor = Color.FromRgb(95, 158, 160);
+        private readonly Color _topBarColor = Color.FromRgb(95, 158, 160);
+        private readonly Color _topBarTextColor = Color.FromRgb((int)byte.MaxValue, (int)byte.MaxValue, (int)byte.MaxValue);
 
         public App()
         {
@@ -49,10 +49,10 @@ namespace AiRTech
                 }
                 ChangePageTo(typeof(MainPage), "AiRTech", false);
 #if DEBUG
-                ChangePageTo(typeof(SubjectsPage), "Subjects", false);
-                var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
-                ChangePageTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
+                //ChangePageTo(typeof(SubjectsPage), "Subjects", false);
+                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                //ChangePageTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                //ChangePageTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
                 //ChangePageTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
                 //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
                 //np?.NavigateTo(3);
