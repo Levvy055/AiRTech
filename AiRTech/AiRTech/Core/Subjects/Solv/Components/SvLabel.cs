@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace AiRTech.Core.Subjects.Solv.Solvers.Components
+namespace AiRTech.Core.Subjects.Solv.Components
 {
     public class SvLabel : ViewComponent
     {

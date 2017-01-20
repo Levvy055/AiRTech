@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using AiRTech.Annotations;
 using AiRTech.Core.Subjects.Def;
 using AiRTech.Core.Subjects.Solv;
+using AiRTech.Properties;
 using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects

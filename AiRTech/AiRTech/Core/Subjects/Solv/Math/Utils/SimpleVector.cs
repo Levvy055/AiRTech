@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AiRTech.Core.Subjects.Solv.Solvers.Math.Utils
+namespace AiRTech.Core.Subjects.Solv.Math.Utils
 {
     public class SimpleVector<T> : IEnumerable<T>
     {

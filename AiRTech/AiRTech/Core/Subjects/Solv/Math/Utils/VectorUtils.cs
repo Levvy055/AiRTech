@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AiRTech.Core.Subjects.Solv.Solvers.Math.Utils
+namespace AiRTech.Core.Subjects.Solv.Math.Utils
 {
     public static class VectorUtils
     {

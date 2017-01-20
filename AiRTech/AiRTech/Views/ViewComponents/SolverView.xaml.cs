@@ -1,5 +1,5 @@
 ﻿using System;
-using AiRTech.Core.Subjects.Solv.Solvers.Components;
+using AiRTech.Core.Subjects.Solv.Components;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewComponents

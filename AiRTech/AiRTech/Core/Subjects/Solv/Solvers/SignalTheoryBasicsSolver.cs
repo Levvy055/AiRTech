@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using AiRTech.Core.Subjects.Solv.Solvers.Components;
-using AiRTech.Core.Subjects.Solv.Solvers.Math;
-using AiRTech.Core.Subjects.Solv.Solvers.Math.Utils;
+using AiRTech.Core.Subjects.Solv.Components;
+using AiRTech.Core.Subjects.Solv.Math;
+using AiRTech.Core.Subjects.Solv.Math.Utils;
 using AiRTech.Views.Other;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
