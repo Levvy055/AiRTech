@@ -11,11 +11,11 @@ namespace AiRTech.Core.Commands
     public static class SubjectCommands
     {
         public static ICommand SubjectItemClicked => CreateBaseSwitchPageCommand("Subject Item Selected", typeof(SubjectPage));
-        public static ICommand DefinitionsTappedCommand => CreateBaseSwitchPageCommand("DefinitionView", typeof(DefinitionsPage));
+        public static ICommand DefinitionsTappedCommand => CreateBaseSwitchPageCommand("DefinitionView", typeof(DefinitionsPage), s => s.Base.LoadDefinitions());
         public static ICommand FormulasTappedCommand => CreateBaseSwitchPageCommand("Formulas", typeof(FormulasPage));
         public static ICommand SolverTappedCommand => CreateBaseSwitchPageCommand("Solver", typeof(SolverPage));
 
-        private static ICommand CreateBaseSwitchPageCommand(string txt, Type pageType)
+        private static ICommand CreateBaseSwitchPageCommand(string txt, Type pageType, Action<Subject> additionalAction = null)
         {
             return new Command(o =>
             {
@@ -26,11 +26,12 @@ namespace AiRTech.Core.Commands
                 }
                 Debug.WriteLine(txt + ": " + s.Name);
                 var app = Application.Current as App;
-                if (app == null)
+                app.NavigateTo(pageType, s.Name, true, s);
+                if (additionalAction == null)
                 {
                     return;
                 }
-                app.NavigateTo(pageType, s.Name, true, s);
+                additionalAction.Invoke(s);
             });
         }
     }

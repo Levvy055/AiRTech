@@ -111,7 +111,6 @@
       <DependentUpon>SolverView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewModels\DefinitionsViewModel.cs" />
-    <Compile Include="Views\ViewModels\SubjectDataViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectsViewModel.cs" />
     <Compile Include="Views\ViewModels\MenuViewModel.cs" />

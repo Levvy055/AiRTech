@@ -13,7 +13,6 @@ namespace AiRTech.Views
         {
             InitializeComponent();
             BindingContext = new MenuViewModel(this);
-
             MasterPageItems = new List<MenuPageItem>
             {
                 new MenuPageItem
