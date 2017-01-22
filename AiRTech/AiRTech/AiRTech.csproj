@@ -43,6 +43,7 @@
     <Compile Include="Core\DataHandling\IFileHandler.cs" />
     <Compile Include="Core\Misc\GenericDictionary.cs" />
     <Compile Include="Core\Subjects\Def\Definition.cs" />
+    <Compile Include="Core\Subjects\Formula\Formula.cs" />
     <Compile Include="Core\Subjects\Impl\AutomaticBasics.cs" />
     <Compile Include="Core\Subjects\Impl\ElementsOfOpticsAndAcoustics.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -113,6 +114,7 @@
       <DependentUpon>SolverView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewModels\DefinitionsViewModel.cs" />
+    <Compile Include="Views\ViewModels\FurmulasViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectsViewModel.cs" />
     <Compile Include="Views\ViewModels\MenuViewModel.cs" />
@@ -267,9 +269,7 @@
     <EmbeddedResource Include="Resources\circle_empty.png" />
     <EmbeddedResource Include="Resources\circle_green.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\Subjects\Formula\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\no-image.png" />
   </ItemGroup>

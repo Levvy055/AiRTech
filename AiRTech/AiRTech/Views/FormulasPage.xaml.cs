@@ -1,4 +1,6 @@
-﻿using AiRTech.Core.Subjects;
+﻿using System.Collections.Generic;
+using AiRTech.Core.Subjects;
+using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
 
 namespace AiRTech.Views
@@ -9,9 +11,11 @@ namespace AiRTech.Views
         public FormulasPage(Subject subject)
         {
             Subject = subject;
+            BindingContext = new FurmulasViewModel(this);
             InitializeComponent();
         }
 
         public Subject Subject { get; set; }
+        public ListView FmlListView => MList;
     }
 }

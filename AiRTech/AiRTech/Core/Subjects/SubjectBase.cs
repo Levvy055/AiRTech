@@ -18,6 +18,7 @@ namespace AiRTech.Core.Subjects
         {
             SubjectType = subjectType;
             Definitions = new List<Definition>();
+            Formulas = new List<Formula.Formula>();
             Solver = Solver.GetSolverFor(SubjectType);
             PropertyChanged += (sender, args) => UpdateDependencies();
         }
@@ -27,6 +28,14 @@ namespace AiRTech.Core.Subjects
             LoadDefinitionsFromFile().ContinueWith(task =>
             {
                 LoadDefinitionsFromServerAndSave();
+            });
+        }
+
+        public void LoadFormulas()
+        {
+            LoadFormulasFromFile().ContinueWith(task =>
+            {
+                LoadFormulasFromServerAndSave();
             });
         }
 
@@ -73,10 +82,53 @@ namespace AiRTech.Core.Subjects
             }
         }
 
+        protected async Task LoadFormulasFromFile()
+        {
+            try
+            {
+                var app = Application.Current as App;
+                var defList = await app.FileHandler.GetFormulas(SubjectType);
+                if (defList != null)
+                {
+                    Definitions.Clear();
+                    foreach (var def in defList)
+                    {
+                        Definitions.Add(def);
+                    }
+                    OnPropertyChanged(nameof(Definitions));
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
+        protected async void LoadFormulasFromServerAndSave()
+        {
+            var app = Application.Current as App;
+            try
+            {
+                var newDefList = await app.Web.GetFormulaList(SubjectType);
+                if (newDefList == null)
+                {
+                    return;
+                }
+                app.FileHandler.UpdateFormulas(newDefList, SubjectType);
+                await LoadFormulasFromFile();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
         public void Sort()
         {
             Definitions.Sort();
+            Formulas.Sort();
             OnPropertyChanged(nameof(Definitions));
+            OnPropertyChanged(nameof(Formulas));
         }
 
         [NotifyPropertyChangedInvocator]
@@ -87,6 +139,8 @@ namespace AiRTech.Core.Subjects
 
         public Solver Solver { get; private set; }
         public List<Definition> Definitions { get; protected set; }
+        public List<Formula.Formula> Formulas { get; protected set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

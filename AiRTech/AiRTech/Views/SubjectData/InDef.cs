@@ -48,6 +48,10 @@ namespace AiRTech.Views.SubjectData
         {
             get
             {
+                if (Image == null)
+                {
+                    Image = "";
+                }
                 var path = Path.Combine(WebCore.FnDefDir, WebCore.FnImgDir, Image);
                 var imageSource = ImageResourceExtension.GetImageFromUri(path).Result;
                 return imageSource;

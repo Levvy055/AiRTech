@@ -6,6 +6,7 @@ using Windows.Storage;
 using AiRTech.Core.DataHandling;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
+using AiRTech.Core.Subjects.Formula;
 using AiRTech.UWP;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -61,12 +62,22 @@ namespace AiRTech.UWP
             return list;
         }
 
+        public Task<IEnumerable<Definition>> GetFormulas(SubjectType subjectType)
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateDefinitions(List<Definition> list, SubjectType subjectType)
         {
             var filename = Path.Combine(DirDefs, subjectType + ".json");
             GetFileContent(filename);
             var sList = JsonConvert.SerializeObject(list);
             File.WriteAllText(filename, sList);
+        }
+
+        public void UpdateFormulas(List<Formula> newDefList, SubjectType subjectType)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Exists(Uri uri)

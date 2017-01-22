@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
+using AiRTech.Core.Subjects.Formula;
 using AiRTech.Views.Other;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
@@ -45,6 +46,11 @@ namespace AiRTech.Core.Web
                 def.LinkDeserializedComponents(subjectType);
             }
             return list;
+        }
+
+        public async Task<List<Formula>> GetFormulaList(SubjectType subjectType)
+        {
+            throw new NotImplementedException();
         }
 
         private async Task<T> GetData<T>(string path)

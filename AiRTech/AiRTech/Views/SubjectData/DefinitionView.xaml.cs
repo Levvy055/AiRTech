@@ -105,6 +105,10 @@ namespace AiRTech.Views.SubjectData
 
         private static Label CreateText(InDef id, bool italic = false)
         {
+            if (id.Text == null)
+            {
+                return new Label();
+            }
             var fa = italic ? FontAttributes.Italic : FontAttributes.None;
             var ft = new FormattedString
             {

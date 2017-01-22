@@ -65,7 +65,8 @@ namespace AiRTech.Views.ViewModels
             try
             {
                 var app = Application.Current as App;
-                app.NavigateToModal(p.DefViews[d.Title]);
+                var view = p.DefViews[d.Title];
+                app.NavigateToModal(view);
             }
             catch (Exception e)
             {
