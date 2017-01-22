@@ -21,5 +21,6 @@ namespace AiRTech.Views
         public Subject Subject { get; set; }
         public Dictionary<string, ContentPage> DefViews { get; } = new Dictionary<string, ContentPage>();
         public ListView DefListView => Mlist;
+        public View NoDefsView => NoDefsLabel;
     }
 }

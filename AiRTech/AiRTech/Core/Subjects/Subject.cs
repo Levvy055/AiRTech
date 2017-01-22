@@ -35,6 +35,8 @@ namespace AiRTech.Core.Subjects
                 _subjects = new Dictionary<SubjectType, Subject>();
                 new Subject("Podstawy Elektroniki", typeof(ElectronicBasics),
                     SubjectType.PODSTAWY_ELEKTRONIKI, "AiRTech.Resources.pe.png");
+                new Subject("Podstawy Automatyki", typeof(ElectronicBasics),
+                    SubjectType.PODSTAWY_AUTOMATYKI, "AiRTech.Resources.pa.png");
                 new Subject("Podstawy Teorii Sygnałów", typeof(SignalTheoryBasics),
                     SubjectType.PODSTAWY_TEORII_SYGNALOW, "AiRTech.Resources.pts.png");
                 new Subject("Elementy Optyki i Akustyki", typeof(ElementsOfOpticsAndAcoustics),

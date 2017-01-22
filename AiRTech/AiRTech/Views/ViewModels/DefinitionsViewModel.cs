@@ -10,9 +10,12 @@ namespace AiRTech.Views.ViewModels
 {
     public class DefinitionsViewModel : ViewModelBase
     {
+        private View _noDefsView;
+
         public DefinitionsViewModel(DefinitionsPage page) : base(page)
         {
             Title = "Definicje";
+            NoDefs = "Brak definicji";
             Subject.Base.PropertyChanged += (sender, args) =>
             {
                 Device.BeginInvokeOnMainThread(() =>
@@ -31,6 +34,8 @@ namespace AiRTech.Views.ViewModels
                 p.DefListView.ItemsSource = defs;
                 if (defs != null && defs.Length > 0)
                 {
+                    p.DefListView.IsVisible = true;
+                    p.NoDefsView.IsVisible = false;
                     foreach (var def in defs)
                     {
                         if (!p.DefViews.ContainsKey(def.Title))
@@ -40,6 +45,11 @@ namespace AiRTech.Views.ViewModels
                             p.DefViews.Add(def.Title, sdp);
                         }
                     }
+                }
+                else
+                {
+                    p.DefListView.IsVisible = false;
+                    p.NoDefsView.IsVisible = true;
                 }
             }
         }
@@ -65,5 +75,7 @@ namespace AiRTech.Views.ViewModels
         }
 
         public List<Definition> Definitions => Subject.Base.Definitions;
+
+        public string NoDefs { get; set; }
     }
 }

@@ -3,20 +3,22 @@
     x:Class="AiRTech.Views.DefinitionsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <StackLayout
-        HorizontalOptions="Fill"
+    <ScrollView
+        HorizontalOptions="FillAndExpand"
         Orientation="Vertical"
-        Spacing="5"
-        VerticalOptions="Fill">
-        <ScrollView
-            HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        <StackLayout
+            HorizontalOptions="Fill"
             Orientation="Vertical"
-            VerticalOptions="FillAndExpand">
-        <Label
-            FontSize="20"
-            HorizontalOptions="Center"
-            Text="{Binding Title}"
-            VerticalOptions="Start" />
+            Spacing="5"
+            VerticalOptions="Fill">
+            <Label
+                x:Name="NoDefsLabel"
+                FontAttributes="Bold"
+                FontSize="25"
+                HorizontalOptions="Center"
+                Text="{Binding NoDefs}"
+                VerticalOptions="Start" />
             <ListView
                 x:Name="Mlist"
                 Margin="0,10,0,0"
@@ -43,6 +45,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </ScrollView>
-    </StackLayout>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
