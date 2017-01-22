@@ -2,9 +2,9 @@
 
 namespace AiRTech.Views.SubjectData
 {
-    public partial class SFormula : ContentView
+    public partial class FormulaView : ContentView
     {
-        public SFormula()
+        public FormulaView()
         {
             InitializeComponent();
         }

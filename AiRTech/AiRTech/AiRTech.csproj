@@ -43,6 +43,7 @@
     <Compile Include="Core\DataHandling\IFileHandler.cs" />
     <Compile Include="Core\Misc\GenericDictionary.cs" />
     <Compile Include="Core\Subjects\Def\Definition.cs" />
+    <Compile Include="Core\Subjects\Impl\ElementsOfOpticsAndAcoustics.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Views\Other\DialogManager.cs" />
     <Compile Include="Views\SubjectData\InDef.cs" />
@@ -73,8 +74,8 @@
     <Compile Include="Views\SubjectData\DefinitionView.xaml.cs">
       <DependentUpon>DefinitionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SubjectData\SFormula.xaml.cs">
-      <DependentUpon>SFormula.xaml</DependentUpon>
+    <Compile Include="Views\SubjectData\FormulaView.xaml.cs">
+      <DependentUpon>FormulaView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Web\WebCore.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
@@ -138,8 +139,8 @@
       <HintPath>..\..\packages\Xam.Plugins.Forms.ImageCircle.1.8.1\lib\portable-net45+wp80+win8+wpa81\ImageCircle.Forms.Plugin.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MvvmHelpers, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Refractored.MvvmHelpers.1.2.0\lib\portable-net45+wp80+win8+wpa81\MvvmHelpers.dll</HintPath>
+    <Reference Include="MvvmHelpers, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Refractored.MvvmHelpers.1.2.2\lib\portable-net45+wp80+win8+wpa81\MvvmHelpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -253,7 +254,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\SubjectData\SFormula.xaml">
+    <EmbeddedResource Include="Views\SubjectData\FormulaView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -270,6 +271,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\no-image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\eoia.png" />
+    <EmbeddedResource Include="Resources\mech.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

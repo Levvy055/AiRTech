@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
+using AiRTech.Views.Other;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
@@ -23,7 +26,15 @@ namespace AiRTech.Views.SubjectData
                 {
                     if (id != null)
                     {
-                        Sl.Children.Add(CreateViewForInnerDefComp(id));
+                        try
+                        {
+                            Sl.Children.Add(CreateViewForInnerDefComp(id));
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.WriteLine(e);
+                            DialogManager.ShowWarningDialog("Błąd w pobranej zawartości", "Nie można utworzyć elementu definicji " + def.Title);
+                        }
                     }
                 }
             }
@@ -47,22 +58,75 @@ namespace AiRTech.Views.SubjectData
         private View CreateViewForInnerDefComp(InDef id)
         {
             var v = new StackLayout();
+            if (id.Layout == InDefLayout.TextOverImage && id.Image == null)
+            {
+                if (!string.IsNullOrWhiteSpace(id.Header))
+                {
+                    id.Layout = !string.IsNullOrWhiteSpace(id.List) ? InDefLayout.List : InDefLayout.HeaderAndText;
+                }
+            }
             switch (id.Layout)
             {
                 case InDefLayout.TextUnderImage:
                     v.Orientation = StackOrientation.Vertical;
                     v.Children.Add(CreateImage(id));
-                    v.Children.Add(CreateLabel(id));
+                    v.Children.Add(CreateText(id, true));
                     break;
                 case InDefLayout.TextOverImage:
                     v.Orientation = StackOrientation.Vertical;
-                    v.Children.Add(CreateLabel(id));
+                    v.Children.Add(CreateText(id, true));
                     v.Children.Add(CreateImage(id));
+                    break;
+                case InDefLayout.List:
+                    v.Orientation = StackOrientation.Vertical;
+                    if (!string.IsNullOrWhiteSpace(id.Header))
+                    {
+                        v.Children.Add(CreateHeader(id));
+                    }
+                    v.Children.Add(CreateList(id));
+                    break;
+                case InDefLayout.HeaderAndText:
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
             return v;
+        }
+
+        private View CreateHeader(InDef id)
+        {
+            var fs = new FormattedString
+            {
+                Spans = { new Span { Text = id.Header, FontSize = 16, FontAttributes = FontAttributes.Bold } }
+            };
+            return new Label { FormattedText = fs };
+        }
+
+        private static Label CreateText(InDef id, bool italic = false)
+        {
+            var fa = italic ? FontAttributes.Italic : FontAttributes.None;
+            var ft = new FormattedString
+            {
+                Spans = { new Span { Text = id.Text, FontAttributes = fa } }
+            };
+            return new Label
+            {
+                FormattedText = ft,
+                HorizontalOptions = LayoutOptions.Fill,
+                HorizontalTextAlignment = TextAlignment.Center
+            };
+        }
+
+        private View CreateList(InDef id)
+        {
+            var fs = new FormattedString();
+            foreach (var str in id.List.Split('|'))
+            {
+                fs.Spans.Add(new Span { Text = "-> ", FontAttributes = FontAttributes.Bold });
+                fs.Spans.Add(new Span { Text = str + Environment.NewLine });
+            }
+            return new Label { FormattedText = fs };
         }
 
         private static Image CreateImage(InDef id)
@@ -73,16 +137,6 @@ namespace AiRTech.Views.SubjectData
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 Aspect = Aspect.AspectFill
-            };
-        }
-
-        private static Label CreateLabel(InDef id)
-        {
-            return new Label
-            {
-                Text = id.Text,
-                HorizontalOptions = LayoutOptions.Fill,
-                HorizontalTextAlignment = TextAlignment.Center
             };
         }
 

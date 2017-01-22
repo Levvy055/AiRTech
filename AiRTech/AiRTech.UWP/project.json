@@ -2,7 +2,7 @@
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Newtonsoft.Json": "9.0.1",
-    "Refractored.MvvmHelpers": "1.2.0",
+    "Refractored.MvvmHelpers": "1.2.2",
     "sameerIOTApps.Plugin.SecureStorage": "1.2.1",
     "Xam.Plugin.Connectivity": "2.3.0",
     "Xam.Plugins.Forms.ImageCircle": "1.8.1",

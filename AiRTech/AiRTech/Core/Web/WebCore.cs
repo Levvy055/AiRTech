@@ -54,10 +54,14 @@ namespace AiRTech.Core.Web
                 try
                 {
                     var resp = await client.GetAsync(path);
-                    resp.EnsureSuccessStatusCode();
-                    var respBody = await resp.Content.ReadAsStringAsync();
-                    var obj = JsonConvert.DeserializeObject<T>(respBody);
-                    return obj;
+                    if (resp.StatusCode == HttpStatusCode.OK
+                        || resp.StatusCode == HttpStatusCode.NotModified
+                        || resp.StatusCode == HttpStatusCode.Found)
+                    {
+                        var respBody = await resp.Content.ReadAsStringAsync();
+                        var obj = JsonConvert.DeserializeObject<T>(respBody);
+                        return obj;
+                    }
                 }
                 catch (JsonException e)
                 {

@@ -2,6 +2,7 @@
 using AiRTech.Core.Misc;
 using AiRTech.Core.Web;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.SubjectData
@@ -36,9 +37,12 @@ namespace AiRTech.Views.SubjectData
         }
         #endregion
 
-        public string Image { get; set; }
         public string Text { get; set; }
+        public string Header { get; set; }
+        public string List { get; set; }
         public InDefLayout Layout { get; set; } = InDefLayout.TextOverImage;
+        public string Image { get; set; }
+
         [JsonIgnore]
         public ImageSource ImageSource
         {

@@ -20,10 +20,17 @@ namespace AiRTech.Views.SubjectData
         private void InitSolver()
         {
             Solver = Subject.Base.Solver;
-            var tabs = Solver.Tabs;
-            Carousel = new CarouselPage();
             var mstack = new StackLayout();
-            if (tabs != null && tabs.Count != 0)
+            Carousel = new CarouselPage();
+            var tabs = Solver?.Tabs;
+            if (Solver == null || tabs == null || tabs.Count == 0)
+            {
+                mstack.Children.Add(new Label
+                {
+                    Text = "Solver not yet implemented!"
+                });
+            }
+            else
             {
                 foreach (var tab in tabs)
                 {
@@ -41,13 +48,6 @@ namespace AiRTech.Views.SubjectData
                     mstack.Children.Add(b);
                     Carousel.Children.Add(page);
                 }
-            }
-            else
-            {
-                mstack.Children.Add(new Label
-                {
-                    Text = "Solver not yet implemented!"
-                });
             }
             Mpage = new ContentPage { Content = new ScrollView { Content = mstack }, Title = "Solver - " + Subject.Name };
             Carousel.CurrentPageChanged += CarouselOnPageChanged;

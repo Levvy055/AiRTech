@@ -37,6 +37,8 @@ namespace AiRTech.Core.Subjects
                     SubjectType.PODSTAWY_ELEKTRONIKI, "AiRTech.Resources.pe.png");
                 new Subject("Podstawy Teorii Sygnałów", typeof(SignalTheoryBasics),
                     SubjectType.PODSTAWY_TEORII_SYGNALOW, "AiRTech.Resources.pts.png");
+                new Subject("Elementy Optyki i Akustyki", typeof(ElementsOfOpticsAndAcoustics),
+                    SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI, "AiRTech.Resources.eoia.png");
                 return _subjects;
             }
         }

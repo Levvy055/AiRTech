@@ -16,7 +16,12 @@ namespace AiRTech.Core.Subjects.Solv
             {
                 return ActiveSolvers[subjectType];
             }
-            var solver = (Solver)Activator.CreateInstance(GetSolverType(subjectType));
+            var solverType = GetSolverType(subjectType);
+            if (solverType == null)
+            {
+                return null;
+            }
+            var solver = (Solver)Activator.CreateInstance(solverType);
             ActiveSolvers.Add(subjectType, solver);
             return solver;
         }
