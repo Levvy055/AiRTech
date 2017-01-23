@@ -43,12 +43,14 @@
     <Compile Include="Core\DataHandling\IFileHandler.cs" />
     <Compile Include="Core\Misc\GenericDictionary.cs" />
     <Compile Include="Core\Subjects\Def\Definition.cs" />
-    <Compile Include="Core\Subjects\Formula\Formula.cs" />
+    <Compile Include="Core\Subjects\Formul\Formula.cs" />
+    <Compile Include="Core\Subjects\Formul\InEq.cs" />
     <Compile Include="Core\Subjects\Impl\AutomaticBasics.cs" />
     <Compile Include="Core\Subjects\Impl\ElementsOfOpticsAndAcoustics.cs" />
+    <Compile Include="Core\Subjects\Impl\Mechanics.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Views\Other\DialogManager.cs" />
-    <Compile Include="Views\SubjectData\InDef.cs" />
+    <Compile Include="Core\Subjects\Def\InDef.cs" />
     <Compile Include="Core\Subjects\Solv\Solver.cs" />
     <Compile Include="Core\Subjects\Solv\Components\SvButton.cs" />
     <Compile Include="Core\Subjects\Solv\Components\SvEmpty.cs" />
@@ -70,7 +72,7 @@
     <Compile Include="Core\Subjects\Subject.cs" />
     <Compile Include="Core\Subjects\SubjectBase.cs" />
     <Compile Include="Core\Subjects\SubjectType.cs" />
-    <Compile Include="Views\SubjectData\InDefLayout.cs" />
+    <Compile Include="Core\Subjects\Def\InDefLayout.cs" />
     <Compile Include="Views\ViewModels\AboutViewModel.cs" />
     <Compile Include="Views\Other\HistResultModal.cs" />
     <Compile Include="Views\SubjectData\DefinitionView.xaml.cs">

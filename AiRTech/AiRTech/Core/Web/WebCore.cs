@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
-using AiRTech.Core.Subjects.Formula;
+using AiRTech.Core.Subjects.Formul;
 using AiRTech.Views.Other;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
@@ -50,7 +50,17 @@ namespace AiRTech.Core.Web
 
         public async Task<List<Formula>> GetFormulaList(SubjectType subjectType)
         {
-            throw new NotImplementedException();
+            var pathToFmls = Path.Combine(FnFmlsDir, FnFmls.Replace("*", subjectType.ToString().ToLower()));
+            var list = await GetData<List<Formula>>(pathToFmls);
+            if (list == null)
+            {
+                return null;
+            }
+            foreach (var f in list)
+            {
+                f.LinkDeserializedComponents(subjectType);
+            }
+            return list;
         }
 
         private async Task<T> GetData<T>(string path)

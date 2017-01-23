@@ -2,10 +2,9 @@
 using AiRTech.Core.Misc;
 using AiRTech.Core.Web;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Xamarin.Forms;
 
-namespace AiRTech.Views.SubjectData
+namespace AiRTech.Core.Subjects.Def
 {
     public class InDef
     {

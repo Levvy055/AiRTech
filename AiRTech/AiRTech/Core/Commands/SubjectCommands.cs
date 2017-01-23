@@ -12,7 +12,7 @@ namespace AiRTech.Core.Commands
     {
         public static ICommand SubjectItemClicked => CreateBaseSwitchPageCommand("Subject Item Selected", typeof(SubjectPage));
         public static ICommand DefinitionsTappedCommand => CreateBaseSwitchPageCommand("DefinitionView", typeof(DefinitionsPage), s => s.Base.LoadDefinitions());
-        public static ICommand FormulasTappedCommand => CreateBaseSwitchPageCommand("Formulas", typeof(FormulasPage));//TODO: , s => s.Base.LoadFormulas());
+        public static ICommand FormulasTappedCommand => CreateBaseSwitchPageCommand("Formulas", typeof(FormulasPage), s => s.Base.LoadFormulas());
         public static ICommand SolverTappedCommand => CreateBaseSwitchPageCommand("Solver", typeof(SolverPage));
 
         private static ICommand CreateBaseSwitchPageCommand(string txt, Type pageType, Action<Subject> additionalAction = null)

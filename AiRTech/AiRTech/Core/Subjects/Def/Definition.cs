@@ -9,9 +9,6 @@ namespace AiRTech.Core.Subjects.Def
 {
     public class Definition : IComparable
     {
-        public Definition()
-        {
-        }
 
         public void LinkDeserializedComponents(SubjectType st)
         {
@@ -67,9 +64,9 @@ namespace AiRTech.Core.Subjects.Def
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;
-            var otherTemperature = obj as Definition;
-            if (otherTemperature != null)
-                return string.Compare(Title, otherTemperature.Title, StringComparison.Ordinal);
+            var otherDefinition = obj as Definition;
+            if (otherDefinition != null)
+                return string.Compare(Title, otherDefinition.Title, StringComparison.Ordinal);
             throw new ArgumentException("Object is not a Definition");
         }
         #endregion

@@ -41,6 +41,8 @@ namespace AiRTech.Core.Subjects
                     SubjectType.PODSTAWY_TEORII_SYGNALOW, "AiRTech.Resources.pts.png");
                 new Subject("Elementy Optyki i Akustyki", typeof(ElementsOfOpticsAndAcoustics),
                     SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI, "AiRTech.Resources.eoia.png");
+                new Subject("Mechanika", typeof(Mechanics),
+                    SubjectType.MECHANIKA, "AiRTech.Resources.mech.png");
                 return _subjects;
             }
         }

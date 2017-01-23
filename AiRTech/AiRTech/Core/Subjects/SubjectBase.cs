@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects.Def;
+using AiRTech.Core.Subjects.Formul;
 using AiRTech.Core.Subjects.Solv;
 using AiRTech.Properties;
 using Xamarin.Forms;
@@ -18,7 +19,7 @@ namespace AiRTech.Core.Subjects
         {
             SubjectType = subjectType;
             Definitions = new List<Definition>();
-            Formulas = new List<Formula.Formula>();
+            Formulas = new List<Formula>();
             Solver = Solver.GetSolverFor(SubjectType);
             PropertyChanged += (sender, args) => UpdateDependencies();
         }
@@ -87,15 +88,15 @@ namespace AiRTech.Core.Subjects
             try
             {
                 var app = Application.Current as App;
-                var defList = await app.FileHandler.GetFormulas(SubjectType);
-                if (defList != null)
+                var fmlList = await app.FileHandler.GetFormulas(SubjectType);
+                if (fmlList != null)
                 {
-                    Definitions.Clear();
-                    foreach (var def in defList)
+                    Formulas.Clear();
+                    foreach (var f in fmlList)
                     {
-                        Definitions.Add(def);
+                        Formulas.Add(f);
                     }
-                    OnPropertyChanged(nameof(Definitions));
+                    OnPropertyChanged(nameof(Formulas));
                 }
             }
             catch (Exception e)
@@ -139,7 +140,7 @@ namespace AiRTech.Core.Subjects
 
         public Solver Solver { get; private set; }
         public List<Definition> Definitions { get; protected set; }
-        public List<Formula.Formula> Formulas { get; protected set; }
+        public List<Formula> Formulas { get; protected set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AiRTech.Core.Subjects.Formula;
+using AiRTech.Core.Subjects.Formul;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewModels

@@ -6,7 +6,7 @@ using Windows.Storage;
 using AiRTech.Core.DataHandling;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
-using AiRTech.Core.Subjects.Formula;
+using AiRTech.Core.Subjects.Formul;
 using AiRTech.UWP;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -17,10 +17,12 @@ namespace AiRTech.UWP
     public class FileHandler_UWP : IFileHandler
     {
         private const string DirNameDefs = "defs";
+        private const string DirNameFmls = "fmls";
 
         public void Init()
         {
             DirDefs = Path.Combine(RootAppPath(), DirNameDefs);
+            DirFmls = Path.Combine(RootAppPath(), DirNameFmls);
             CreateDefaultFilesAndDirs();
         }
 
@@ -30,10 +32,19 @@ namespace AiRTech.UWP
             {
                 Directory.CreateDirectory(DirDefs);
             }
-            var dirImg = Path.Combine(DirDefs, "images");
-            if (!Directory.Exists(dirImg))
+            if (!Directory.Exists(DirFmls))
             {
-                Directory.CreateDirectory(dirImg);
+                Directory.CreateDirectory(DirFmls);
+            }
+            var dirImgd = Path.Combine(DirDefs, "images");
+            if (!Directory.Exists(dirImgd))
+            {
+                Directory.CreateDirectory(dirImgd);
+            }
+            var dirImgf = Path.Combine(DirFmls, "images");
+            if (!Directory.Exists(dirImgf))
+            {
+                Directory.CreateDirectory(dirImgf);
             }
         }
 
@@ -62,9 +73,24 @@ namespace AiRTech.UWP
             return list;
         }
 
-        public Task<IEnumerable<Definition>> GetFormulas(SubjectType subjectType)
+        public async Task<IEnumerable<Formula>> GetFormulas(SubjectType subjectType)
         {
-            throw new NotImplementedException();
+            var filename = Path.Combine(DirFmls, subjectType + ".json");
+            var fc = GetFileContent(filename);
+            if (string.IsNullOrWhiteSpace(fc))
+            {
+                return null;
+            }
+            var list = await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<List<Formula>>(fc));
+            if (list == null)
+            {
+                return null;
+            }
+            foreach (var f in list)
+            {
+                f.LinkDeserializedComponents(subjectType);
+            }
+            return list;
         }
 
         public void UpdateDefinitions(List<Definition> list, SubjectType subjectType)
@@ -75,9 +101,12 @@ namespace AiRTech.UWP
             File.WriteAllText(filename, sList);
         }
 
-        public void UpdateFormulas(List<Formula> newDefList, SubjectType subjectType)
+        public void UpdateFormulas(List<Formula> list, SubjectType subjectType)
         {
-            throw new NotImplementedException();
+            var filename = Path.Combine(DirFmls, subjectType + ".json");
+            GetFileContent(filename);
+            var sList = JsonConvert.SerializeObject(list);
+            File.WriteAllText(filename, sList);
         }
 
         public bool Exists(Uri uri)
@@ -132,5 +161,6 @@ namespace AiRTech.UWP
         }
 
         public string DirDefs { get; private set; }
+        public string DirFmls { get; private set; }
     }
 }
