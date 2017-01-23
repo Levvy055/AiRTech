@@ -76,7 +76,6 @@ namespace AiRTech.Views.ViewModels
         }
 
         public List<Definition> Definitions => Subject.Base.Definitions;
-
         public string NoDefs { get; set; }
     }
 }

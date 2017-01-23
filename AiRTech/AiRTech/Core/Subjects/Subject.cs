@@ -47,7 +47,6 @@ namespace AiRTech.Core.Subjects
             }
         }
         public static ICollection<Subject> SubjectAsValues => Subjects.Values;
-
         public int Id { get; }
         public string Name { get; }
         public string Details { get; set; }

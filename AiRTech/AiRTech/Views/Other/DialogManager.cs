@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.Other
@@ -8,7 +9,10 @@ namespace AiRTech.Views.Other
         public static async void ShowWarningDialog(string header, string message)
         {
             var app = Application.Current as App;
-            await app.MainPage.DisplayAlert(header, message, "Zamknij");
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                await app.MainPage.DisplayAlert(header, message, "Zamknij");
+            });
         }
     }
 }

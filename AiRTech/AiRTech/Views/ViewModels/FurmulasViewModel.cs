@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects.Formul;
+using AiRTech.Views.SubjectData;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewModels
@@ -29,9 +30,28 @@ namespace AiRTech.Views.ViewModels
             var p = Page as FormulasPage;
             if (args.PropertyName == nameof(Formulas) && p?.FmlListView != null)
             {
-
+                var fmls = Formulas.ToArray();
+                p.FmlListView.ItemsSource = fmls;
+                if (fmls != null && fmls.Length > 0)
+                {
+                    p.FmlListView.IsVisible = true;
+                    p.NoFmlsView.IsVisible = false;
+                    foreach (var def in fmls)
+                    {
+                        if (!p.FmlViews.ContainsKey(def.Title))
+                        {
+                            var sd = new FormulaView(def, Subject);
+                            var sdp = new ContentPage { Title = def.Title, Content = sd };
+                            p.FmlViews.Add(def.Title, sdp);
+                        }
+                    }
+                }
+                else
+                {
+                    p.FmlListView.IsVisible = false;
+                    p.NoFmlsView.IsVisible = true;
+                }
             }
-            throw new NotImplementedException();
         }
 
         public string NoFormula { get; set; }

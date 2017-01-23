@@ -79,6 +79,10 @@ namespace AiRTech.Core.Web
                         return obj;
                     }
                 }
+                catch (JsonSerializationException e)
+                {
+                    HandleWebException(e, "Błędna odpowiedź serwera! Spróbuj ponownie później.");
+                }
                 catch (JsonException e)
                 {
                     HandleWebException(e, "Błędna odpowiedź serwera! Spróbuj ponownie później.");
@@ -87,7 +91,6 @@ namespace AiRTech.Core.Web
                 {
                     HandleWebException(e);
                 }
-
             }
             return default(T);
         }

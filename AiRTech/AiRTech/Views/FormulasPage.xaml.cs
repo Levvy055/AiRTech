@@ -16,6 +16,8 @@ namespace AiRTech.Views
         }
 
         public Subject Subject { get; set; }
-        public ListView FmlListView => MList;
+        public Dictionary<string, ContentPage> FmlViews { get; } = new Dictionary<string, ContentPage>();
+        public ListView FmlListView => Mlist;
+        public View NoFmlsView => NoFmlsLabel;
     }
 }
