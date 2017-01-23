@@ -11,8 +11,11 @@ namespace AiRTech.Views
         public FormulasPage(Subject subject)
         {
             Subject = subject;
-            BindingContext = new FurmulasViewModel(this);
+            var fmlsVm= new FurmulasViewModel(this);
+            BindingContext = fmlsVm;
             InitializeComponent();
+            Subject.Base.Sort();
+            FmlListView.ItemSelected += fmlsVm.MlistOnItemSelected;
         }
 
         public Subject Subject { get; set; }

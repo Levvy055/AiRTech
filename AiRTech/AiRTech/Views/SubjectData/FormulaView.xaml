@@ -3,5 +3,18 @@
     x:Class="AiRTech.Views.SubjectData.FormulaView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <ContentView.Content />
+    <ScrollView Orientation="Vertical">
+        <StackLayout
+            x:Name="Sl"
+            HorizontalOptions="Fill"
+            Orientation="Vertical"
+            Spacing="5">
+            <Label
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="{Binding Title}" />
+            <Label FontSize="16" Text="{Binding Desc}" />
+        </StackLayout>
+    </ScrollView>
 </ContentView>

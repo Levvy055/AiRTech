@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IO;
+using AiRTech.Core.Misc;
+using AiRTech.Core.Web;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects.Formul
 {
@@ -55,5 +59,18 @@ namespace AiRTech.Core.Subjects.Formul
         [JsonProperty("Inner")]
         public InEq[] InEqs { get; set; }
 
+        public ImageSource ImageSource
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(EqFile))
+                {
+                    EqFile = "";
+                }
+                var path = Path.Combine(WebCore.FnFmlsDir, WebCore.FnImgDir, EqFile);
+                var imageSource = ImageResourceExtension.GetImageFromUri(path).Result;
+                return imageSource;
+            }
+        }
     }
 }

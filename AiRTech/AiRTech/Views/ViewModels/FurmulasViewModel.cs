@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,5 +57,26 @@ namespace AiRTech.Views.ViewModels
 
         public string NoFormula { get; set; }
         public List<Formula> Formulas => Subject.Base.Formulas;
+
+        public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        {
+            var p = Page as FormulasPage;
+            var d = p.FmlListView.SelectedItem as Formula;
+            if (d == null)
+            {
+                return;
+            }
+            try
+            {
+                var app = Application.Current as App;
+                var view = p.FmlViews[d.Title];
+                app.NavigateToModal(view);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Err: " + e);
+            }
+            p.FmlListView.SelectedItem = -1;
+        }
     }
 }

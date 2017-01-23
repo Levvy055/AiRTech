@@ -47,7 +47,7 @@ namespace AiRTech.Core.Subjects.Def
         {
             get
             {
-                if (Image == null)
+                if (string.IsNullOrWhiteSpace(Image))
                 {
                     Image = "";
                 }
