@@ -54,6 +54,8 @@ namespace AiRTech.Core.Subjects.Formul
         #endregion
 
         public string Title { get; set; }
+        [JsonProperty("Syn")]
+        public string[] Synonyms { get; set; }
         [JsonProperty("Eq")]
         public string EqFile { get; set; }
         [JsonProperty("Inner")]

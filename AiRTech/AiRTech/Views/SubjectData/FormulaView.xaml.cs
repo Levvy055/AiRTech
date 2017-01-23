@@ -24,6 +24,21 @@ namespace AiRTech.Views.SubjectData
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 Aspect = Aspect.AspectFill
             };
+            if (fml.Synonyms != null && fml.Synonyms.Length > 0)
+            {
+                var txt = string.Join(", ", fml.Synonyms);
+                var sLab = new Label
+                {
+                    FormattedText = new FormattedString
+                    {
+                        Spans =
+                            {
+                                new Span {Text = "Inaczej: ", FontAttributes = FontAttributes.Bold},
+                                new Span {Text = txt} }
+                    }
+                };
+                Sl.Children.Add(sLab);
+            }
             Sl.Children.Add(img);
             if (fml.InEqs != null && fml.InEqs.Length > 0)
             {
