@@ -2,25 +2,31 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using AiRTech.Core;
 using AiRTech.Core.DataHandling;
+using AiRTech.Core.Net;
 using AiRTech.Core.Subjects;
-using AiRTech.Core.Web;
 using AiRTech.Views;
+using AiRTech.Views.Other;
 using AiRTech.Views.SubjectData;
 using Xamarin.Forms;
+using DefinitionsPage = AiRTech.Views.Pages.DefinitionsPage;
+using MainPage = AiRTech.Views.Pages.MainPage;
+using MenuPage = AiRTech.Views.Pages.MenuPage;
+using SubjectPage = AiRTech.Views.Pages.SubjectPage;
 
 namespace AiRTech
 {
-    public partial class App : Application
+    public partial class App : AiRTechApp
     {
         private readonly Color _mainBgColor = Color.FromRgb(169, 169, 169);
         private readonly Color _menuBgColor = Color.FromRgb(95, 158, 160);
         private readonly Color _topBarColor = Color.FromRgb(95, 158, 160);
         private readonly Color _topBarTextColor = Color.FromRgb((int)byte.MaxValue, (int)byte.MaxValue, (int)byte.MaxValue);
 
-        public App()
+        public App() : base()
         {
-            NavPage = new NavigationPage(new ContentPage
+            var mainContentPage = new ContentPage
             {
                 Title = "Ładowanie",
                 Content = new ActivityIndicator
@@ -28,7 +34,8 @@ namespace AiRTech
                     IsRunning = true,
                     Color = Color.DarkRed
                 }
-            })
+            };
+            NavPage = new NavigationPage(mainContentPage)
             {
                 BarBackgroundColor = _topBarColor,
                 BarTextColor = _topBarTextColor,
@@ -47,7 +54,7 @@ namespace AiRTech
             };
         }
 
-        public async void NavigateTo(Type page, string title, bool inner = true, params object[] args)
+        private async void NavigateTo(Type page, string title, bool inner = true, params object[] args)
         {
             var mPage = MainPage as MasterDetailPage;
             if (mPage == null)
@@ -85,7 +92,7 @@ namespace AiRTech
             }
         }
 
-        public async void NavigateTo(Page page, bool removePrevious = false)
+        private async void NavigateTo(Page page, bool removePrevious = false)
         {
             if (removePrevious)
             {
@@ -101,7 +108,7 @@ namespace AiRTech
             }
         }
 
-        public async void NavigateToModal(ContentPage modal)
+        public override async void NavigateToModal(ContentPage modal)
         {
             await NavPage.PushAsync(modal);
         }
@@ -109,7 +116,7 @@ namespace AiRTech
         public Page GetPage(Type pageType, string title = null, params object[] args)
         {
             Page page;
-            if (CreatedPages.ContainsKey(pageType))
+            if (MainPages.ContainsKey(pageType))
             {
                 if (pageType == typeof(SubjectPage) || pageType == typeof(DefinitionsPage) || pageType == typeof(SolverPage))
                 {
@@ -117,7 +124,7 @@ namespace AiRTech
                 }
                 else
                 {
-                    page = CreatedPages[pageType][0];
+                    page = MainPages[pageType][0];
                 }
             }
             else
@@ -133,7 +140,7 @@ namespace AiRTech
 
         private Page GetPage(Type pageType, object[] args)
         {
-            var pages = CreatedPages[pageType];
+            var pages = MainPages[pageType];
             Page page = null;
             foreach (var p in pages)
             {
@@ -158,7 +165,7 @@ namespace AiRTech
                 page = Activator.CreateInstance(pageType, args) as Page;
             }
             var list = new List<Page> { page };
-            CreatedPages[pageType] = list;
+            MainPages[pageType] = list;
             return page;
         }
 
@@ -167,26 +174,8 @@ namespace AiRTech
             //await Task.Delay(5000);
             try
             {
-                try
-                {
-                    FileHandler = DependencyService.Get<IFileHandler>();
-                    FileHandler.Init();
-                }
-                catch (Exception e)
-                {
-                    MainPage.DisplayAlert("Error!", "Błąd uzyskiwania dostępu do pliku bazy!", "Zamknij");
-                    Debug.WriteLine(e);
-                    throw;
-                }
-                try
-                {
-                    Web = new WebCore();
-                }
-                catch (Exception e)
-                {
-                    MainPage.DisplayAlert("Offline!", "Brak dostępu do serwera!", "Zamknij");
-                    Debug.WriteLine(e);
-                }
+                DialogManager = new DialogManager();
+                DataCore = new CoreManager(this);
                 NavigateTo(typeof(MainPage), "AiRTech", false);
                 var menuPage = (MenuPage)((MasterDetailPage)MainPage).Master;
                 menuPage.IsBusy = false;
@@ -224,9 +213,8 @@ namespace AiRTech
             MainPage = new ContentPage();
         }
 
-        private Dictionary<Type, List<Page>> CreatedPages { get; } = new Dictionary<Type, List<Page>>();
+        public CoreManager DataCore { get; set; }
+        private Dictionary<Type, List<Page>> MainPages { get; } = new Dictionary<Type, List<Page>>();
         private NavigationPage NavPage { get; set; }
-        public IFileHandler FileHandler { get; set; }
-        public WebCore Web { get; set; }
     }
 }

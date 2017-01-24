@@ -1,5 +1,7 @@
 ﻿using System.Windows.Input;
 using AiRTech.Core.Commands;
+using AiRTech.Views.Pages;
+using AiRTech.Views.SubjectData;
 
 namespace AiRTech.Views.ViewModels
 {
@@ -18,11 +20,10 @@ namespace AiRTech.Views.ViewModels
         public string FormulaTxt => "Wzory";
         public string TaskSolverTxt => "Solver";
         public ICommand DefinitionTappedCommand =>
-            _defTappedCommand ?? (_defTappedCommand = SubjectCommands.DefinitionsTappedCommand);
-
+            _defTappedCommand ?? (_defTappedCommand = SubjectCommands.DefinitionsTappedCommand(typeof(DefinitionsPage)));
         public ICommand FormulasTappedCommand =>
-            _frmlTappedCommand ?? (_frmlTappedCommand = SubjectCommands.FormulasTappedCommand);
+            _frmlTappedCommand ?? (_frmlTappedCommand = SubjectCommands.FormulasTappedCommand(typeof(FormulasPage)));
         public ICommand SolverTappedCommand =>
-            _solverTappedCommand ?? (_solverTappedCommand = SubjectCommands.SolverTappedCommand);
+            _solverTappedCommand ?? (_solverTappedCommand = SubjectCommands.SolverTappedCommand(typeof(SolverPage)));
     }
 }

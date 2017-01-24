@@ -135,9 +135,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AiRTech\AiRTech.csproj">
-      <Project>{2d1243a0-f81d-4823-8853-484e13590978}</Project>
-      <Name>AiRTech</Name>
+    <ProjectReference Include="..\AiRTech\AiRTech.CoViews.csproj">
+      <Project>{80C6A490-5B49-47B9-9324-6BB6BCD035FC}</Project>
+      <Name>AiRTech.CoViews</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

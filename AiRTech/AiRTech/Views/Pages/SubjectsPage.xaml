@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AiRTech.Views.Pages.SubjectsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:commands="clr-namespace:AiRTech.Core.Commands;assembly=AiRTech"
+    xmlns:subjects="clr-namespace:AiRTech.Core.Subjects;assembly=AiRTech">
+    <ListView
+        x:Name="listView" Margin="10,20,10,0"
+        HorizontalOptions="Center"
+        ItemsSource="{Binding Source={x:Static subjects:Subject.SubjectAsValues}}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ImageCell
+                    Command="{Binding Source={x:Static commands:SubjectCommands.SubjectItemClicked}}"
+                    CommandParameter="{Binding .}"
+                    Detail="{Binding Details}"
+                    ImageSource="{Binding ImgProperty}"
+                    Text="{Binding Name}" />
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

@@ -12,7 +12,7 @@ namespace AiRTech.Views.ViewModels
     {
         private View _noDefsView;
 
-        public DefinitionsViewModel(DefinitionsPage page) : base(page)
+        public DefinitionsViewModel(Pages.DefinitionsPage page) : base(page)
         {
             Title = "Definicje";
             NoDefs = "Brak definicji";
@@ -27,7 +27,7 @@ namespace AiRTech.Views.ViewModels
 
         private void SubjectOnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            var p = Page as DefinitionsPage;
+            var p = Page as Pages.DefinitionsPage;
             if (args.PropertyName == nameof(Definitions) && p?.DefListView != null)
             {
                 var defs = Definitions.ToArray();
@@ -56,7 +56,7 @@ namespace AiRTech.Views.ViewModels
 
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs)
         {
-            var p = Page as DefinitionsPage;
+            var p = Page as Pages.DefinitionsPage;
             var d = p.DefListView.SelectedItem as Definition;
             if (d == null)
             {
