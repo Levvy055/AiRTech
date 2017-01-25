@@ -23,8 +23,8 @@ namespace AiRTech.Views.SubjectData
             Solver = Subject.Base.Solver;
             var mstack = new StackLayout();
             Carousel = new CarouselPage();
-            var tabs = ViewHandler.SolverViews[Subject.Base.SubjectType];
-            if (Solver == null || tabs == null || tabs.Count == 0)
+            var solverViews = ViewHandler.GetSolverViews(Subject.Base.SubjectType);
+            if (Solver == null || solverViews == null || solverViews.Count == 0)
             {
                 mstack.Children.Add(new Label
                 {
@@ -33,17 +33,17 @@ namespace AiRTech.Views.SubjectData
             }
             else
             {
-                foreach (var tab in tabs)
+                foreach (var tab in solverViews)
                 {
                     var sv = new ScrollView
                     {
-                        Content = tab.Value,
+                        Content = tab,
                         Orientation = ScrollOrientation.Vertical
                     };
-                    var page = new ContentPage { Content = sv, Title = tab.Key };
+                    var page = new ContentPage { Content = sv, Title = tab.Title };
                     var b = new Button
                     {
-                        Text = tab.Key,
+                        Text = tab.Title,
                         Command = NavigateToTabCommand(page)
                     };
                     mstack.Children.Add(b);

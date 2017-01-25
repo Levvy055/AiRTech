@@ -10,6 +10,7 @@ using AiRTech.Core.Subjects.Solv;
 using AiRTech.Core.Subjects.Solv.Solvers;
 using AiRTech.Views;
 using AiRTech.Views.Other;
+using AiRTech.Views.Pages;
 using AiRTech.Views.SubjectData;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
@@ -70,9 +71,9 @@ namespace AiRTech
                 menuPage.IsBusy = false;
                 menuPage.IsDisabled = false;
 #if DEBUG
-                //NavigateTo(typeof(SubjectsPage), "Subjects", false);
-                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                //NavigateTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                NavigateToMain(typeof(SubjectsPage), "Subjects");
+                var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                NavigateToSubject(s, "Podstawy Teorii Sygnałów");
                 //NavigateTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
                 //NavigateTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
                 //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
@@ -108,9 +109,9 @@ namespace AiRTech
             new SignalTheoryBasicsSolver();
         }
 
-        public override void NavigateToMain(Type mPageType, string title)
+        public override void NavigateToMain(Type pageType, string title)
         {
-            NavigateTo(typeof(MainPage), "AiRTech", false);
+            NavigateTo(pageType, "AiRTech", false);
         }
 
         public override void NavigateToSubject(Subject subject, string title)
@@ -120,15 +121,15 @@ namespace AiRTech
 
         public override void NavigateToDefinition(string title, Subject subject)
         {
-            throw new NotImplementedException();
+            NavigateTo(typeof(DefinitionsPage), title, true, subject);
         }
 
         public override void NavigateToFormula(string title, Subject subject)
         {
-            throw new NotImplementedException();
+            NavigateTo(typeof(FormulasPage), title, true, subject);
         }
 
-        public override void NavigateToSolver(Subject subject, string name, bool carousel=false)
+        public override void NavigateToSolver(Subject subject, string name, bool carousel = false)
         {
             var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
             var sv = ViewHandler.GetSolverView(subject.Base.SubjectType, name);
@@ -180,7 +181,6 @@ namespace AiRTech
                     }
                 }
                 mPage.IsPresented = false;
-
             }
         }
 
@@ -202,27 +202,36 @@ namespace AiRTech
 
         public Page GetPage(Type pageType, string title = null, params object[] args)
         {
-            Page page;
-            if (MainPages.ContainsKey(pageType))
+            try
             {
-                if (pageType == typeof(SubjectPage) || pageType == typeof(DefinitionsPage) || pageType == typeof(SolverPage))
+                Page page;
+                if (MainPages.ContainsKey(pageType))
                 {
-                    page = GetPage(pageType, args);
+                    if (pageType == typeof(SubjectPage) || pageType == typeof(DefinitionsPage) ||
+                        pageType == typeof(SolverPage))
+                    {
+                        page = GetPage(pageType, args);
+                    }
+                    else
+                    {
+                        page = MainPages[pageType][0];
+                    }
                 }
                 else
                 {
-                    page = MainPages[pageType][0];
+                    page = CreatePage(pageType, args);
                 }
+                if (!string.IsNullOrWhiteSpace(title) && page != null)
+                {
+                    page.Title = title;
+                }
+                return page;
             }
-            else
+            catch (Exception e)
             {
-                page = CreatePage(pageType, args);
+                Debug.WriteLine(e);
+                return null;
             }
-            if (!string.IsNullOrWhiteSpace(title) && page != null)
-            {
-                page.Title = title;
-            }
-            return page;
         }
 
         private Page GetPage(Type pageType, object[] args)

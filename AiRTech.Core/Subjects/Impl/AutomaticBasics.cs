@@ -2,7 +2,7 @@
 {
     public class AutomaticBasics : SubjectBase
     {
-        public AutomaticBasics() : base(SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI)
+        public AutomaticBasics() : base(SubjectType.PODSTAWY_AUTOMATYKI)
         {
 
         }

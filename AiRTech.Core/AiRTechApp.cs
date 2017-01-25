@@ -17,7 +17,7 @@ namespace AiRTech.Core
         }
 
         protected abstract void InitSolvers();
-        public abstract void NavigateToMain(Type mPageType, string title);
+        public abstract void NavigateToMain(Type pageType, string title);
         public abstract void NavigateToPage(Page page, bool removePrevious = false);
         public abstract void NavigateToSubject(Subject subject, string title);
         public abstract void NavigateToDefinition(string title, Subject subject);

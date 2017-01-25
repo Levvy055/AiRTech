@@ -8,18 +8,21 @@ namespace AiRTech.Core.Commands
 {
     public static class SubjectCommands
     {
-        public static ICommand SubjectItemClicked(Type pageType)
+        public static ICommand SubjectItemClicked
         {
-            return new Command(o =>
+            get
             {
-                var s = o as Subject;
-                if (s == null)
+                return new Command(o =>
                 {
-                    return;
-                }
-                Debug.WriteLine("Subject Item Selected: " + s.Name);
-                CoreManager.Current.App.NavigateToSubject(s, s.Name);
-            });
+                    var s = o as Subject;
+                    if (s == null)
+                    {
+                        return;
+                    }
+                    Debug.WriteLine("Subject Item Selected: " + s.Name);
+                    CoreManager.Current.App.NavigateToSubject(s, s.Name);
+                });
+            }
         }
 
         public static ICommand DefinitionsTappedCommand
