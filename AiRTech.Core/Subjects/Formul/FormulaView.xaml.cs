@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using AiRTech.Core;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Formul;
-using AiRTech.Views.Other;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.SubjectData
@@ -15,6 +15,7 @@ namespace AiRTech.Views.SubjectData
         public FormulaView(Formula fml, Subject subject)
         {
             _subject = subject;
+            Title = fml.Title;
             BindingContext = fml;
             InitializeComponent();
             var img = new Image
@@ -51,11 +52,13 @@ namespace AiRTech.Views.SubjectData
                     catch (Exception e)
                     {
                         Debug.WriteLine(e);
-                        DialogManager.ShowWarningDialog("Błąd w pobranej zawartości", "Nie można utworzyć elementu definicji " + fml.Title);
+                        CoreManager.Current.App.DialogManager.ShowWarningDialog("Błąd w pobranej zawartości", "Nie można utworzyć elementu definicji " + fml.Title);
                     }
                 }
             }
         }
+
+        public string Title { get; private set; }
 
         private View CreateViewForInnerFormulaComp(InEq id)
         {

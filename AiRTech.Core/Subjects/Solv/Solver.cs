@@ -7,14 +7,24 @@ namespace AiRTech.Core.Subjects.Solv
     public abstract class Solver
     {
         protected Dictionary<string, SolverView> _tabs;
+        private static readonly Dictionary<SubjectType, Solver> _solvers = new Dictionary<SubjectType, Solver>();
 
         protected Solver(SubjectType subjectType)
         {
             Solvers.Add(subjectType, this);
         }
 
-        public abstract Dictionary<string, SolverView> SolverTabs { get; }
+        public static Solver GetSolverFor(SubjectType subjectType)
+        {
+            if (Solvers.ContainsKey(subjectType))
+            {
+                return Solvers[subjectType];
+            }
+            return null;
+        }
 
-        public static Dictionary<SubjectType, Solver> Solvers { get; } = new Dictionary<SubjectType, Solver>();
+        public abstract Dictionary<string, SolverView> InitSolverTabs();
+
+        private static Dictionary<SubjectType, Solver> Solvers => _solvers;
     }
 }

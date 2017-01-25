@@ -4,24 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects;
+using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
 namespace AiRTech.Core
 {
-    public abstract  class AiRTechApp:Application
+    public abstract class AiRTechApp : Application
     {
         protected AiRTechApp()
         {
 
         }
 
-        public abstract void NavigateToMain(Type mPageType, string title, bool inner = true, params object[] args);
-        public abstract void NavigateToSubject(Type sPageType, string title, bool inner = true, params object[] args);
-        public abstract void NavigateToDefinition(Type dPageType, string title, bool inner = true, params object[] args);
-        public abstract void NavigateToFormula(Type fPageType, string title, bool inner = true, params object[] args);
-        public abstract void NavigateToSolver(Type sPageType, string title, bool inner = true, params object[] args);
-        public abstract void NavigateToModal(ContentPage modal);
         protected abstract void InitSolvers();
+        public abstract void NavigateToMain(Type mPageType, string title);
+        public abstract void NavigateToPage(Page page, bool removePrevious = false);
+        public abstract void NavigateToSubject(Subject subject, string title);
+        public abstract void NavigateToDefinition(string title, Subject subject);
+        public abstract void NavigateToFormula(string title, Subject subject);
+        public abstract void NavigateToSolver(Subject subject, string name, bool carousel=false);
+        public abstract void NavigateToSolver(Subject subject, SolverView sv);
+        public abstract void NavigateToModal(ContentPage modal);
+
         public IDialogManager DialogManager { get; protected set; }
     }
 }

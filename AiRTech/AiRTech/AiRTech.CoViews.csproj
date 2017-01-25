@@ -43,6 +43,9 @@
     <Compile Include="Solvers\SignalTheoryBasicsSolver.cs" />
     <Compile Include="Views\Other\DialogManager.cs" />
     <Compile Include="ViewHandler.cs" />
+    <Compile Include="Views\Pages\SolverPage.xaml.cs">
+      <DependentUpon>SolverPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewModels\AboutViewModel.cs" />
     <Compile Include="Views\Other\HistResultModal.cs" />
     <Compile Include="Views\Pages\AboutPage.xaml.cs">
@@ -162,24 +165,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\pe.png" />
-    <EmbeddedResource Include="Resources\pts.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Pages\SubjectPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\definitions.png" />
-    <EmbeddedResource Include="Resources\formula.png" />
-    <EmbeddedResource Include="Resources\solver.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\home.png" />
-    <EmbeddedResource Include="Resources\about.png" />
-    <EmbeddedResource Include="Resources\subjects.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Pages\DefinitionsPage.xaml">
@@ -194,27 +183,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\arrow_right.png" />
-    <EmbeddedResource Include="Resources\arrow_left.png" />
-    <EmbeddedResource Include="Resources\circle.png" />
-    <EmbeddedResource Include="Resources\circle_empty.png" />
-    <EmbeddedResource Include="Resources\circle_green.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\AiRTech.Core\AiRTech.Core.csproj">
       <Project>{67f9d3a8-f71e-4428-913f-c37ae82cdb24}</Project>
       <Name>AiRTech.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\no-image.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\eoia.png" />
-    <EmbeddedResource Include="Resources\mech.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\pa.png" />
+    <EmbeddedResource Include="Views\Pages\SolverPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.4.184-pre1\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

@@ -6,9 +6,12 @@ using AiRTech.Core;
 using AiRTech.Core.DataHandling;
 using AiRTech.Core.Net;
 using AiRTech.Core.Subjects;
+using AiRTech.Core.Subjects.Solv;
+using AiRTech.Core.Subjects.Solv.Solvers;
 using AiRTech.Views;
 using AiRTech.Views.Other;
 using AiRTech.Views.SubjectData;
+using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 using DefinitionsPage = AiRTech.Views.Pages.DefinitionsPage;
 using MainPage = AiRTech.Views.Pages.MainPage;
@@ -54,6 +57,95 @@ namespace AiRTech
             };
         }
 
+        protected override async void OnStart()
+        {
+            //await Task.Delay(5000);
+            try
+            {
+                DialogManager = new DialogManager();
+                DataCore = new CoreManager(this);
+                InitSolvers();
+                NavigateToMain(typeof(MainPage), "AiRTech");
+                var menuPage = (MenuPage)((MasterDetailPage)MainPage).Master;
+                menuPage.IsBusy = false;
+                menuPage.IsDisabled = false;
+#if DEBUG
+                //NavigateTo(typeof(SubjectsPage), "Subjects", false);
+                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                //NavigateTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                //NavigateTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
+                //NavigateTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
+                //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
+                //np?.NavigateTo(3);
+#else
+                ((MasterDetailPage)MainPage).IsPresented = true;
+#endif
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
+
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
+        }
+
+        public void OnDestroy()
+        {
+            MainPage = new ContentPage();
+        }
+
+        protected override void InitSolvers()
+        {
+            new ElectronicBasicsSolver();
+            new SignalTheoryBasicsSolver();
+        }
+
+        public override void NavigateToMain(Type mPageType, string title)
+        {
+            NavigateTo(typeof(MainPage), "AiRTech", false);
+        }
+
+        public override void NavigateToSubject(Subject subject, string title)
+        {
+            NavigateTo(typeof(SubjectPage), title, true, subject);
+        }
+
+        public override void NavigateToDefinition(string title, Subject subject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void NavigateToFormula(string title, Subject subject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void NavigateToSolver(Subject subject, string name, bool carousel=false)
+        {
+            var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
+            var sv = ViewHandler.GetSolverView(subject.Base.SubjectType, name);
+            np?.NavigateToTab(sv);
+        }
+
+        public override void NavigateToSolver(Subject subject, SolverView sv)
+        {
+            var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
+            np?.NavigateToTab(sv);
+        }
+
+        public override async void NavigateToModal(ContentPage modal)
+        {
+            await NavPage.PushAsync(modal);
+        }
+
         private async void NavigateTo(Type page, string title, bool inner = true, params object[] args)
         {
             var mPage = MainPage as MasterDetailPage;
@@ -92,7 +184,7 @@ namespace AiRTech
             }
         }
 
-        private async void NavigateTo(Page page, bool removePrevious = false)
+        public override async void NavigateToPage(Page page, bool removePrevious = false)
         {
             if (removePrevious)
             {
@@ -106,11 +198,6 @@ namespace AiRTech
             {
                 NavPage.Title = page.Title;
             }
-        }
-
-        public override async void NavigateToModal(ContentPage modal)
-        {
-            await NavPage.PushAsync(modal);
         }
 
         public Page GetPage(Type pageType, string title = null, params object[] args)
@@ -167,50 +254,6 @@ namespace AiRTech
             var list = new List<Page> { page };
             MainPages[pageType] = list;
             return page;
-        }
-
-        protected override async void OnStart()
-        {
-            //await Task.Delay(5000);
-            try
-            {
-                DialogManager = new DialogManager();
-                DataCore = new CoreManager(this);
-                NavigateTo(typeof(MainPage), "AiRTech", false);
-                var menuPage = (MenuPage)((MasterDetailPage)MainPage).Master;
-                menuPage.IsBusy = false;
-                menuPage.IsDisabled = false;
-#if DEBUG
-                //NavigateTo(typeof(SubjectsPage), "Subjects", false);
-                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                //NavigateTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
-                //NavigateTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
-                //NavigateTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
-                //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
-                //np?.NavigateTo(3);
-#else
-                ((MasterDetailPage)MainPage).IsPresented = true;
-#endif
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-        }
-
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
-
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
-        }
-
-        public void OnDestroy()
-        {
-            MainPage = new ContentPage();
         }
 
         public CoreManager DataCore { get; set; }

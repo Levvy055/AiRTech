@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Input;
+using AiRTech.Core;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Solv;
 using Xamarin.Forms;
@@ -22,7 +23,7 @@ namespace AiRTech.Views.SubjectData
             Solver = Subject.Base.Solver;
             var mstack = new StackLayout();
             Carousel = new CarouselPage();
-            var tabs = Solver?.SolverTabs;
+            var tabs = ViewHandler.SolverViews[Subject.Base.SubjectType];
             if (Solver == null || tabs == null || tabs.Count == 0)
             {
                 mstack.Children.Add(new Label
@@ -49,7 +50,14 @@ namespace AiRTech.Views.SubjectData
                     Carousel.Children.Add(page);
                 }
             }
-            Mpage = new ContentPage { Content = new ScrollView { Content = mstack }, Title = "Solver - " + Subject.Name };
+            Mpage = new ContentPage
+            {
+                Content = new ScrollView
+                {
+                    Content = mstack
+                },
+                Title = "Solver - " + Subject.Name
+            };
             Carousel.CurrentPageChanged += CarouselOnPageChanged;
         }
 
@@ -59,8 +67,7 @@ namespace AiRTech.Views.SubjectData
             {
                 var t = Carousel.CurrentPage.Title;
                 Carousel.Title = t;
-                var app = Application.Current as App;
-                app.NavigateTo(Carousel);
+                CoreManager.Current.App.NavigateToSolver(Subject, t, true);
             }
             catch (Exception e)
             {
@@ -70,8 +77,7 @@ namespace AiRTech.Views.SubjectData
 
         public void NavigateToMain()
         {
-            var app = Application.Current as App;
-            app.NavigateTo(Mpage);
+            CoreManager.Current.App.NavigateToPage(Mpage);
             _isOnMain = true;
         }
 
@@ -100,8 +106,7 @@ namespace AiRTech.Views.SubjectData
         {
             Carousel.CurrentPage = page;
             Carousel.Title = page.Title + " - Solver";
-            var app = Application.Current as App;
-            app.NavigateTo(Carousel, _isOnMain);
+            CoreManager.Current.App.NavigateToPage(Carousel, _isOnMain);
             _isOnMain = false;
         }
 

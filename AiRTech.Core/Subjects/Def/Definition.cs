@@ -9,35 +9,6 @@ namespace AiRTech.Core.Subjects.Def
 {
     public class Definition : IComparable
     {
-        public void LinkDeserializedComponents(SubjectType st)
-        {
-            if (!string.IsNullOrEmpty(SolverNames))
-            {
-                var sTabs = ViewHandler.GetSolverFor(st).SolverTabs;
-                foreach (var sns in SolverNames.Split('|'))
-                {
-                    var sn = sns.Trim();
-                    if (!sTabs.ContainsKey(sn)) { continue; }
-                    if (!Solvers.Contains(sTabs[sn]))
-                    {
-                        Solvers.Add(sTabs[sn]);
-                    }
-                }
-            }
-            if (!string.IsNullOrEmpty(FormulaNames))
-            {
-                var sTabs = Formula.GetFormulaFor(st).Tabs;
-                foreach (var sns in SolverNames.Split('|'))
-                {
-                    var sn = sns.Trim();
-                    if (!sTabs.ContainsKey(sn)) { continue; }
-                    if (!Solvers.Contains(sTabs[sn]))
-                    {
-                        Solvers.Add(sTabs[sn]);
-                    }
-                }
-            }
-        }
 
         #region Equality
         public override bool Equals(object o)
@@ -90,8 +61,5 @@ namespace AiRTech.Core.Subjects.Def
         public string SolverNames { get; set; }
         [JsonProperty(PropertyName = "Fmls")]
         public string FormulaNames { get; set; }
-        [JsonIgnore]
-        public List<SolverView> Solvers { get; } = new List<SolverView>();
-        public List<FormulaView> Formulas { get; } = new List<FormulaView>();
     }
 }

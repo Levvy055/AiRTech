@@ -19,8 +19,7 @@ namespace AiRTech.Core.DataHandling
             else
             {
                 Uri ur;
-                var app = Application.Current as App;
-                var baseUri = new Uri(app.FileHandler.RootAppPath() + "\\");
+                var baseUri = new Uri(CoreManager.Current.FileHandler.RootAppPath() + "\\");
                 if (Uri.TryCreate(baseUri, uri, out ur))
                 {
                     u = ur.AbsolutePath;

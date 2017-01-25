@@ -36,14 +36,6 @@ namespace AiRTech.Core.Net
         {
             var pathToDefs = Path.Combine(FnDefDir, FnDefs.Replace("*", subjectType.ToString().ToLower()));
             var list = await GetData<List<Definition>>(pathToDefs);
-            if (list == null)
-            {
-                return null;
-            }
-            foreach (var def in list)
-            {
-                def.LinkDeserializedComponents(subjectType);
-            }
             return list;
         }
 
@@ -123,36 +115,36 @@ namespace AiRTech.Core.Net
             {
                 return _connected;
             }
-            var internetStatus = CrossConnectivity.Current.IsConnected;
-            if (!internetStatus)
+            try
             {
-                CoreManager.App.DialogManager.ShowWarningDialog("Brak dostępu do internetu!",
-                    "Włącz INTERNETY! czyt. włącz transmisje danych.");
-                return false;
-            }
-            var isReachable = await CrossConnectivity.Current.IsRemoteReachable("http://www.google.com");
-            if (!isReachable)
-            {
-                CoreManager.App.DialogManager.ShowWarningDialog("Brak dostępu do internetu!",
-                    "Połącz się z INTERNETEM!");
-                return false;
-            }
-            using (var client = Connection)
-            {
-                try
+                var internetStatus = CrossConnectivity.Current.IsConnected;
+                if (!internetStatus)
+                {
+                    CoreManager.Current.App.DialogManager.ShowWarningDialog("Brak dostępu do internetu!",
+                        "Włącz INTERNETY! czyt. włącz transmisje danych.");
+                    return false;
+                }
+                var isReachable = await CrossConnectivity.Current.IsRemoteReachable("http://www.google.com");
+                if (!isReachable)
+                {
+                    CoreManager.Current.App.DialogManager.ShowWarningDialog("Brak dostępu do internetu!",
+                        "Połącz się z INTERNETEM!");
+                    return false;
+                }
+                using (var client = Connection)
                 {
                     var r = await client.GetStringAsync("index.html");
                     _connected = !string.IsNullOrWhiteSpace(r) && r.StartsWith("<!DOCTYPE html>");
                     if (!_connected)
                     {
-                        CoreManager.App.DialogManager.ShowWarningDialog("Brak dostępu do serwera!",
+                        CoreManager.Current.App.DialogManager.ShowWarningDialog("Brak dostępu do serwera!",
                     "Serwer jest wyłączony, bądź nie odpowiada.");
                     }
                 }
-                catch (Exception e)
-                {
-                    HandleWebException(e);
-                }
+            }
+            catch (Exception e)
+            {
+                HandleWebException(e);
             }
             return _connected;
         }
@@ -165,7 +157,7 @@ namespace AiRTech.Core.Net
             {
                 msg = "Problem podczas próby pobrania zawartości online.";
             }
-            CoreManager.App.DialogManager.ShowWarningDialog("Błąd pobierania!", msg);
+            CoreManager.Current.App.DialogManager.ShowWarningDialog("Błąd pobierania!", msg);
         }
 
         private HttpClient Connection

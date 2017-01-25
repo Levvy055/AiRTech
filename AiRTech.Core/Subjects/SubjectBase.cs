@@ -8,6 +8,7 @@ using AiRTech.Core.Subjects.Def;
 using AiRTech.Core.Subjects.Formul;
 using AiRTech.Core.Subjects.Solv;
 using Xamarin.Forms;
+using AiRTech.Core.Properties;
 
 namespace AiRTech.Core.Subjects
 {
@@ -18,7 +19,7 @@ namespace AiRTech.Core.Subjects
             SubjectType = subjectType;
             Definitions = new List<Definition>();
             Formulas = new List<Formula>();
-            Solver = ViewHandler.GetSolverFor(SubjectType);
+            Solver = Solver.GetSolverFor(SubjectType);
             PropertyChanged += (sender, args) => UpdateDependencies();
         }
 
@@ -44,8 +45,7 @@ namespace AiRTech.Core.Subjects
         {
             try
             {
-                var app = Application.Current as App;
-                var defList = await app.FileHandler.GetDefinitions(SubjectType);
+                var defList = await CoreManager.Current.FileHandler.GetDefinitions(SubjectType);
                 if (defList != null)
                 {
                     Definitions.Clear();
@@ -64,15 +64,14 @@ namespace AiRTech.Core.Subjects
 
         protected async void LoadDefinitionsFromServerAndSave()
         {
-            var app = Application.Current as App;
             try
             {
-                var newDefList = await app.Web.GetDefinitionList(SubjectType);
+                var newDefList = await CoreManager.Current.Web.GetDefinitionList(SubjectType);
                 if (newDefList == null)
                 {
                     return;
                 }
-                app.FileHandler.UpdateDefinitions(newDefList, SubjectType);
+                CoreManager.Current.FileHandler.UpdateDefinitions(newDefList, SubjectType);
                 await LoadDefinitionsFromFile();
             }
             catch (Exception e)
@@ -85,8 +84,7 @@ namespace AiRTech.Core.Subjects
         {
             try
             {
-                var app = Application.Current as App;
-                var fmlList = await app.FileHandler.GetFormulas(SubjectType);
+                var fmlList = await CoreManager.Current.FileHandler.GetFormulas(SubjectType);
                 if (fmlList != null)
                 {
                     Formulas.Clear();
@@ -105,15 +103,14 @@ namespace AiRTech.Core.Subjects
 
         protected async void LoadFormulasFromServerAndSave()
         {
-            var app = Application.Current as App;
             try
             {
-                var newDefList = await app.Web.GetFormulaList(SubjectType);
+                var newDefList = await CoreManager.Current.Web.GetFormulaList(SubjectType);
                 if (newDefList == null)
                 {
                     return;
                 }
-                app.FileHandler.UpdateFormulas(newDefList, SubjectType);
+                CoreManager.Current.FileHandler.UpdateFormulas(newDefList, SubjectType);
                 await LoadFormulasFromFile();
             }
             catch (Exception e)

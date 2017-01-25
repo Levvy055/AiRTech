@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using AiRTech.Core;
 using AiRTech.Views.ViewComponents;
 using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
@@ -50,9 +51,8 @@ namespace AiRTech.Views.Pages
                 return;
             }
             ListView.SelectedItem = null;
-            Debug.WriteLine("Menu List changed to: " + item.Title);
-            var app = Application.Current as App;
-            app?.NavigateTo(item.TargetType, item.Title,  false);
+            Debug.WriteLine("By menu Page changed to: " + item.Title);
+            CoreManager.Current.App.NavigateToMain(item.TargetType, item.Title);
         }
 
         public ListView ListView => listView;

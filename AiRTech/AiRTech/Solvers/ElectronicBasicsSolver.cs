@@ -5,20 +5,21 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
 {
     public class ElectronicBasicsSolver : Solver
     {
-        public override Dictionary<string, SolverView> SolverTabs
+        public ElectronicBasicsSolver() : base(SubjectType.PODSTAWY_ELEKTRONIKI)
         {
-            get
+        }
+
+        public override Dictionary<string, SolverView> InitSolverTabs()
+        {
+            if (_tabs != null)
             {
-                if (_tabs != null)
-                {
-                    return _tabs;
-                }
-                var list = new Dictionary<string, SolverView>
+                return _tabs;
+            }
+            var list = new Dictionary<string, SolverView>
             {
                 //{"First", new SolverView(null)}
             };
-                return list;
-            }
+            return list;
         }
     }
 }

@@ -20,10 +20,10 @@ namespace AiRTech.Views.ViewModels
         public string FormulaTxt => "Wzory";
         public string TaskSolverTxt => "Solver";
         public ICommand DefinitionTappedCommand =>
-            _defTappedCommand ?? (_defTappedCommand = SubjectCommands.DefinitionsTappedCommand(typeof(DefinitionsPage)));
+            _defTappedCommand ?? (_defTappedCommand = SubjectCommands.DefinitionsTappedCommand);
         public ICommand FormulasTappedCommand =>
-            _frmlTappedCommand ?? (_frmlTappedCommand = SubjectCommands.FormulasTappedCommand(typeof(FormulasPage)));
+            _frmlTappedCommand ?? (_frmlTappedCommand = SubjectCommands.FormulasTappedCommand);
         public ICommand SolverTappedCommand =>
-            _solverTappedCommand ?? (_solverTappedCommand = SubjectCommands.SolverTappedCommand(typeof(SolverPage)));
+            _solverTappedCommand ?? (_solverTappedCommand = SubjectCommands.SolverTappedCommand);
     }
 }

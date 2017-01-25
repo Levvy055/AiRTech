@@ -15,6 +15,7 @@ namespace AiRTech.Core
     {
         public CoreManager(AiRTechApp app)
         {
+            Current=this;
             App = app;
             try
             {
@@ -38,7 +39,8 @@ namespace AiRTech.Core
             }
         }
 
-        public static AiRTechApp App { get; private set; }
+        public static CoreManager Current { get; set; }
+        public AiRTechApp App { get;}
         public WebCore Web { get; set; }
         public IFileHandler FileHandler { get; set; }
         }

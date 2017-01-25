@@ -40,15 +40,15 @@ namespace AiRTech.Core.Misc
             {
                 return DefaultEmptyImage;
             }
-            var app = Application.Current as App;
+            var cm = CoreManager.Current;
             try
             {
-                if (!app.FileHandler.Exists(imgUri) || app.FileHandler.IsEmpty(imgUri))
+                if (!cm.FileHandler.Exists(imgUri) || cm.FileHandler.IsEmpty(imgUri))
                 {
                     var s = false;
-                    using (var fs = app.FileHandler.GetFileStream(pathToImg))
+                    using (var fs = cm.FileHandler.GetFileStream(pathToImg))
                     {
-                        if (await app.Web.GetImage(pathToImg, fs).ConfigureAwait(false))
+                        if (await cm.Web.GetImage(pathToImg, fs).ConfigureAwait(false))
                         {
                             s = true;
                         }
@@ -56,12 +56,12 @@ namespace AiRTech.Core.Misc
                     if (!s)
                     {
                         Debug.WriteLine("Image File " + pathToImg + " not found! ");
-                        app.FileHandler.RemoveFile(imgUri);
+                        cm.FileHandler.RemoveFile(imgUri);
                         return DefaultEmptyImage;
                     }
                 }
                 Uri rUri;
-                if (!Uri.TryCreate(new Uri(app.FileHandler.RootAppPath() + "\\"), imgUri, out rUri))
+                if (!Uri.TryCreate(new Uri(cm.FileHandler.RootAppPath() + "\\"), imgUri, out rUri))
                 {
                     Debug.WriteLine("Image File " + pathToImg + " not found! ");
                     return DefaultEmptyImage;
@@ -72,7 +72,7 @@ namespace AiRTech.Core.Misc
             catch (Exception e)
             {
                 Debug.WriteLine("Image File " + pathToImg + " not found! " + e);
-                app.FileHandler.RemoveFile(imgUri);
+                cm.FileHandler.RemoveFile(imgUri);
                 return DefaultEmptyImage;
             }
         }

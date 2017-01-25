@@ -23,15 +23,13 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
         {
         }
 
-        public override Dictionary<string, SolverView> SolverTabs
+        public override Dictionary<string, SolverView> InitSolverTabs()
         {
-            get
+            if (_tabs != null)
             {
-                if (_tabs != null)
-                {
-                    return _tabs;
-                }
-                _tabs = new Dictionary<string, SolverView>
+                return _tabs;
+            }
+            _tabs = new Dictionary<string, SolverView>
                 {
                     {"Decybele", DecibelsView},
                     {"Histogram 2D", HistogramView},
@@ -44,12 +42,11 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
                         {"M-law", new SolverView(null)},
                         {"Grafy", new SolverView(null)}*/
                 };
-                foreach (var tabPair in _tabs)
-                {
-                    tabPair.Value.Title = tabPair.Key;
-                }
-                return _tabs;
+            foreach (var tabPair in _tabs)
+            {
+                tabPair.Value.Title = tabPair.Key;
             }
+            return _tabs;
         }
 
         #endregion

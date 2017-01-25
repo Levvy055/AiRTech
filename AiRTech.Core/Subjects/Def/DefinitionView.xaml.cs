@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using AiRTech.Core;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Def;
-using AiRTech.Views.Other;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
@@ -14,10 +14,13 @@ namespace AiRTech.Views.SubjectData
     public partial class DefinitionView : ContentView
     {
         private readonly Subject _subject;
+        private readonly Definition _def;
 
         public DefinitionView(Definition def, Subject subject)
         {
+            _def = def;
             _subject = subject;
+            Title = def.Title;
             BindingContext = def;
             InitializeComponent();
             if (def.Inner != null && def.Inner.Length > 0)
@@ -26,72 +29,87 @@ namespace AiRTech.Views.SubjectData
                 {
                     if (id != null)
                     {
-                        try
+                        var v = CreateViewForInnerDefComp(id);
+                        if (v != null)
                         {
-                            Sl.Children.Add(CreateViewForInnerDefComp(id));
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.WriteLine(e);
-                            DialogManager.ShowWarningDialog("Błąd w pobranej zawartości", "Nie można utworzyć elementu definicji " + def.Title);
+                            Sl.Children.Add(v);
                         }
                     }
                 }
             }
-            if (def.Solvers.Count > 0)
+            if (!string.IsNullOrWhiteSpace(def.SolverNames))
             {
+                var sn = def.SolverNames.Split('|');
+                for (var i = 0; i < sn.Length; i++)
+                {
+                    sn[i] = sn[i].Trim();
+                }
                 Sl.Children.Add(new Label
                 {
                     Text = "Powiązane Solvery",
                     HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment = TextAlignment.End,
                     FontSize = 18,
                     FontAttributes = FontAttributes.Bold
 
                 });
-                foreach (var s in def.Solvers.Where(s => s != null))
+                foreach (var s in sn)
                 {
                     Sl.Children.Add(CreateButton(s));
                 }
             }
         }
 
+        public string Title { get; private set; }
+
         private View CreateViewForInnerDefComp(InDef id)
         {
-            var v = new StackLayout();
-            if (id.Layout == InDefLayout.TextOverImage && id.Image == null)
+            try
             {
-                if (!string.IsNullOrWhiteSpace(id.Header))
+
+                var v = new StackLayout();
+                if (id.Layout == InDefLayout.TextOverImage && id.Image == null)
                 {
-                    id.Layout = !string.IsNullOrWhiteSpace(id.List) ? InDefLayout.List : InDefLayout.HeaderAndText;
-                }
-            }
-            switch (id.Layout)
-            {
-                case InDefLayout.TextUnderImage:
-                    v.Orientation = StackOrientation.Vertical;
-                    v.Children.Add(CreateImage(id));
-                    v.Children.Add(CreateText(id, true));
-                    break;
-                case InDefLayout.TextOverImage:
-                    v.Orientation = StackOrientation.Vertical;
-                    v.Children.Add(CreateText(id, true));
-                    v.Children.Add(CreateImage(id));
-                    break;
-                case InDefLayout.List:
-                    v.Orientation = StackOrientation.Vertical;
                     if (!string.IsNullOrWhiteSpace(id.Header))
                     {
-                        v.Children.Add(CreateHeader(id));
+                        id.Layout = !string.IsNullOrWhiteSpace(id.List) ? InDefLayout.List : InDefLayout.HeaderAndText;
                     }
-                    v.Children.Add(CreateList(id));
-                    break;
-                case InDefLayout.HeaderAndText:
+                }
+                switch (id.Layout)
+                {
+                    case InDefLayout.TextUnderImage:
+                        v.Orientation = StackOrientation.Vertical;
+                        v.Children.Add(CreateImage(id));
+                        v.Children.Add(CreateText(id, true));
+                        break;
+                    case InDefLayout.TextOverImage:
+                        v.Orientation = StackOrientation.Vertical;
+                        v.Children.Add(CreateText(id, true));
+                        v.Children.Add(CreateImage(id));
+                        break;
+                    case InDefLayout.List:
+                        v.Orientation = StackOrientation.Vertical;
+                        if (!string.IsNullOrWhiteSpace(id.Header))
+                        {
+                            v.Children.Add(CreateHeader(id));
+                        }
+                        v.Children.Add(CreateList(id));
+                        break;
+                    case InDefLayout.HeaderAndText:
 
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                return v;
+
             }
-            return v;
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                CoreManager.Current.App.DialogManager.ShowWarningDialog("Błąd w pobranej zawartości", "Nie można utworzyć elementu definicji " + _def.Title);
+            }
+            return null;
         }
 
         private View CreateHeader(InDef id)
@@ -144,23 +162,21 @@ namespace AiRTech.Views.SubjectData
             };
         }
 
-        private View CreateButton(SolverView solverView)
+        private View CreateButton(string solverName)
         {
             var b = new Button
             {
-                Text = solverView.Title,
-                Command = SolverButton_Click(solverView)
+                Text = solverName,
+                Command = SolverButton_Click(solverName)
             };
             return b;
         }
 
-        private ICommand SolverButton_Click(SolverView solverView)
+        private ICommand SolverButton_Click(string solverName)
         {
             var c = new Command(() =>
             {
-                var app = App.Current as App;
-                var np = app.GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", _subject) as SolverPage;
-                np?.NavigateToTab(solverView);
+                CoreManager.Current.App.NavigateToSolver(_subject, solverName);
             });
             return c;
         }
