@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="AiRTech.Views.SubjectData.SolverPage"
+    x:Class="AiRTech.Views.Pages.SolverPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewComponents="clr-namespace:AiRTech.Views.ViewComponents;assembly=AiRTech" />

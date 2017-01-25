@@ -6,7 +6,7 @@ using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Solv;
 using Xamarin.Forms;
 
-namespace AiRTech.Views.SubjectData
+namespace AiRTech.Views.Pages
 {
     public partial class SolverPage : ContentPage
     {
@@ -98,6 +98,7 @@ namespace AiRTech.Views.SubjectData
                 if (scroll?.Content == v)
                 {
                     GoToTab(page);
+                    break;
                 }
             }
         }

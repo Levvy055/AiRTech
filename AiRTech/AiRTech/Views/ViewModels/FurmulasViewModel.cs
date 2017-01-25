@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects.Formul;
-using AiRTech.Views.SubjectData;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewModels

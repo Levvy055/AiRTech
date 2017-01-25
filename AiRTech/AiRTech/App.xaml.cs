@@ -7,16 +7,16 @@ using AiRTech.Core.DataHandling;
 using AiRTech.Core.Net;
 using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Solv;
-using AiRTech.Core.Subjects.Solv.Solvers;
+using AiRTech.Solvers;
 using AiRTech.Views;
 using AiRTech.Views.Other;
 using AiRTech.Views.Pages;
-using AiRTech.Views.SubjectData;
 using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 using DefinitionsPage = AiRTech.Views.Pages.DefinitionsPage;
 using MainPage = AiRTech.Views.Pages.MainPage;
 using MenuPage = AiRTech.Views.Pages.MenuPage;
+using SolverView = AiRTech.Core.Subjects.Solv.SolverView;
 using SubjectPage = AiRTech.Views.Pages.SubjectPage;
 
 namespace AiRTech
@@ -105,8 +105,20 @@ namespace AiRTech
 
         protected override void InitSolvers()
         {
-            new ElectronicBasicsSolver();
-            new SignalTheoryBasicsSolver();
+            new ElectronicBasicsSolver().InitSolverTabs((s) =>
+             {
+                 foreach (var t in s.Tabs)
+                 {
+                     ViewHandler.Add(t, s.SubjectType);
+                 }
+             });
+            new SignalTheoryBasicsSolver().InitSolverTabs((s) =>
+            {
+                foreach (var t in s.Tabs)
+                {
+                    ViewHandler.Add(t, s.SubjectType);
+                }
+            });
         }
 
         public override void NavigateToMain(Type pageType, string title)
@@ -132,13 +144,22 @@ namespace AiRTech
         public override void NavigateToSolver(Subject subject, string name, bool carousel = false)
         {
             var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
-            var sv = ViewHandler.GetSolverView(subject.Base.SubjectType, name);
-            np?.NavigateToTab(sv);
+            NavigateToPage(np, carousel);
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                var sv = ViewHandler.GetSolverView(subject.Base.SubjectType, name);
+                np?.NavigateToTab(sv);
+            }
+            else
+            {
+                np?.NavigateToMain();
+            }
         }
 
         public override void NavigateToSolver(Subject subject, SolverView sv)
         {
             var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
+            NavigateToPage(np);
             np?.NavigateToTab(sv);
         }
 
@@ -157,13 +178,7 @@ namespace AiRTech
             var newPage = GetPage(page, title, args);
             if (newPage != null)
             {
-                if (newPage.GetType() == typeof(SolverPage))
-                {
-                    var solverPage = newPage as SolverPage;
-                    solverPage.NavigateToMain();
-                }
-                else
-                {
+
                     if (inner)
                     {
                         await NavPage.PushAsync(newPage);
@@ -179,7 +194,6 @@ namespace AiRTech
                         };
                         mPage.Detail = NavPage;
                     }
-                }
                 mPage.IsPresented = false;
             }
         }

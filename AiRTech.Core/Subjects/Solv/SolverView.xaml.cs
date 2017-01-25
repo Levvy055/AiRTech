@@ -2,7 +2,7 @@
 using AiRTech.Core.Subjects.Solv.Components;
 using Xamarin.Forms;
 
-namespace AiRTech.Views.ViewComponents
+namespace AiRTech.Core.Subjects.Solv
 {
     public delegate void ChangedEventHandler(object sender, EventArgs e);
 

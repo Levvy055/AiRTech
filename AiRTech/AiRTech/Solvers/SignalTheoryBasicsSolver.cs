@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using AiRTech.Core.Subjects;
+using AiRTech.Core.Subjects.Solv;
 using AiRTech.Core.Subjects.Solv.Components;
 using AiRTech.Core.Subjects.Solv.Math;
 using AiRTech.Core.Subjects.Solv.Math.Utils;
-using AiRTech.Views.ViewComponents;
-using Xamarin.Forms;
 using AiRTech.Views.Other;
+using Xamarin.Forms;
 
-namespace AiRTech.Core.Subjects.Solv.Solvers
+namespace AiRTech.Solvers
 {
     public class SignalTheoryBasicsSolver : Solver
     {
@@ -23,11 +24,11 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
         {
         }
 
-        public override Dictionary<string, SolverView> InitSolverTabs()
+        public override void InitSolverTabs(Action<Solver> sa)
         {
             if (_tabs != null)
             {
-                return _tabs;
+                return;
             }
             _tabs = new Dictionary<string, SolverView>
                 {
@@ -46,7 +47,7 @@ namespace AiRTech.Core.Subjects.Solv.Solvers
             {
                 tabPair.Value.Title = tabPair.Key;
             }
-            return _tabs;
+            sa.Invoke(this);
         }
 
         #endregion

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects;
-using AiRTech.Views.ViewComponents;
+using AiRTech.Core.Subjects.Solv;
 using Xamarin.Forms;
 
 namespace AiRTech.Core

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AiRTech.Droid.Resources;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;

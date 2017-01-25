@@ -11,7 +11,7 @@
 
 [assembly: global::Android.Runtime.ResourceDesignerAttribute("AiRTech.Droid.Resource", IsApplication=true)]
 
-namespace AiRTech.Droid
+namespace AiRTech.Droid.Resources
 {
 	
 	
@@ -26,7 +26,7 @@ namespace AiRTech.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::AiRTech.Droid.Resource.Attribute.actionBarSize;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::AiRTech.Droid.Resources.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation

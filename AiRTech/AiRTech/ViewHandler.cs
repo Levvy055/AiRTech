@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using AiRTech.Core.Subjects;
+using AiRTech.Core.Subjects.Def;
+using AiRTech.Core.Subjects.Formul;
 using AiRTech.Core.Subjects.Solv;
-using AiRTech.Core.Subjects.Solv.Solvers;
-using AiRTech.Views.SubjectData;
 using AiRTech.Views.ViewComponents;
+using SolverView = AiRTech.Core.Subjects.Solv.SolverView;
 
 namespace AiRTech
 {

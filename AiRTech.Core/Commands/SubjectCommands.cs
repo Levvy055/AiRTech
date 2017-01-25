@@ -73,7 +73,7 @@ namespace AiRTech.Core.Commands
                         return;
                     }
                     Debug.WriteLine("Solver: " + s.Name);
-                    CoreManager.Current.App.NavigateToSolver(s, s.Name);
+                    CoreManager.Current.App.NavigateToSolver(s, string.Empty);
                 });
             }
         }

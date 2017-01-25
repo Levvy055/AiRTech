@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows.Input;
-using AiRTech.Core;
-using AiRTech.Core.Subjects;
-using AiRTech.Core.Subjects.Def;
-using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 
-namespace AiRTech.Views.SubjectData
+namespace AiRTech.Core.Subjects.Def
 {
     public partial class DefinitionView : ContentView
     {

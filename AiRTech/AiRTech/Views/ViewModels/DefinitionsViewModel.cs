@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using AiRTech.Core.Subjects.Def;
-using AiRTech.Views.SubjectData;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewModels

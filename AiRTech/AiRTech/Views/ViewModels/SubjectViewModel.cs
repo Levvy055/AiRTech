@@ -1,7 +1,6 @@
 ﻿using System.Windows.Input;
 using AiRTech.Core.Commands;
 using AiRTech.Views.Pages;
-using AiRTech.Views.SubjectData;
 
 namespace AiRTech.Views.ViewModels
 {

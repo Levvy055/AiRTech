@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AiRTech.Views.ViewComponents;
+using System.Linq;
 
 namespace AiRTech.Core.Subjects.Solv
 {
@@ -11,6 +11,7 @@ namespace AiRTech.Core.Subjects.Solv
 
         protected Solver(SubjectType subjectType)
         {
+            SubjectType = subjectType;
             Solvers.Add(subjectType, this);
         }
 
@@ -23,8 +24,11 @@ namespace AiRTech.Core.Subjects.Solv
             return null;
         }
 
-        public abstract Dictionary<string, SolverView> InitSolverTabs();
+        public abstract void InitSolverTabs(Action<Solver> sa);
 
         private static Dictionary<SubjectType, Solver> Solvers => _solvers;
+        public SubjectType SubjectType { get; private set; }
+
+        public IEnumerable<SolverView> Tabs => _tabs.Values.ToList();
     }
 }

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using AiRTech.Core;
-using AiRTech.Core.Subjects;
-using AiRTech.Core.Subjects.Formul;
 using Xamarin.Forms;
 
-namespace AiRTech.Views.SubjectData
+namespace AiRTech.Core.Subjects.Formul
 {
     public partial class FormulaView : ContentView
     {

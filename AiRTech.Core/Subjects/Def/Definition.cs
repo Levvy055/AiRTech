@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using AiRTech.Core.Subjects.Formul;
-using AiRTech.Views.SubjectData;
-using AiRTech.Views.ViewComponents;
 using Newtonsoft.Json;
 
 namespace AiRTech.Core.Subjects.Def
