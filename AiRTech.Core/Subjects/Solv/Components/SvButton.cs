@@ -17,7 +17,7 @@ namespace AiRTech.Core.Subjects.Solv.Components
             {
                 icon = "circle.png";
             }
-            var iS = ImageResourceExtension.GetEmbeddedImage("AiRTech.Resources." + icon);
+            var iS = ImageResourceExtension.GetEmbeddedImage("AiRTech.Core.Resources." + icon);
             var i = new CircleImage
             {
                 BorderColor = Color.White,

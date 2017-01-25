@@ -89,6 +89,6 @@ namespace AiRTech.Core.Misc
 
         public static ImageSource DefaultEmptyImage =>
             _defaultEmptyImage ??
-            (_defaultEmptyImage = GetEmbeddedImage("AiRTech.Resources.no-image.png"));
+            (_defaultEmptyImage = GetEmbeddedImage("AiRTech.Core.Resources.no-image.png"));
     }
 }

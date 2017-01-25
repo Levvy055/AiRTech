@@ -32,11 +32,11 @@ namespace AiRTech.Core.Subjects
                     return _subjects;
                 }
                 _subjects = new Dictionary<SubjectType, Subject>();
-                new Subject("Podstawy Elektroniki", typeof(ElectronicBasics), "AiRTech.Resources.pe.png");
-                new Subject("Podstawy Automatyki", typeof(ElectronicBasics), "AiRTech.Resources.pa.png");
-                new Subject("Podstawy Teorii Sygnałów", typeof(SignalTheoryBasics), "AiRTech.Resources.pts.png");
-                new Subject("Elementy Optyki i Akustyki", typeof(ElementsOfOpticsAndAcoustics), "AiRTech.Resources.eoia.png");
-                new Subject("Mechanika", typeof(Mechanics), "AiRTech.Resources.mech.png");
+                new Subject("Podstawy Elektroniki", typeof(ElectronicBasics), "AiRTech.Core.Resources.pe.png");
+                new Subject("Podstawy Automatyki", typeof(ElectronicBasics), "AiRTech.Core.Resources.pa.png");
+                new Subject("Podstawy Teorii Sygnałów", typeof(SignalTheoryBasics), "AiRTech.Core.Resources.pts.png");
+                new Subject("Elementy Optyki i Akustyki", typeof(ElementsOfOpticsAndAcoustics), "AiRTech.Core.Resources.eoia.png");
+                new Subject("Mechanika", typeof(Mechanics), "AiRTech.Core.Resources.mech.png");
                 return _subjects;
             }
         }
