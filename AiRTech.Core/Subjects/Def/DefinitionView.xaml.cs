@@ -170,7 +170,7 @@ namespace AiRTech.Core.Subjects.Def
         {
             var c = new Command(() =>
             {
-                CoreManager.Current.App.NavigateToSolver(_subject, solverName);
+                CoreManager.Current.App.NavigateToSolverList(_subject, solverName);
             });
             return c;
         }

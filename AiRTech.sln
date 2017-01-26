@@ -11,14 +11,26 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiRTech.Droid", "AiRTech\AiRTech.Droid\AiRTech.Droid.csproj", "{B61A278A-DE8F-465F-9FF6-D808CCE9A0BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiRTech.iOS", "AiRTech\AiRTech.iOS\AiRTech.iOS.csproj", "{CC2CB3DB-4090-4CF9-95B6-9291BCC6B1EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24} = {67F9D3A8-F71E-4428-913F-C37AE82CDB24}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiRTech.WinPhone", "AiRTech\AiRTech.WinPhone\AiRTech.WinPhone.csproj", "{A44E58C9-6767-46AA-8E5A-416E5CA2B60F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24} = {67F9D3A8-F71E-4428-913F-C37AE82CDB24}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiRTech.UWP", "AiRTech\AiRTech.UWP\AiRTech.UWP.csproj", "{840B579F-A3FA-4EBA-A3DB-E31FF01D031B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiRTech.Windows", "AiRTech\AiRTech.Windows\AiRTech.Windows.csproj", "{36169A14-B42E-4F25-B33D-ED453D6B1E35}"
+	ProjectSection(ProjectDependencies) = postProject
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24} = {67F9D3A8-F71E-4428-913F-C37AE82CDB24}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiRTech.Test", "AiRTech.Test\AiRTech.Test.csproj", "{0B7EEB12-BCDD-4202-89C3-E6E209986F71}"
+	ProjectSection(ProjectDependencies) = postProject
+		{67F9D3A8-F71E-4428-913F-C37AE82CDB24} = {67F9D3A8-F71E-4428-913F-C37AE82CDB24}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiRTech.Core", "AiRTech.Core\AiRTech.Core.csproj", "{67F9D3A8-F71E-4428-913F-C37AE82CDB24}"
 EndProject

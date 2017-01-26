@@ -141,26 +141,23 @@ namespace AiRTech
             NavigateTo(typeof(FormulasPage), title, true, subject);
         }
 
-        public override void NavigateToSolver(Subject subject, string name, bool carousel = false)
+        public override void NavigateToSolverList(Subject subject, string title)
         {
             var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
-            NavigateToPage(np, carousel);
-            if (!string.IsNullOrWhiteSpace(name))
+            np?.NavigateToMain();
+        }
+
+        public override void NavigateToSolver(Subject subject, SolverView sv)
+        {
+            var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
+            if (sv != null)
             {
-                var sv = ViewHandler.GetSolverView(subject.Base.SubjectType, name);
                 np?.NavigateToTab(sv);
             }
             else
             {
                 np?.NavigateToMain();
             }
-        }
-
-        public override void NavigateToSolver(Subject subject, SolverView sv)
-        {
-            var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
-            NavigateToPage(np);
-            np?.NavigateToTab(sv);
         }
 
         public override async void NavigateToModal(ContentPage modal)
@@ -179,21 +176,21 @@ namespace AiRTech
             if (newPage != null)
             {
 
-                    if (inner)
+                if (inner)
+                {
+                    await NavPage.PushAsync(newPage);
+                }
+                else
+                {
+                    NavPage = new NavigationPage(newPage)
                     {
-                        await NavPage.PushAsync(newPage);
-                    }
-                    else
-                    {
-                        NavPage = new NavigationPage(newPage)
-                        {
-                            Title = newPage.Title,
-                            BarBackgroundColor = _topBarColor,
-                            BarTextColor = _topBarTextColor,
-                            BackgroundColor = _mainBgColor
-                        };
-                        mPage.Detail = NavPage;
-                    }
+                        Title = newPage.Title,
+                        BarBackgroundColor = _topBarColor,
+                        BarTextColor = _topBarTextColor,
+                        BackgroundColor = _mainBgColor
+                    };
+                    mPage.Detail = NavPage;
+                }
                 mPage.IsPresented = false;
             }
         }
@@ -221,8 +218,10 @@ namespace AiRTech
                 Page page;
                 if (MainPages.ContainsKey(pageType))
                 {
-                    if (pageType == typeof(SubjectPage) || pageType == typeof(DefinitionsPage) ||
-                        pageType == typeof(SolverPage))
+                    if (pageType == typeof(SubjectPage)
+                        || pageType == typeof(DefinitionsPage)
+                        || pageType == typeof(FormulasPage)
+                        || pageType == typeof(SolverPage))
                     {
                         page = GetPage(pageType, args);
                     }

@@ -22,7 +22,7 @@ namespace AiRTech.Core
         public abstract void NavigateToSubject(Subject subject, string title);
         public abstract void NavigateToDefinition(string title, Subject subject);
         public abstract void NavigateToFormula(string title, Subject subject);
-        public abstract void NavigateToSolver(Subject subject, string name, bool carousel=false);
+        public abstract void NavigateToSolverList(Subject subject, string title);
         public abstract void NavigateToSolver(Subject subject, SolverView sv);
         public abstract void NavigateToModal(ContentPage modal);
 

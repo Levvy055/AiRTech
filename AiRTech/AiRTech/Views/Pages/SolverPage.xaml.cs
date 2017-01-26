@@ -15,6 +15,8 @@ namespace AiRTech.Views.Pages
         public SolverPage(Subject subject)
         {
             Subject = subject;
+            BindingContext = Subject;
+            InitializeComponent();
             InitSolver();
         }
 
@@ -23,6 +25,7 @@ namespace AiRTech.Views.Pages
             Solver = Subject.Base.Solver;
             var mstack = new StackLayout();
             Carousel = new CarouselPage();
+            _isOnMain = true;
             var solverViews = ViewHandler.GetSolverViews(Subject.Base.SubjectType);
             if (Solver == null || solverViews == null || solverViews.Count == 0)
             {
@@ -33,31 +36,26 @@ namespace AiRTech.Views.Pages
             }
             else
             {
-                foreach (var tab in solverViews)
+                foreach (var solverView in solverViews)
                 {
                     var sv = new ScrollView
                     {
-                        Content = tab,
+                        Content = solverView,
                         Orientation = ScrollOrientation.Vertical
                     };
-                    var page = new ContentPage { Content = sv, Title = tab.Title };
-                    var b = new Button
+                    var tab = new ContentPage { Content = sv, Title = solverView.Title };
+                    var btn = new Button
                     {
-                        Text = tab.Title,
-                        Command = NavigateToTabCommand(page)
+                        Text = solverView.Title,
+                        Command = NavigateToTabCommand(tab)
                     };
-                    mstack.Children.Add(b);
-                    Carousel.Children.Add(page);
+                    mstack.Children.Add(btn);
+                    Carousel.Children.Add(tab);
                 }
             }
-            Mpage = new ContentPage
-            {
-                Content = new ScrollView
-                {
-                    Content = mstack
-                },
-                Title = "Solver - " + Subject.Name
-            };
+
+            Sv.Content = mstack;
+            Title = "Solver - " + Subject.Name;
             Carousel.CurrentPageChanged += CarouselOnPageChanged;
         }
 
@@ -67,18 +65,13 @@ namespace AiRTech.Views.Pages
             {
                 var t = Carousel.CurrentPage.Title;
                 Carousel.Title = t;
-                CoreManager.Current.App.NavigateToSolver(Subject, t, true);
+                var sv = ViewHandler.GetSolverView(Subject.Base.SubjectType, t);
+                NavigateToTab(sv);
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
             }
-        }
-
-        public void NavigateToMain()
-        {
-            CoreManager.Current.App.NavigateToPage(Mpage);
-            _isOnMain = true;
         }
 
         private ICommand NavigateToTabCommand(ContentPage page)
@@ -90,8 +83,18 @@ namespace AiRTech.Views.Pages
             return c;
         }
 
-        public void NavigateToTab(View v)
+        public void NavigateToMain()
         {
+            CoreManager.Current.App.NavigateToPage(this,!_isOnMain);
+            _isOnMain = true;
+        }
+
+        public void NavigateToTab(SolverView v)
+        {
+            if (v == null)
+            {
+                return;
+            }
             foreach (var page in Carousel.Children)
             {
                 var scroll = page.Content as ScrollView;
@@ -107,13 +110,12 @@ namespace AiRTech.Views.Pages
         {
             Carousel.CurrentPage = page;
             Carousel.Title = page.Title + " - Solver";
-            CoreManager.Current.App.NavigateToPage(Carousel, _isOnMain);
+            CoreManager.Current.App.NavigateToPage(Carousel, !_isOnMain);
             _isOnMain = false;
         }
 
         public Subject Subject { get; set; }
         public Solver Solver { get; private set; }
-        public ContentPage Mpage { get; private set; }
         public CarouselPage Carousel { get; set; }
     }
 }
