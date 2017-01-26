@@ -1,12 +1,11 @@
-﻿using System;
-using System.Diagnostics;
+﻿using AiRTech.Core;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.Other
 {
-    public static class DialogManager
+    public class DialogManager:IDialogManager
     {
-        public static async void ShowWarningDialog(string header, string message)
+        public void ShowWarningDialog(string header, string message)
         {
             var app = Application.Current as App;
             Device.BeginInvokeOnMainThread(async () =>

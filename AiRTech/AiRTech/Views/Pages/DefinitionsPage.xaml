@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AiRTech.Views.Pages.DefinitionsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ScrollView
+        HorizontalOptions="FillAndExpand"
+        Orientation="Vertical"
+        VerticalOptions="FillAndExpand">
+        <StackLayout
+            HorizontalOptions="Fill"
+            Orientation="Vertical"
+            Spacing="5"
+            VerticalOptions="Fill">
+            <Label
+                x:Name="NoDefsLabel"
+                FontAttributes="Bold"
+                FontSize="25"
+                HorizontalOptions="Center"
+                Text="{Binding NoDefs}"
+                VerticalOptions="Start" />
+            <ListView
+                x:Name="Mlist"
+                Margin="0,10,0,0"
+                HorizontalOptions="Fill"
+                ItemsSource="{Binding Definitions}"
+                RowHeight="35"
+                SeparatorVisibility="None"
+                VerticalOptions="Fill">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10,5,10,0" VerticalOptions="Fill">
+                                <Label
+                                    BackgroundColor="DarkOrange"
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HorizontalOptions="Fill"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Title}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

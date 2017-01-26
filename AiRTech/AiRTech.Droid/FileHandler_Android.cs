@@ -10,7 +10,6 @@ using AiRTech.Droid;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using Environment = System.Environment;
-//using JFile = Java.IO.File;
 
 [assembly: Dependency(typeof(FileHandler_Android))]
 namespace AiRTech.Droid
@@ -66,10 +65,6 @@ namespace AiRTech.Droid
             if (list == null)
             {
                 return null;
-            }
-            foreach (var def in list)
-            {
-                def.LinkDeserializedComponents(subjectType);
             }
             return list;
         }

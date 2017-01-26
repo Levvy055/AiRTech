@@ -2,25 +2,35 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using AiRTech.Core;
 using AiRTech.Core.DataHandling;
+using AiRTech.Core.Net;
 using AiRTech.Core.Subjects;
-using AiRTech.Core.Web;
+using AiRTech.Core.Subjects.Solv;
+using AiRTech.Solvers;
 using AiRTech.Views;
-using AiRTech.Views.SubjectData;
+using AiRTech.Views.Other;
+using AiRTech.Views.Pages;
+using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
+using DefinitionsPage = AiRTech.Views.Pages.DefinitionsPage;
+using MainPage = AiRTech.Views.Pages.MainPage;
+using MenuPage = AiRTech.Views.Pages.MenuPage;
+using SolverView = AiRTech.Core.Subjects.Solv.SolverView;
+using SubjectPage = AiRTech.Views.Pages.SubjectPage;
 
 namespace AiRTech
 {
-    public partial class App : Application
+    public partial class App : AiRTechApp
     {
         private readonly Color _mainBgColor = Color.FromRgb(169, 169, 169);
         private readonly Color _menuBgColor = Color.FromRgb(95, 158, 160);
         private readonly Color _topBarColor = Color.FromRgb(95, 158, 160);
         private readonly Color _topBarTextColor = Color.FromRgb((int)byte.MaxValue, (int)byte.MaxValue, (int)byte.MaxValue);
 
-        public App()
+        public App() : base()
         {
-            NavPage = new NavigationPage(new ContentPage
+            var mainContentPage = new ContentPage
             {
                 Title = "Ładowanie",
                 Content = new ActivityIndicator
@@ -28,7 +38,8 @@ namespace AiRTech
                     IsRunning = true,
                     Color = Color.DarkRed
                 }
-            })
+            };
+            NavPage = new NavigationPage(mainContentPage)
             {
                 BarBackgroundColor = _topBarColor,
                 BarTextColor = _topBarTextColor,
@@ -47,154 +58,22 @@ namespace AiRTech
             };
         }
 
-        public async void NavigateTo(Type page, string title, bool inner = true, params object[] args)
-        {
-            var mPage = MainPage as MasterDetailPage;
-            if (mPage == null)
-            {
-                return;
-            }
-            var newPage = GetPage(page, title, args);
-            if (newPage != null)
-            {
-                if (newPage.GetType() == typeof(SolverPage))
-                {
-                    var solverPage = newPage as SolverPage;
-                    solverPage.NavigateToMain();
-                }
-                else
-                {
-                    if (inner)
-                    {
-                        await NavPage.PushAsync(newPage);
-                    }
-                    else
-                    {
-                        NavPage = new NavigationPage(newPage)
-                        {
-                            Title = newPage.Title,
-                            BarBackgroundColor = _topBarColor,
-                            BarTextColor = _topBarTextColor,
-                            BackgroundColor = _mainBgColor
-                        };
-                        mPage.Detail = NavPage;
-                    }
-                }
-                mPage.IsPresented = false;
-
-            }
-        }
-
-        public async void NavigateTo(Page page, bool removePrevious = false)
-        {
-            if (removePrevious)
-            {
-                await NavPage.PopAsync(false);
-            }
-            if (NavPage.CurrentPage != page)
-            {
-                await NavPage.PushAsync(page);
-            }
-            else
-            {
-                NavPage.Title = page.Title;
-            }
-        }
-
-        public async void NavigateToModal(ContentPage modal)
-        {
-            await NavPage.PushAsync(modal);
-        }
-
-        public Page GetPage(Type pageType, string title = null, params object[] args)
-        {
-            Page page;
-            if (CreatedPages.ContainsKey(pageType))
-            {
-                if (pageType == typeof(SubjectPage) || pageType == typeof(DefinitionsPage) || pageType == typeof(SolverPage))
-                {
-                    page = GetPage(pageType, args);
-                }
-                else
-                {
-                    page = CreatedPages[pageType][0];
-                }
-            }
-            else
-            {
-                page = CreatePage(pageType, args);
-            }
-            if (!string.IsNullOrWhiteSpace(title) && page != null)
-            {
-                page.Title = title;
-            }
-            return page;
-        }
-
-        private Page GetPage(Type pageType, object[] args)
-        {
-            var pages = CreatedPages[pageType];
-            Page page = null;
-            foreach (var p in pages)
-            {
-                dynamic sp = p;
-                if (sp.Subject == args[0])
-                {
-                    page = p;
-                }
-            }
-            return page ?? CreatePage(pageType, args);
-        }
-
-        private Page CreatePage(Type pageType, object[] args)
-        {
-            Page page;
-            if (args == null || args.Length == 0)
-            {
-                page = Activator.CreateInstance(pageType) as Page;
-            }
-            else
-            {
-                page = Activator.CreateInstance(pageType, args) as Page;
-            }
-            var list = new List<Page> { page };
-            CreatedPages[pageType] = list;
-            return page;
-        }
-
         protected override async void OnStart()
         {
             //await Task.Delay(5000);
             try
             {
-                try
-                {
-                    FileHandler = DependencyService.Get<IFileHandler>();
-                    FileHandler.Init();
-                }
-                catch (Exception e)
-                {
-                    MainPage.DisplayAlert("Error!", "Błąd uzyskiwania dostępu do pliku bazy!", "Zamknij");
-                    Debug.WriteLine(e);
-                    throw;
-                }
-                try
-                {
-                    Web = new WebCore();
-                }
-                catch (Exception e)
-                {
-                    MainPage.DisplayAlert("Offline!", "Brak dostępu do serwera!", "Zamknij");
-                    Debug.WriteLine(e);
-                }
-                NavigateTo(typeof(MainPage), "AiRTech", false);
+                DialogManager = new DialogManager();
+                DataCore = new CoreManager(this);
+                InitSolvers();
+                NavigateToMain(typeof(MainPage), "AiRTech");
                 var menuPage = (MenuPage)((MasterDetailPage)MainPage).Master;
                 menuPage.IsBusy = false;
                 menuPage.IsDisabled = false;
 #if DEBUG
-                //NavigateTo(typeof(SubjectsPage), "Subjects", false);
-                //var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                //NavigateTo(typeof(SubjectPage), "Podstawy Teorii Sygnałów", true, s);
+                NavigateToMain(typeof(SubjectsPage), "Subjects");
+                var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
+                NavigateToSubject(s, "Podstawy Teorii Sygnałów");
                 //NavigateTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
                 //NavigateTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
                 //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
@@ -224,9 +103,183 @@ namespace AiRTech
             MainPage = new ContentPage();
         }
 
-        private Dictionary<Type, List<Page>> CreatedPages { get; } = new Dictionary<Type, List<Page>>();
+        protected override void InitSolvers()
+        {
+            new ElectronicBasicsSolver().InitSolverTabs((s) =>
+             {
+                 foreach (var t in s.Tabs)
+                 {
+                     ViewHandler.Add(t, s.SubjectType);
+                 }
+             });
+            new SignalTheoryBasicsSolver().InitSolverTabs((s) =>
+            {
+                foreach (var t in s.Tabs)
+                {
+                    ViewHandler.Add(t, s.SubjectType);
+                }
+            });
+        }
+
+        public override void NavigateToMain(Type pageType, string title)
+        {
+            NavigateTo(pageType, "AiRTech", false);
+        }
+
+        public override void NavigateToSubject(Subject subject, string title)
+        {
+            NavigateTo(typeof(SubjectPage), title, true, subject);
+        }
+
+        public override void NavigateToDefinition(string title, Subject subject)
+        {
+            NavigateTo(typeof(DefinitionsPage), title, true, subject);
+        }
+
+        public override void NavigateToFormula(string title, Subject subject)
+        {
+            NavigateTo(typeof(FormulasPage), title, true, subject);
+        }
+
+        public override void NavigateToSolverList(Subject subject, string title)
+        {
+            var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
+            np?.NavigateToMain();
+        }
+
+        public override void NavigateToSolver(Subject subject, SolverView sv)
+        {
+            var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
+            if (sv != null)
+            {
+                np?.NavigateToTab(sv);
+            }
+            else
+            {
+                np?.NavigateToMain();
+            }
+        }
+
+        public override async void NavigateToModal(ContentPage modal)
+        {
+            await NavPage.PushAsync(modal);
+        }
+
+        private async void NavigateTo(Type page, string title, bool inner = true, params object[] args)
+        {
+            var mPage = MainPage as MasterDetailPage;
+            if (mPage == null)
+            {
+                return;
+            }
+            var newPage = GetPage(page, title, args);
+            if (newPage != null)
+            {
+
+                if (inner)
+                {
+                    await NavPage.PushAsync(newPage);
+                }
+                else
+                {
+                    NavPage = new NavigationPage(newPage)
+                    {
+                        Title = newPage.Title,
+                        BarBackgroundColor = _topBarColor,
+                        BarTextColor = _topBarTextColor,
+                        BackgroundColor = _mainBgColor
+                    };
+                    mPage.Detail = NavPage;
+                }
+                mPage.IsPresented = false;
+            }
+        }
+
+        public override async void NavigateToPage(Page page, bool removePrevious = false)
+        {
+            if (removePrevious)
+            {
+                await NavPage.PopAsync(false);
+            }
+            if (NavPage.CurrentPage != page)
+            {
+                await NavPage.PushAsync(page);
+            }
+            else
+            {
+                NavPage.Title = page.Title;
+            }
+        }
+
+        public Page GetPage(Type pageType, string title = null, params object[] args)
+        {
+            try
+            {
+                Page page;
+                if (MainPages.ContainsKey(pageType))
+                {
+                    if (pageType == typeof(SubjectPage)
+                        || pageType == typeof(DefinitionsPage)
+                        || pageType == typeof(FormulasPage)
+                        || pageType == typeof(SolverPage))
+                    {
+                        page = GetPage(pageType, args);
+                    }
+                    else
+                    {
+                        page = MainPages[pageType][0];
+                    }
+                }
+                else
+                {
+                    page = CreatePage(pageType, args);
+                }
+                if (!string.IsNullOrWhiteSpace(title) && page != null)
+                {
+                    page.Title = title;
+                }
+                return page;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+        }
+
+        private Page GetPage(Type pageType, object[] args)
+        {
+            var pages = MainPages[pageType];
+            Page page = null;
+            foreach (var p in pages)
+            {
+                dynamic sp = p;
+                if (sp.Subject == args[0])
+                {
+                    page = p;
+                }
+            }
+            return page ?? CreatePage(pageType, args);
+        }
+
+        private Page CreatePage(Type pageType, object[] args)
+        {
+            Page page;
+            if (args == null || args.Length == 0)
+            {
+                page = Activator.CreateInstance(pageType) as Page;
+            }
+            else
+            {
+                page = Activator.CreateInstance(pageType, args) as Page;
+            }
+            var list = new List<Page> { page };
+            MainPages[pageType] = list;
+            return page;
+        }
+
+        public CoreManager DataCore { get; set; }
+        private Dictionary<Type, List<Page>> MainPages { get; } = new Dictionary<Type, List<Page>>();
         private NavigationPage NavPage { get; set; }
-        public IFileHandler FileHandler { get; set; }
-        public WebCore Web { get; set; }
     }
 }

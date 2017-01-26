@@ -6,14 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AiRTech.Core.Subjects.Formul;
-using AiRTech.Views.SubjectData;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewModels
 {
     public class FurmulasViewModel : ViewModelBase
     {
-        public FurmulasViewModel(FormulasPage page) : base(page)
+        public FurmulasViewModel(Pages.FormulasPage page) : base(page)
         {
             Title = "Wzory";
             NoFormula = "Brak wzorów";
@@ -28,7 +27,7 @@ namespace AiRTech.Views.ViewModels
 
         private void SubjectOnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            var p = Page as FormulasPage;
+            var p = Page as Pages.FormulasPage;
             if (args.PropertyName == nameof(Formulas) && p?.FmlListView != null)
             {
                 var fmls = Formulas.ToArray();
@@ -60,7 +59,7 @@ namespace AiRTech.Views.ViewModels
 
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var p = Page as FormulasPage;
+            var p = Page as Pages.FormulasPage;
             var d = p.FmlListView.SelectedItem as Formula;
             if (d == null)
             {

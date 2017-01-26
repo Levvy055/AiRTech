@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using AiRTech.Core.Commands;
+using AiRTech.Views.Pages;
 
 namespace AiRTech.Views.ViewModels
 {
@@ -19,7 +20,6 @@ namespace AiRTech.Views.ViewModels
         public string TaskSolverTxt => "Solver";
         public ICommand DefinitionTappedCommand =>
             _defTappedCommand ?? (_defTappedCommand = SubjectCommands.DefinitionsTappedCommand);
-
         public ICommand FormulasTappedCommand =>
             _frmlTappedCommand ?? (_frmlTappedCommand = SubjectCommands.FormulasTappedCommand);
         public ICommand SolverTappedCommand =>
