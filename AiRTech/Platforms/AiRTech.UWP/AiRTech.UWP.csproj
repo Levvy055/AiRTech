@@ -140,7 +140,7 @@
       <Project>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</Project>
       <Name>AiRTech.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AiRTech\AiRTech.CoViews.csproj">
+    <ProjectReference Include="..\..\AiRTech.CoViews\AiRTech.CoViews.csproj">
       <Project>{80C6A490-5B49-47B9-9324-6BB6BCD035FC}</Project>
       <Name>AiRTech.CoViews</Name>
     </ProjectReference>

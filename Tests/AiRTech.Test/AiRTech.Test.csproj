@@ -82,7 +82,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AiRTech\AiRTech\AiRTech.CoViews.csproj">
+    <ProjectReference Include="..\..\AiRTech\AiRTech.CoViews\AiRTech.CoViews.csproj">
       <Project>{80C6A490-5B49-47B9-9324-6BB6BCD035FC}</Project>
       <Name>AiRTech.CoViews</Name>
     </ProjectReference>
