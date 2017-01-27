@@ -19,7 +19,9 @@ namespace AiRTech.Solvers
         private SolverView _histView;
         private SolverView _signalView;
         private SolverView _sisView;
+        #endregion
 
+        #region Init
         public SignalTheoryBasicsSolver() : base(SubjectType.PODSTAWY_TEORII_SYGNALOW)
         {
         }

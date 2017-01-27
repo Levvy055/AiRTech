@@ -197,17 +197,17 @@ namespace AiRTech
 
         public override async void NavigateToPage(Page page, bool removePrevious = false)
         {
-            if (removePrevious)
+            if (NavPage.CurrentPage == page)
             {
-                await NavPage.PopAsync(false);
-            }
-            if (NavPage.CurrentPage != page)
-            {
-                await NavPage.PushAsync(page);
+                NavPage.Title = page.Title;
             }
             else
             {
-                NavPage.Title = page.Title;
+                if (removePrevious)
+                {
+                    await NavPage.PopAsync(false);
+                }
+                await NavPage.PushAsync(page);
             }
         }
 
