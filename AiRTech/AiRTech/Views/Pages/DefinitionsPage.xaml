@@ -2,7 +2,18 @@
 <ContentPage
     x:Class="AiRTech.Views.Pages.DefinitionsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:misc="clr-namespace:AiRTech.Core.Misc;assembly=AiRTech.Core">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding RefreshCommand}" Text="Odśwież">
+            <ToolbarItem.Icon>
+                <OnPlatform
+                    x:TypeArguments="FileImageSource"
+                    Android="Assets/refresh.png"
+                    WinPhone="Assets/refresh.png" />
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ScrollView
         HorizontalOptions="FillAndExpand"
         Orientation="Vertical"

@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows.Input;
+using AiRTech.Core;
 using AiRTech.Core.Subjects.Def;
+using AiRTech.Views.Pages;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewModels
@@ -11,8 +14,9 @@ namespace AiRTech.Views.ViewModels
     {
         private View _noDefsView;
 
-        public DefinitionsViewModel(Pages.DefinitionsPage page) : base(page)
+        public DefinitionsViewModel(DefinitionsPage page) : base(page)
         {
+            Page.IsBusy = true;
             Title = "Definicje";
             NoDefs = "Brak definicji";
             Subject.Base.PropertyChanged += (sender, args) =>
@@ -22,11 +26,13 @@ namespace AiRTech.Views.ViewModels
                     SubjectOnPropertyChanged(sender, args);
                 });
             };
+            Page.IsBusy = false;
         }
 
         private void SubjectOnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            var p = Page as Pages.DefinitionsPage;
+            Page.IsBusy = true;
+            var p = Page as DefinitionsPage;
             if (args.PropertyName == nameof(Definitions) && p?.DefListView != null)
             {
                 var defs = Definitions.ToArray();
@@ -51,11 +57,13 @@ namespace AiRTech.Views.ViewModels
                     p.NoDefsView.IsVisible = true;
                 }
             }
+            Page.IsBusy = false;
         }
 
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs)
         {
-            var p = Page as Pages.DefinitionsPage;
+            Page.IsBusy = true;
+            var p = Page as DefinitionsPage;
             var d = p.DefListView.SelectedItem as Definition;
             if (d == null)
             {
@@ -63,18 +71,35 @@ namespace AiRTech.Views.ViewModels
             }
             try
             {
-                var app = Application.Current as App;
                 var view = p.DefViews[d.Title];
-                app.NavigateToModal(view);
+                CoreManager.Current.App.NavigateToModal(view);
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Err: " + e);
             }
             p.DefListView.SelectedItem = -1;
+            Page.IsBusy = false;
+        }
+
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    if (!Page.IsBusy)
+                    {
+                        Page.IsBusy = true;
+                        Subject.Base.LoadDefinitionsFromServerAndSave();
+                        Page.IsBusy = false;
+                    }
+                });
+            }
         }
 
         public List<Definition> Definitions => Subject.Base.Definitions;
         public string NoDefs { get; set; }
+        public DefinitionsPage DefPage => Page as DefinitionsPage;
     }
 }

@@ -22,7 +22,6 @@ namespace AiRTech.Core.Misc
             }
             var assembly = typeof(ImageResourceExtension).GetTypeInfo().Assembly;
             var imageSource = ImageSource.FromResource(Source, assembly);
-
             return imageSource;
         }
 
@@ -90,5 +89,18 @@ namespace AiRTech.Core.Misc
         public static ImageSource DefaultEmptyImage =>
             _defaultEmptyImage ??
             (_defaultEmptyImage = GetEmbeddedImage("AiRTech.Core.Resources.no-image.png"));
+    }
+
+    [ContentProperty("Icon")]
+    public class IconResourceExtension : IMarkupExtension
+    {
+
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            var imageSource = ImageResourceExtension.GetEmbeddedImage(Icon);
+            return imageSource;
+        }
+
+        public string Icon { get; set; }
     }
 }

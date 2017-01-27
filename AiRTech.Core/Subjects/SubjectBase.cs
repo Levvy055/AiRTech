@@ -62,7 +62,7 @@ namespace AiRTech.Core.Subjects
             }
         }
 
-        protected async void LoadDefinitionsFromServerAndSave()
+        public async void LoadDefinitionsFromServerAndSave()
         {
             try
             {
@@ -101,7 +101,7 @@ namespace AiRTech.Core.Subjects
             }
         }
 
-        protected async void LoadFormulasFromServerAndSave()
+        public async void LoadFormulasFromServerAndSave()
         {
             try
             {

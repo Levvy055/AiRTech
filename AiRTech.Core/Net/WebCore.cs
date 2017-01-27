@@ -29,7 +29,7 @@ namespace AiRTech.Core.Net
 
         public WebCore()
         {
-            Online();
+            var t=Online();
         }
 
         public async Task<List<Definition>> GetDefinitionList(SubjectType subjectType)

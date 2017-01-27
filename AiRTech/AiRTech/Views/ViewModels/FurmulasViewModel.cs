@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using AiRTech.Core.Subjects.Formul;
 using Xamarin.Forms;
 
@@ -54,9 +55,6 @@ namespace AiRTech.Views.ViewModels
             }
         }
 
-        public string NoFormula { get; set; }
-        public List<Formula> Formulas => Subject.Base.Formulas;
-
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
             var p = Page as Pages.FormulasPage;
@@ -77,5 +75,19 @@ namespace AiRTech.Views.ViewModels
             }
             p.FmlListView.SelectedItem = -1;
         }
+
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    Subject.Base.LoadFormulasFromServerAndSave();
+                });
+            }
+        }
+
+        public string NoFormula { get; set; }
+        public List<Formula> Formulas => Subject.Base.Formulas;
     }
 }

@@ -26,11 +26,11 @@ namespace AiRTech
         private readonly Color _mainBgColor = Color.FromRgb(169, 169, 169);
         private readonly Color _menuBgColor = Color.FromRgb(95, 158, 160);
         private readonly Color _topBarColor = Color.FromRgb(95, 158, 160);
-        private readonly Color _topBarTextColor = Color.FromRgb((int)byte.MaxValue, (int)byte.MaxValue, (int)byte.MaxValue);
+        private readonly Color _topBarTextColor = Color.FromRgb(byte.MaxValue, byte.MaxValue, byte.MaxValue);
 
         public App() : base()
         {
-            var mainContentPage = new ContentPage
+            var loadingPage = new ContentPage
             {
                 Title = "Ładowanie",
                 Content = new ActivityIndicator
@@ -39,7 +39,7 @@ namespace AiRTech
                     Color = Color.DarkRed
                 }
             };
-            NavPage = new NavigationPage(mainContentPage)
+            NavPage = new NavigationPage(loadingPage)
             {
                 BarBackgroundColor = _topBarColor,
                 BarTextColor = _topBarTextColor,
