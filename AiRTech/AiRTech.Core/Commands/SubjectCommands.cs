@@ -47,7 +47,7 @@ namespace AiRTech.Core.Commands
         {
             get
             {
-                return new Command(o =>
+                return new Command(async o =>
                 {
                     var s = o as Subject;
                     if (s == null)
@@ -55,8 +55,8 @@ namespace AiRTech.Core.Commands
                         return;
                     }
                     Debug.WriteLine("Formulas: " + s.Name);
-                    CoreManager.Current.App.NavigateToFormula(s.Name, s);
-                    s.Base.LoadFormulas();
+                    await s.Base.LoadFormulas();
+                    CoreManager.Current.App.NavigateToFormulaList(s, s.Name);
                 });
             }
         }

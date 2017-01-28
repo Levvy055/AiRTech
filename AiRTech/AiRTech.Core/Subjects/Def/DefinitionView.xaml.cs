@@ -33,28 +33,13 @@ namespace AiRTech.Core.Subjects.Def
             }
             if (!string.IsNullOrWhiteSpace(def.SolverNames))
             {
-                var sn = def.SolverNames.Split('|');
-                for (var i = 0; i < sn.Length; i++)
-                {
-                    sn[i] = sn[i].Trim();
-                }
-                Sl.Children.Add(new Label
-                {
-                    Text = "Powiązane Solvery",
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment = TextAlignment.End,
-                    FontSize = 18,
-                    FontAttributes = FontAttributes.Bold
-
-                });
-                foreach (var s in sn)
-                {
-                    Sl.Children.Add(CreateButton(s));
-                }
+                CreateNavigationToSolvers();
+            }
+            if (!string.IsNullOrWhiteSpace(def.FormulaNames))
+            {
+                CreateNavigationToFormulas();
             }
         }
-
-        public string Title { get; private set; }
 
         private View CreateViewForInnerDefComp(InDef id)
         {
@@ -104,6 +89,48 @@ namespace AiRTech.Core.Subjects.Def
                 CoreManager.Current.App.DialogManager.ShowWarningDialog("Błąd w pobranej zawartości", "Nie można utworzyć elementu definicji " + _def.Title);
             }
             return null;
+        }
+
+        private void CreateNavigationToSolvers()
+        {
+            var sn = _def.SolverNames.Split('|');
+            for (var i = 0; i < sn.Length; i++)
+            {
+                sn[i] = sn[i].Trim();
+            }
+            Sl.Children.Add(new Label
+            {
+                Text = "Solvery do definicji",
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.End,
+                FontSize = 18,
+                FontAttributes = FontAttributes.Bold
+            });
+            foreach (var s in sn)
+            {
+                Sl.Children.Add(CreateSolverButton(s));
+            }
+        }
+
+        private void CreateNavigationToFormulas()
+        {
+            var sn = _def.FormulaNames.Split('|');
+            for (var i = 0; i < sn.Length; i++)
+            {
+                sn[i] = sn[i].Trim();
+            }
+            Sl.Children.Add(new Label
+            {
+                Text = "Wzory do definicji",
+                HorizontalTextAlignment = TextAlignment.Center,
+                VerticalTextAlignment = TextAlignment.End,
+                FontSize = 18,
+                FontAttributes = FontAttributes.Bold
+            });
+            foreach (var s in sn)
+            {
+                Sl.Children.Add(CreateFormulaButton(s));
+            }
         }
 
         private View CreateHeader(InDef id)
@@ -156,12 +183,22 @@ namespace AiRTech.Core.Subjects.Def
             };
         }
 
-        private View CreateButton(string solverName)
+        private View CreateSolverButton(string solverName)
         {
             var b = new Button
             {
                 Text = solverName,
                 Command = SolverButton_Click(solverName)
+            };
+            return b;
+        }
+
+        private View CreateFormulaButton(string solverName)
+        {
+            var b = new Button
+            {
+                Text = solverName,
+                Command = FormulaButton_Click(solverName)
             };
             return b;
         }
@@ -174,5 +211,16 @@ namespace AiRTech.Core.Subjects.Def
             });
             return c;
         }
+
+        private ICommand FormulaButton_Click(string solverName)
+        {
+            var c = new Command(() =>
+            {
+                CoreManager.Current.App.NavigateToFormula(solverName, _subject);
+            });
+            return c;
+        }
+
+        public string Title { get; private set; }
     }
 }

@@ -31,9 +31,9 @@ namespace AiRTech.Core.Subjects
             });
         }
 
-        public void LoadFormulas()
+        public async Task LoadFormulas()
         {
-            LoadFormulasFromFile().ContinueWith(task =>
+            await LoadFormulasFromFile().ContinueWith(task =>
             {
                 LoadFormulasFromServerAndSave();
             });

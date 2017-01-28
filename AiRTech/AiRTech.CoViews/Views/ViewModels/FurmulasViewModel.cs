@@ -6,14 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AiRTech.Core;
 using AiRTech.Core.Subjects.Formul;
+using AiRTech.Views.Pages;
 using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewModels
 {
     public class FurmulasViewModel : ViewModelBase
     {
-        public FurmulasViewModel(Pages.FormulasPage page) : base(page)
+        public FurmulasViewModel(FormulasPage page) : base(page)
         {
             Title = "Wzory";
             NoFormula = "Brak wzorów";
@@ -28,7 +30,7 @@ namespace AiRTech.Views.ViewModels
 
         private void SubjectOnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            var p = Page as Pages.FormulasPage;
+            var p = Page as FormulasPage;
             if (args.PropertyName == nameof(Formulas) && p?.FmlListView != null)
             {
                 var fmls = Formulas.ToArray();
@@ -57,7 +59,7 @@ namespace AiRTech.Views.ViewModels
 
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var p = Page as Pages.FormulasPage;
+            var p = Page as FormulasPage;
             var d = p.FmlListView.SelectedItem as Formula;
             if (d == null)
             {
@@ -65,9 +67,8 @@ namespace AiRTech.Views.ViewModels
             }
             try
             {
-                var app = Application.Current as App;
                 var view = p.FmlViews[d.Title];
-                app.NavigateToModal(view);
+                CoreManager.Current.App.NavigateToModal(view);
             }
             catch (Exception e)
             {
@@ -86,7 +87,6 @@ namespace AiRTech.Views.ViewModels
                 });
             }
         }
-
         public string NoFormula { get; set; }
         public List<Formula> Formulas => Subject.Base.Formulas;
     }

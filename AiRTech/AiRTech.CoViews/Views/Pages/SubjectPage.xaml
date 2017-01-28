@@ -6,8 +6,8 @@
     xmlns:misc="clr-namespace:AiRTech.Core.Misc;assembly=AiRTech.Core">
     <Grid
         Margin="0,20,0,0"
-        HorizontalOptions="Center"
-        VerticalOptions="Start">
+        HorizontalOptions="CenterAndExpand"
+        VerticalOptions="StartAndExpand">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -17,9 +17,12 @@
             <StackLayout.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding DefinitionTappedCommand}" CommandParameter="{Binding Subject}" />
             </StackLayout.GestureRecognizers>
-            <Image Source="{misc:ImageResource AiRTech.Core.Resources.definitions.png}" />
+            <Image
+                Aspect="Fill"
+                Scale="1.2"
+                Source="{misc:ImageResource AiRTech.Core.Resources.definitions.png}" />
             <Label
-                FontSize="28"
+                FontSize="30"
                 HorizontalOptions="StartAndExpand"
                 Text="{Binding DefinitionTxt}"
                 VerticalOptions="CenterAndExpand" />
@@ -28,7 +31,10 @@
             <StackLayout.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding FormulasTappedCommand}" CommandParameter="{Binding Subject}" />
             </StackLayout.GestureRecognizers>
-            <Image Source="{misc:ImageResource AiRTech.Core.Resources.formula.png}" />
+            <Image
+                Aspect="Fill"
+                Scale="1.2"
+                Source="{misc:ImageResource AiRTech.Core.Resources.formula.png}" />
             <Label
                 FontSize="28"
                 HorizontalOptions="StartAndExpand"
@@ -39,7 +45,10 @@
             <StackLayout.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding SolverTappedCommand}" CommandParameter="{Binding Subject}" />
             </StackLayout.GestureRecognizers>
-            <Image Source="{misc:ImageResource AiRTech.Core.Resources.solver.png}" />
+            <Image
+                Aspect="Fill"
+                Scale="1.2"
+                Source="{misc:ImageResource AiRTech.Core.Resources.solver.png}" />
             <Label
                 FontSize="28"
                 HorizontalOptions="StartAndExpand"

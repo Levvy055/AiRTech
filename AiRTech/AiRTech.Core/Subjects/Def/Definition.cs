@@ -21,7 +21,8 @@ namespace AiRTech.Core.Subjects.Def
             if (this.GetType() != y.GetType()) { return false; }
             return string.Equals(this.Title, y.Title)
                 && string.Equals(this.Desc, y.Desc)
-                && Equals(this.SolverNames, y.SolverNames);
+                && Equals(this.SolverNames, y.SolverNames)
+                && Equals(FormulaNames, y.FormulaNames);
         }
 
         public override int GetHashCode()
@@ -33,6 +34,7 @@ namespace AiRTech.Core.Subjects.Def
                 hashCode = (hashCode * 397) ^ (Desc?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (Inner?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (SolverNames?.GetHashCode() ?? 0);
+                hashCode = (hashCode * 397) ^ (FormulaNames?.GetHashCode() ?? 0);
                 return hashCode;
             }
         }

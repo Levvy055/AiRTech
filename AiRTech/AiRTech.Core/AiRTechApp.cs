@@ -27,5 +27,6 @@ namespace AiRTech.Core
         public abstract void NavigateToModal(ContentPage modal);
 
         public IDialogManager DialogManager { get; protected set; }
+        public abstract void NavigateToFormulaList(Subject subject, string title);
     }
 }

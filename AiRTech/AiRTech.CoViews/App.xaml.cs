@@ -72,8 +72,8 @@ namespace AiRTech
                 menuPage.IsDisabled = false;
 #if DEBUG
                 NavigateToMain(typeof(SubjectsPage), "Subjects");
-                var s = Subject.Subjects[SubjectType.PODSTAWY_TEORII_SYGNALOW];
-                NavigateToSubject(s, "Podstawy Teorii Sygnałów");
+                var s = Subject.Subjects[SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI];
+                NavigateToSubject(s, "EOiA");
                 //NavigateTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
                 //NavigateTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
                 //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
@@ -136,9 +136,15 @@ namespace AiRTech
             NavigateTo(typeof(DefinitionsPage), title, true, subject);
         }
 
-        public override void NavigateToFormula(string title, Subject subject)
+        public override void NavigateToFormulaList(Subject subject, string title)
         {
             NavigateTo(typeof(FormulasPage), title, true, subject);
+        }
+
+        public override void NavigateToFormula(string name, Subject subject)
+        {
+            var np = GetPage(typeof(FormulasPage), subject.Name, subject) as FormulasPage;
+            np?.NavigateToFormula(name);
         }
 
         public override void NavigateToSolverList(Subject subject, string title)
