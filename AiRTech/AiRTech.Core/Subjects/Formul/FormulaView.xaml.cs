@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using AiRTech.Core.Misc;
+using AiRTech.Core.Net;
 using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects.Formul
@@ -8,20 +12,15 @@ namespace AiRTech.Core.Subjects.Formul
     public partial class FormulaView : ContentView
     {
         private readonly Subject _subject;
+        private readonly Formula _fml;
 
         public FormulaView(Formula fml, Subject subject)
         {
             _subject = subject;
+            _fml = fml;
             Title = fml.Title;
             BindingContext = fml;
             InitializeComponent();
-            var img = new Image
-            {
-                Source = fml.ImageSource,
-                VerticalOptions = LayoutOptions.Fill,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                Aspect = Aspect.AspectFill
-            };
             if (fml.Synonyms != null && fml.Synonyms.Length > 0)
             {
                 var txt = string.Join(", ", fml.Synonyms);
@@ -37,38 +36,49 @@ namespace AiRTech.Core.Subjects.Formul
                 };
                 Sl.Children.Add(sLab);
             }
+            var img = new Image
+            {
+                Source = fml.ImageSource,
+                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Aspect = Aspect.AspectFill
+            };
             Sl.Children.Add(img);
             if (fml.InEqs != null && fml.InEqs.Length > 0)
             {
-                foreach (var eq in fml.InEqs.Where(id => id != null))
+                CreateInner();
+            }
+        }
+
+        private async void CreateInner()
+        {
+            foreach (var eq in _fml.InEqs.Where(id => id != null))
+            {
+                try
                 {
-                    try
-                    {
-                        Sl.Children.Add(CreateViewForInnerFormulaComp(eq));
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.WriteLine(e);
-                        CoreManager.Current.App.DialogManager.ShowWarningDialog("Błąd w pobranej zawartości", "Nie można utworzyć elementu definicji " + fml.Title);
-                    }
+                    Sl.Children.Add(await CreateViewForInnerFormulaComp(eq));
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e);
+                    CoreManager.Current.App.DialogManager.ShowWarningDialog("Błąd w pobranej zawartości",
+                        "Nie można utworzyć elementu definicji " + _fml.Title);
                 }
             }
         }
 
-        public string Title { get; private set; }
-
-        private View CreateViewForInnerFormulaComp(InEq id)
+        private async Task<StackLayout> CreateViewForInnerFormulaComp(InEq id)
         {
-            var v = new StackLayout { Orientation = StackOrientation.Horizontal };
-            v.Children.Add(new Label
+            var stackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+            stackLayout.Children.Add(new Label
             {
                 FormattedText = new FormattedString
                 {
                     Spans = { new Span { Text = id.Sign,
-                FontAttributes = FontAttributes.Bold } }
+                    FontAttributes = FontAttributes.Bold } }
                 }
             });
-            v.Children.Add(new Label
+            stackLayout.Children.Add(new Label
             {
                 FormattedText = new FormattedString
                 {
@@ -81,7 +91,23 @@ namespace AiRTech.Core.Subjects.Formul
                     } }
                 }
             });
-            return v;
+            if (!string.IsNullOrWhiteSpace(id.Img))
+            {
+                var path = Path.Combine(WebCore.FnFmlsDir, WebCore.FnImgDir, id.Img);
+                var image = new Image
+                {
+                    Source = await ImageResourceExtension.GetImageFromUri(path)
+                };
+                stackLayout = new StackLayout
+                {
+                    Orientation = StackOrientation.Vertical,
+                    Children = { stackLayout }
+                };
+                stackLayout.Children.Add(image);
+            }
+            return stackLayout;
         }
+
+        public string Title { get; private set; }
     }
 }
