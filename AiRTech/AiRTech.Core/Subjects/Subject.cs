@@ -19,8 +19,9 @@ namespace AiRTech.Core.Subjects
             Name = name;
             Details = "Przejdź";
             Img = img;
-            Base = (SubjectBase)Activator.CreateInstance(type);
+            Base = (SubjectBase)Activator.CreateInstance(type, this);
             Subjects.Add(Base.SubjectType, this);
+            CoreManager.Current.App.SubjectPages.Add(Base.SubjectType, new Dictionary<NavPageType, Page>());
         }
 
         public static Dictionary<SubjectType, Subject> Subjects
@@ -46,6 +47,6 @@ namespace AiRTech.Core.Subjects
         public string Details { get; set; }
         public string Img { get; }
         public ImageSource ImgProperty => ImageResourceExtension.GetEmbeddedImage(Img);
-        public SubjectBase Base { get; private set; }
+        public SubjectBase Base { get; }
     }
 }

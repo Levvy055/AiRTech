@@ -1,4 +1,5 @@
 ﻿using System;
+using AiRTech.Core;
 using AiRTech.Core.Misc;
 using Xamarin.Forms;
 
@@ -10,6 +11,6 @@ namespace AiRTech.Views.ViewComponents
         public string IconSource { get; set; }
         public string Detail { get; set; }
         public ImageSource IconProperty => ImageResourceExtension.GetEmbeddedImage(IconSource);
-        public Type TargetType { get; set; }
+        public NavPageType TargetType { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class AutomaticBasics : SubjectBase
     {
-        public AutomaticBasics() : base(SubjectType.PODSTAWY_AUTOMATYKI)
+        public AutomaticBasics(Subject subject) : base(SubjectType.PODSTAWY_AUTOMATYKI, subject)
         {
 
         }

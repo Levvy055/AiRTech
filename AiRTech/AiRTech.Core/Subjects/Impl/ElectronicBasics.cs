@@ -2,7 +2,7 @@
 {
     public class ElectronicBasics : SubjectBase
     {
-        public ElectronicBasics() : base(SubjectType.PODSTAWY_ELEKTRONIKI)
+        public ElectronicBasics(Subject subject) : base(SubjectType.PODSTAWY_ELEKTRONIKI, subject)
         {
 
         }

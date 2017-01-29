@@ -17,16 +17,20 @@ namespace AiRTech.Core
         }
 
         protected abstract void InitSolvers();
-        public abstract void NavigateToMain(Type pageType, string title);
+        public abstract void ClearDefinitions(Subject subjectType);
+        public abstract void ClearFormulas(Subject subjectType);
+        public abstract void NavigateToModal(ContentPage modal);
         public abstract void NavigateToPage(Page page, bool removePrevious = false);
+        public abstract void NavigateToMain(NavPageType pageType, string title);
         public abstract void NavigateToSubject(Subject subject, string title);
         public abstract void NavigateToDefinition(string title, Subject subject);
         public abstract void NavigateToFormula(string title, Subject subject);
         public abstract void NavigateToSolverList(Subject subject, string title);
-        public abstract void NavigateToSolver(Subject subject, SolverView sv);
-        public abstract void NavigateToModal(ContentPage modal);
-
-        public IDialogManager DialogManager { get; protected set; }
+        public abstract void NavigateToSolver(Subject subject, string solverName);
         public abstract void NavigateToFormulaList(Subject subject, string title);
+        public IDialogManager DialogManager { get; protected set; }
+        public CoreManager DataCore { get; protected set; }
+        protected Dictionary<NavPageType, Page> MainPages { get; } = new Dictionary<NavPageType, Page>();
+        public Dictionary<SubjectType, Dictionary<NavPageType, Page>> SubjectPages { get; } = new Dictionary<SubjectType, Dictionary<NavPageType, Page>>();
     }
 }

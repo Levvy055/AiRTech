@@ -2,7 +2,7 @@
 {
     public class ElementsOfOpticsAndAcoustics : SubjectBase
     {
-        public ElementsOfOpticsAndAcoustics() : base(SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI)
+        public ElementsOfOpticsAndAcoustics(Subject subject) : base(SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI, subject)
         {
 
         }

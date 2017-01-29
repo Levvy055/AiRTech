@@ -12,9 +12,11 @@ namespace AiRTech
 {
     public static class ViewHandler
     {
+        #region fields
         private static readonly Dictionary<SubjectType, Dictionary<string, DefinitionView>> _defViews = new Dictionary<SubjectType, Dictionary<string, DefinitionView>>();
         private static readonly Dictionary<SubjectType, Dictionary<string, FormulaView>> _fmlViews = new Dictionary<SubjectType, Dictionary<string, FormulaView>>();
         private static readonly Dictionary<SubjectType, Dictionary<string, SolverView>> _solverViews = new Dictionary<SubjectType, Dictionary<string, SolverView>>();
+        #endregion
 
         #region Add
         public static void Add(DefinitionView defView, SubjectType subjectType)

@@ -14,9 +14,10 @@ namespace AiRTech.Core.Subjects
 {
     public abstract class SubjectBase : INotifyPropertyChanged
     {
-        protected SubjectBase(SubjectType subjectType)
+        protected SubjectBase(SubjectType subjectType, Subject subject)
         {
             SubjectType = subjectType;
+            Subject = subject;
             Definitions = new List<Definition>();
             Formulas = new List<Formula>();
             Solver = Solver.GetSolverFor(SubjectType);
@@ -71,6 +72,7 @@ namespace AiRTech.Core.Subjects
                 {
                     return;
                 }
+                CoreManager.Current.App.ClearDefinitions(Subject);
                 CoreManager.Current.FileHandler.UpdateDefinitions(newDefList, SubjectType);
                 await LoadDefinitionsFromFile();
             }
@@ -110,6 +112,7 @@ namespace AiRTech.Core.Subjects
                 {
                     return;
                 }
+                CoreManager.Current.App.ClearFormulas(Subject);
                 CoreManager.Current.FileHandler.UpdateFormulas(newDefList, SubjectType);
                 await LoadFormulasFromFile();
             }
@@ -137,6 +140,7 @@ namespace AiRTech.Core.Subjects
         public Solver Solver { get; private set; }
         public List<Definition> Definitions { get; protected set; }
         public List<Formula> Formulas { get; protected set; }
+        public Subject Subject { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

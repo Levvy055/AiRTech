@@ -3,7 +3,7 @@
     public class SignalTheoryBasics : SubjectBase
     {
 
-        public SignalTheoryBasics() : base(SubjectType.PODSTAWY_TEORII_SYGNALOW)
+        public SignalTheoryBasics(Subject subject) : base(SubjectType.PODSTAWY_TEORII_SYGNALOW, subject)
         {
 
         }

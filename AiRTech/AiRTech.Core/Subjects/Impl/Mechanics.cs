@@ -3,7 +3,7 @@
     public class Mechanics : SubjectBase
     {
 
-        public Mechanics() : base(SubjectType.MECHANIKA)
+        public Mechanics(Subject subject) : base(SubjectType.MECHANIKA, subject)
         {
 
         }

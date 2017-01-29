@@ -66,12 +66,12 @@ namespace AiRTech
                 DialogManager = new DialogManager();
                 DataCore = new CoreManager(this);
                 InitSolvers();
-                NavigateToMain(typeof(MainPage), "AiRTech");
+                NavigateToMain(NavPageType.MainPage, "AiRTech");
                 var menuPage = (MenuPage)((MasterDetailPage)MainPage).Master;
                 menuPage.IsBusy = false;
                 menuPage.IsDisabled = false;
 #if DEBUG
-                NavigateToMain(typeof(SubjectsPage), "Subjects");
+                NavigateToMain(NavPageType.SubjectsPage, "Subjects");
                 var s = Subject.Subjects[SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI];
                 NavigateToSubject(s, "EOiA");
                 //NavigateTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
@@ -121,41 +121,81 @@ namespace AiRTech
             });
         }
 
-        public override void NavigateToMain(Type pageType, string title)
+        public override void ClearDefinitions(Subject subject)
+        {
+            ViewHandler.DefViews.Clear();
+            if (SubjectPages[subject.Base.SubjectType].ContainsKey(NavPageType.DefinitionsPage))
+            {
+                SubjectPages[subject.Base.SubjectType].Remove(NavPageType.DefinitionsPage);
+            }
+        }
+
+        public override void ClearFormulas(Subject subject)
+        {
+            ViewHandler.FmlViews.Clear();
+            if (SubjectPages[subject.Base.SubjectType].ContainsKey(NavPageType.FormulasPage))
+            {
+                SubjectPages[subject.Base.SubjectType].Remove(NavPageType.FormulasPage);
+            }
+        }
+
+        public override async void NavigateToModal(ContentPage modal)
+        {
+            await NavPage.PushAsync(modal);
+        }
+
+        public override async void NavigateToPage(Page page, bool removePrevious = false)
+        {
+            if (NavPage.CurrentPage == page)
+            {
+                NavPage.Title = page.Title;
+            }
+            else
+            {
+                if (removePrevious)
+                {
+                    await NavPage.PopAsync(false);
+                }
+                await NavPage.PushAsync(page);
+            }
+        }
+
+        public override void NavigateToMain(NavPageType pageType, string title)
         {
             NavigateTo(pageType, "AiRTech", false);
         }
 
         public override void NavigateToSubject(Subject subject, string title)
         {
-            NavigateTo(typeof(SubjectPage), title, true, subject);
+            NavigateTo(NavPageType.SubjectPage, title, true, subject);
         }
 
         public override void NavigateToDefinition(string title, Subject subject)
         {
-            NavigateTo(typeof(DefinitionsPage), title, true, subject);
+            NavigateTo(NavPageType.DefinitionsPage, title, true, subject);
         }
 
         public override void NavigateToFormulaList(Subject subject, string title)
         {
-            NavigateTo(typeof(FormulasPage), title, true, subject);
+            NavigateTo(NavPageType.FormulasPage, title, true, subject);
         }
 
         public override void NavigateToFormula(string name, Subject subject)
         {
-            var np = GetPage(typeof(FormulasPage), subject.Name, subject) as FormulasPage;
+            var np = GetPage<FormulasPage>(NavPageType.FormulasPage, subject.Name, subject);
             np?.NavigateToFormula(name);
         }
 
         public override void NavigateToSolverList(Subject subject, string title)
         {
-            var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
+            var np = GetPage<SolverPage>(NavPageType.SolverPage, subject.Name, subject);
             np?.NavigateToMain();
         }
 
-        public override void NavigateToSolver(Subject subject, SolverView sv)
+        public override void NavigateToSolver(Subject subject, string solverName)
         {
-            var np = GetPage(typeof(SolverPage), subject.Name, subject) as SolverPage;
+            var np = GetPage<SolverPage>(NavPageType.SolverPage, subject.Name, subject);
+            var sv = ViewHandler.GetSolverView(subject.Base.SubjectType, solverName);
             if (sv != null)
             {
                 np?.NavigateToTab(sv);
@@ -166,22 +206,16 @@ namespace AiRTech
             }
         }
 
-        public override async void NavigateToModal(ContentPage modal)
-        {
-            await NavPage.PushAsync(modal);
-        }
-
-        private async void NavigateTo(Type page, string title, bool inner = true, params object[] args)
+        private async void NavigateTo(NavPageType pageType, string title, bool inner = true, Subject subject = null)
         {
             var mPage = MainPage as MasterDetailPage;
             if (mPage == null)
             {
                 return;
             }
-            var newPage = GetPage(page, title, args);
+            var newPage = GetPage<Page>(pageType, title, subject);
             if (newPage != null)
             {
-
                 if (inner)
                 {
                     await NavPage.PushAsync(newPage);
@@ -201,91 +235,109 @@ namespace AiRTech
             }
         }
 
-        public override async void NavigateToPage(Page page, bool removePrevious = false)
-        {
-            if (NavPage.CurrentPage == page)
-            {
-                NavPage.Title = page.Title;
-            }
-            else
-            {
-                if (removePrevious)
-                {
-                    await NavPage.PopAsync(false);
-                }
-                await NavPage.PushAsync(page);
-            }
-        }
-
-        public Page GetPage(Type pageType, string title = null, params object[] args)
+        public T GetPage<T>(NavPageType pageType, string title = null, Subject subject = null)
         {
             try
             {
                 Page page;
-                if (MainPages.ContainsKey(pageType))
+                if (pageType != NavPageType.SubjectPage
+                    && pageType != NavPageType.DefinitionsPage
+                    && pageType != NavPageType.FormulasPage
+                    && pageType != NavPageType.SolverPage)
                 {
-                    if (pageType == typeof(SubjectPage)
-                        || pageType == typeof(DefinitionsPage)
-                        || pageType == typeof(FormulasPage)
-                        || pageType == typeof(SolverPage))
-                    {
-                        page = GetPage(pageType, args);
-                    }
-                    else
-                    {
-                        page = MainPages[pageType][0];
-                    }
+                    page = GetMainPage(pageType);
                 }
                 else
                 {
-                    page = CreatePage(pageType, args);
+                    page = GetPageForSubject(pageType, subject);
                 }
-                if (!string.IsNullOrWhiteSpace(title) && page != null)
+                if (!string.IsNullOrWhiteSpace(title) && page.Title != title)
                 {
                     page.Title = title;
                 }
-                return page;
+                if (page != null)
+                {
+                    return (T)(object)page;
+                }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
-                return null;
             }
+            return default(T);
         }
 
-        private Page GetPage(Type pageType, object[] args)
+        private Page GetMainPage(NavPageType pageType)
         {
-            var pages = MainPages[pageType];
-            Page page = null;
-            foreach (var p in pages)
-            {
-                dynamic sp = p;
-                if (sp.Subject == args[0])
-                {
-                    page = p;
-                }
-            }
-            return page ?? CreatePage(pageType, args);
+            return !MainPages.ContainsKey(pageType) ? CreatePage(pageType) : MainPages[pageType];
         }
 
-        private Page CreatePage(Type pageType, object[] args)
+        private T GetPageForSubject<T>(NavPageType pageType, Subject subject)
         {
-            Page page;
-            if (args == null || args.Length == 0)
+            var page = GetPageForSubject(pageType, subject);
+            if (page != null)
             {
-                page = Activator.CreateInstance(pageType) as Page;
+                return (T)Convert.ChangeType(page, typeof(T));
             }
-            else
+            return default(T);
+        }
+
+        private Page GetPageForSubject(NavPageType pageType, Subject subject)
+        {
+            if (!SubjectPages.ContainsKey(subject.Base.SubjectType)
+                || !SubjectPages[subject.Base.SubjectType].ContainsKey(pageType))
             {
-                page = Activator.CreateInstance(pageType, args) as Page;
+                CreatePage(pageType, subject);
             }
-            var list = new List<Page> { page };
-            MainPages[pageType] = list;
+            var page = SubjectPages[subject.Base.SubjectType][pageType];
             return page;
         }
 
-        public CoreManager DataCore { get; set; }
-        private Dictionary<Type, List<Page>> MainPages { get; } = new Dictionary<Type, List<Page>>();
+        private Page CreatePage(NavPageType pageType, Subject subject = null)
+        {
+            Page page;
+            Type type;
+            switch (pageType)
+            {
+                case NavPageType.MainPage:
+                    type = typeof(MainPage);
+                    break;
+                case NavPageType.AboutPage:
+                    type = typeof(AboutPage);
+                    break;
+                case NavPageType.SubjectsPage:
+                    type = typeof(SubjectsPage);
+                    break;
+                case NavPageType.SubjectPage:
+                    type = typeof(SubjectPage);
+                    break;
+                case NavPageType.DefinitionsPage:
+                    type = typeof(DefinitionsPage);
+                    break;
+                case NavPageType.FormulasPage:
+                    type = typeof(FormulasPage);
+                    break;
+                case NavPageType.SolverPage:
+                    type = typeof(SolverPage);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(pageType), pageType, null);
+            }
+            if (subject == null)
+            {
+                page = Activator.CreateInstance(type) as Page;
+                MainPages.Add(pageType, page);
+                return page;
+            }
+            else
+            {
+                page = Activator.CreateInstance(type, subject) as Page;
+                var subjectType = subject.Base.SubjectType;
+                SubjectPages[subjectType].Add(pageType, page);
+                return page;
+            }
+        }
+
         private NavigationPage NavPage { get; set; }
     }
 }
