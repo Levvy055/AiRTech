@@ -30,21 +30,6 @@ namespace AiRTech
 
         public App() : base()
         {
-            var loadingPage = new ContentPage
-            {
-                Title = "Ładowanie",
-                Content = new ActivityIndicator
-                {
-                    IsRunning = true,
-                    Color = Color.DarkRed
-                }
-            };
-            NavPage = new NavigationPage(loadingPage)
-            {
-                BarBackgroundColor = _topBarColor,
-                BarTextColor = _topBarTextColor,
-                BackgroundColor = _mainBgColor
-            };
             MainPage = new MasterDetailPage
             {
                 Master = new MenuPage
@@ -53,27 +38,35 @@ namespace AiRTech
                     IsBusy = true,
                     IsDisabled = true
                 },
-                Detail = NavPage,
+                Detail = new ContentPage(),
                 MasterBehavior = MasterBehavior.Popover
             };
-        }
-
-        protected override async void OnStart()
-        {
-            //await Task.Delay(5000);
             try
             {
                 DialogManager = new DialogManager();
                 DataCore = new CoreManager(this);
                 InitSolvers();
                 NavigateToMain(NavPageType.MainPage, "AiRTech");
-                var menuPage = (MenuPage)((MasterDetailPage)MainPage).Master;
-                menuPage.IsBusy = false;
-                menuPage.IsDisabled = false;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            var menuPage = (MenuPage)((MasterDetailPage)MainPage).Master;
+            menuPage.IsBusy = false;
+            menuPage.IsDisabled = false;
+        }
+
+        protected override void OnStart()
+        {
+            NavigateToMain(NavPageType.MainPage, "AiRTech");
+            //await Task.Delay(5000);
+            try
+            {
 #if DEBUG
-                NavigateToMain(NavPageType.SubjectsPage, "Subjects");
-                var s = Subject.Subjects[SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI];
-                NavigateToSubject(s, "EOiA");
+                //NavigateToMain(NavPageType.SubjectsPage, "Subjects");
+                //var s = Subject.Subjects[SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI];
+                //NavigateToSubject(s, "EOiA");
                 //NavigateTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
                 //NavigateTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
                 //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;

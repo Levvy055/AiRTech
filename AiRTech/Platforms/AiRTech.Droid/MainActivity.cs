@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AiRTech.Core;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using ImageCircle.Forms.Plugin.Droid;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 namespace AiRTech.Droid
 {
-    [Activity(Label = "AiRTech", Icon = "@drawable/ic_launcher", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    [Activity(Label = "AiR Tech", Icon = "@drawable/ic_launcher", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -22,13 +25,8 @@ namespace AiRTech.Droid
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
             AndroidEnvironment.UnhandledExceptionRaiser += AndroidEnvironmentOnUnhandledException;
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
-            ImageCircleRenderer.Init();
-            App = new App();
             LoadApplication(App);
         }
-
-        public App App { get; set; }
 
         protected override void OnDestroy()
         {
@@ -57,6 +55,8 @@ namespace AiRTech.Droid
         {
             Console.WriteLine(sender.ToString());
         }
+
+        public App App => CoreManager.Current.App as App;
     }
 }
 

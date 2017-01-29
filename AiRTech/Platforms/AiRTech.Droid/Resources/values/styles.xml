@@ -31,4 +31,16 @@
   <style name="CustomTab" parent="@android:style/Widget.Holo.ActionBar.TabText">
     <item name="android:gravity">center</item>
   </style>
+
+  <style name="MyTheme.Base" parent="Theme.AppCompat.Light">
+  </style>
+
+  <style name="MyTheme" parent="MyTheme.Base">
+  </style>
+
+  <style name="MyTheme.Splash" parent ="Theme.AppCompat.Light">
+    <item name="android:windowBackground">@drawable/splash_screen</item>
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+  </style>
 </resources>

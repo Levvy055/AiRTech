@@ -4,8 +4,7 @@
     {
         public MainPage()
         {
-            this.InitializeComponent();
-
+            InitializeComponent();
             LoadApplication(new AiRTech.App());
         }
     }
