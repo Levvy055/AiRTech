@@ -1,22 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using AiRTech.Core;
-using AiRTech.Core.DataHandling;
-using AiRTech.Core.Net;
 using AiRTech.Core.Subjects;
-using AiRTech.Core.Subjects.Solv;
 using AiRTech.Solvers;
-using AiRTech.Views;
 using AiRTech.Views.Other;
 using AiRTech.Views.Pages;
-using AiRTech.Views.ViewComponents;
 using Xamarin.Forms;
 using DefinitionsPage = AiRTech.Views.Pages.DefinitionsPage;
 using MainPage = AiRTech.Views.Pages.MainPage;
 using MenuPage = AiRTech.Views.Pages.MenuPage;
-using SolverView = AiRTech.Core.Subjects.Solv.SolverView;
 using SubjectPage = AiRTech.Views.Pages.SubjectPage;
 
 namespace AiRTech
@@ -27,10 +19,13 @@ namespace AiRTech
         private readonly Color _menuBgColor = Color.FromRgb(95, 158, 160);
         private readonly Color _topBarColor = Color.FromRgb(95, 158, 160);
         private readonly Color _topBarTextColor = Color.FromRgb(byte.MaxValue, byte.MaxValue, byte.MaxValue);
+        private MasterDetailPage _mdp;
+        private bool _isOnMain;
+        private NavPageType _lastType = NavPageType.MainPage;
 
         public App() : base()
         {
-            MainPage = new MasterDetailPage
+            _mdp = new MasterDetailPage
             {
                 Master = new MenuPage
                 {
@@ -41,6 +36,7 @@ namespace AiRTech
                 Detail = new ContentPage(),
                 MasterBehavior = MasterBehavior.Popover
             };
+            MainPage = _mdp;
             try
             {
                 DialogManager = new DialogManager();
@@ -60,7 +56,6 @@ namespace AiRTech
         protected override void OnStart()
         {
             NavigateToMain(NavPageType.MainPage, "AiRTech");
-            //await Task.Delay(5000);
             try
             {
 #if DEBUG
@@ -83,12 +78,24 @@ namespace AiRTech
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            Debug.WriteLine("Sleeping");
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+            Debug.WriteLine("Resuming");
+            if (MainPage != _mdp)
+            {
+                MainPage = _mdp;
+            }
+            if (_isOnMain)
+            {
+                NavigateTo(NavPageType.MainPage, "AiR Tech");
+            }
+            else
+            {
+                NavigateTo(_lastType);
+            }
         }
 
         public void OnDestroy()
@@ -199,16 +206,13 @@ namespace AiRTech
             }
         }
 
-        private async void NavigateTo(NavPageType pageType, string title, bool inner = true, Subject subject = null)
+        private async void NavigateTo(NavPageType pageType, string title = null, bool inner = true, Subject subject = null)
         {
-            var mPage = MainPage as MasterDetailPage;
-            if (mPage == null)
-            {
-                return;
-            }
             var newPage = GetPage<Page>(pageType, title, subject);
             if (newPage != null)
             {
+                _isOnMain = pageType == NavPageType.MainPage || pageType == NavPageType.AboutPage;
+                _lastType = pageType;
                 if (inner)
                 {
                     await NavPage.PushAsync(newPage);
@@ -222,9 +226,9 @@ namespace AiRTech
                         BarTextColor = _topBarTextColor,
                         BackgroundColor = _mainBgColor
                     };
-                    mPage.Detail = NavPage;
+                    _mdp.Detail = NavPage;
                 }
-                mPage.IsPresented = false;
+                _mdp.IsPresented = false;
             }
         }
 
