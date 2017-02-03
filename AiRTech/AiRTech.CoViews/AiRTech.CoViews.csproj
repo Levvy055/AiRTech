@@ -43,6 +43,9 @@
     <Compile Include="Solvers\SignalTheoryBasicsSolver.cs" />
     <Compile Include="Views\Other\DialogManager.cs" />
     <Compile Include="ViewHandler.cs" />
+    <Compile Include="Views\Pages\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\SolverPage.xaml.cs">
       <DependentUpon>SolverPage.xaml</DependentUpon>
     </Compile>
@@ -77,6 +80,7 @@
     <Compile Include="Views\ViewComponents\MenuPageItem.cs" />
     <Compile Include="Views\ViewModels\DefinitionsViewModel.cs" />
     <Compile Include="Views\ViewModels\FurmulasViewModel.cs" />
+    <Compile Include="Views\ViewModels\SearchPageViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectsViewModel.cs" />
     <Compile Include="Views\ViewModels\MenuViewModel.cs" />
@@ -190,6 +194,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Pages\SolverPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Pages\SearchPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

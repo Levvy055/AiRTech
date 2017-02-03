@@ -122,6 +122,11 @@ namespace AiRTech.Core.Subjects
             }
         }
 
+        public void SearchDefinition()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Sort()
         {
             Definitions.Sort();

@@ -98,6 +98,22 @@ namespace AiRTech.Views.ViewModels
             }
         }
 
+        public ICommand SearchCommand
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    if (!Page.IsBusy)
+                    {
+                        Page.IsBusy = true;
+                        Subject.Base.SearchDefinition();
+                        Page.IsBusy = false;
+                    }
+                });
+            }
+        }
+
         public List<Definition> Definitions => Subject.Base.Definitions;
         public string NoDefs { get; set; }
         public DefinitionsPage DefPage => Page as DefinitionsPage;

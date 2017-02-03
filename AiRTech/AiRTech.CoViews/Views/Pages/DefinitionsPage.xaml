@@ -5,6 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:misc="clr-namespace:AiRTech.Core.Misc;assembly=AiRTech.Core">
     <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SearchCommand}" Text="Szukaj">
+            <ToolbarItem.Icon>
+                <OnPlatform
+                    x:TypeArguments="FileImageSource"
+                    Android="Assets/search.png"
+                    WinPhone="Assets/search.png" />
+            </ToolbarItem.Icon>
+        </ToolbarItem>
         <ToolbarItem Command="{Binding RefreshCommand}" Text="Odśwież">
             <ToolbarItem.Icon>
                 <OnPlatform
