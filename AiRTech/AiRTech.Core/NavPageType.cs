@@ -2,6 +2,7 @@
 {
     public enum NavPageType
     {
-        MainPage, AboutPage, SubjectsPage, SubjectPage, DefinitionsPage, FormulasPage, SolverPage
+        MainPage, AboutPage, SubjectsPage, SubjectPage, DefinitionsPage, FormulasPage, SolverPage,
+        SearchPage
     }
 }

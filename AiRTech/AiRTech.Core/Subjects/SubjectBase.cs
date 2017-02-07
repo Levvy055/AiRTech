@@ -124,7 +124,7 @@ namespace AiRTech.Core.Subjects
 
         public void SearchDefinition()
         {
-            throw new NotImplementedException();
+            CoreManager.Current.App.NavigateToSearchPage(NavPageType.DefinitionsPage, Subject);
         }
 
         public void Sort()

@@ -1,4 +1,5 @@
-﻿using AiRTech.Views.ViewModels;
+﻿using AiRTech.Core.Subjects;
+using AiRTech.Views.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,10 +17,11 @@ namespace AiRTech.Views.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchPage : ContentPage
     {
-        public SearchPage()
+        public SearchPage(Subject subject)
         {
             InitializeComponent();
             BindingContext = new SearchPageViewModel();
+            Subject = subject;
         }
 
         void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -28,12 +30,13 @@ namespace AiRTech.Views.Pages
         async void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
+            {
                 return;
-
+            }
             await DisplayAlert("Selected", e.SelectedItem.ToString(), "OK");
-
-            //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
+
+        public Subject Subject { get; private set; }
     }
 }

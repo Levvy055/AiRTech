@@ -11,6 +11,9 @@ namespace AiRTech.Core
 {
     public abstract class AiRTechApp : Application
     {
+        public static double ScreenWidth;
+        public static double ScreenHeight;
+
         protected AiRTechApp()
         {
 
@@ -24,10 +27,11 @@ namespace AiRTech.Core
         public abstract void NavigateToMain(NavPageType pageType, string title);
         public abstract void NavigateToSubject(Subject subject, string title);
         public abstract void NavigateToDefinition(string title, Subject subject);
+        public abstract void NavigateToFormulaList(Subject subject, string title);
         public abstract void NavigateToFormula(string title, Subject subject);
         public abstract void NavigateToSolverList(Subject subject, string title);
         public abstract void NavigateToSolver(Subject subject, string solverName);
-        public abstract void NavigateToFormulaList(Subject subject, string title);
+        public abstract void NavigateToSearchPage(NavPageType callingPage, Subject subject);
         public IDialogManager DialogManager { get; protected set; }
         public CoreManager DataCore { get; protected set; }
         protected Dictionary<NavPageType, Page> MainPages { get; } = new Dictionary<NavPageType, Page>();

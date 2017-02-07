@@ -30,51 +30,49 @@ namespace AiRTech.Views.ViewModels
 
         private void SubjectOnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            var p = Page as FormulasPage;
-            if (args.PropertyName == nameof(Formulas) && p?.FmlListView != null)
+            if (args.PropertyName == nameof(Formulas) && FmlPage?.FmlListView != null)
             {
                 var fmls = Formulas.ToArray();
-                p.FmlListView.ItemsSource = fmls;
+                FmlPage.FmlListView.ItemsSource = fmls;
                 if (fmls != null && fmls.Length > 0)
                 {
-                    p.FmlListView.IsVisible = true;
-                    p.NoFmlsView.IsVisible = false;
+                    FmlPage.FmlListView.IsVisible = true;
+                    FmlPage.NoFmlsView.IsVisible = false;
                     foreach (var def in fmls)
                     {
-                        if (!p.FmlViews.ContainsKey(def.Title))
+                        if (!FmlPage.FmlViews.ContainsKey(def.Title))
                         {
                             var sd = new FormulaView(def, Subject);
                             var sdp = new ContentPage { Title = def.Title, Content = sd };
-                            p.FmlViews.Add(def.Title, sdp);
+                            FmlPage.FmlViews.Add(def.Title, sdp);
                         }
                     }
                 }
                 else
                 {
-                    p.FmlListView.IsVisible = false;
-                    p.NoFmlsView.IsVisible = true;
+                    FmlPage.FmlListView.IsVisible = false;
+                    FmlPage.NoFmlsView.IsVisible = true;
                 }
             }
         }
 
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var p = Page as FormulasPage;
-            var d = p.FmlListView.SelectedItem as Formula;
+            var d = FmlPage.FmlListView.SelectedItem as Formula;
             if (d == null)
             {
                 return;
             }
             try
             {
-                var view = p.FmlViews[d.Title];
+                var view = FmlPage.FmlViews[d.Title];
                 CoreManager.Current.App.NavigateToModal(view);
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Err: " + e);
             }
-            p.FmlListView.SelectedItem = -1;
+            FmlPage.FmlListView.SelectedItem = -1;
         }
 
         public ICommand RefreshCommand
@@ -83,11 +81,13 @@ namespace AiRTech.Views.ViewModels
             {
                 return new Command(o =>
                 {
+                    FmlPage.FmlViews.Clear();
                     Subject.Base.LoadFormulasFromServerAndSave();
                 });
             }
         }
         public string NoFormula { get; set; }
         public List<Formula> Formulas => Subject.Base.Formulas;
+        public FormulasPage FmlPage => Page as FormulasPage;
     }
 }

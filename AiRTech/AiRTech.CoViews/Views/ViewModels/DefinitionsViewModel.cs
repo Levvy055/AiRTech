@@ -32,29 +32,28 @@ namespace AiRTech.Views.ViewModels
         private void SubjectOnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             Page.IsBusy = true;
-            var p = Page as DefinitionsPage;
-            if (args.PropertyName == nameof(Definitions) && p?.DefListView != null)
+            if (args.PropertyName == nameof(Definitions) && DefPage?.DefListView != null)
             {
                 var defs = Definitions.ToArray();
-                p.DefListView.ItemsSource = defs;
+                DefPage.DefListView.ItemsSource = defs;
                 if (defs != null && defs.Length > 0)
                 {
-                    p.DefListView.IsVisible = true;
-                    p.NoDefsView.IsVisible = false;
+                    DefPage.DefListView.IsVisible = true;
+                    DefPage.NoDefsView.IsVisible = false;
                     foreach (var def in defs)
                     {
-                        if (!p.DefViews.ContainsKey(def.Title))
+                        if (!DefPage.DefViews.ContainsKey(def.Title))
                         {
                             var sd = new DefinitionView(def, Subject);
                             var sdp = new ContentPage { Title = def.Title, Content = sd };
-                            p.DefViews.Add(def.Title, sdp);
+                            DefPage.DefViews.Add(def.Title, sdp);
                         }
                     }
                 }
                 else
                 {
-                    p.DefListView.IsVisible = false;
-                    p.NoDefsView.IsVisible = true;
+                    DefPage.DefListView.IsVisible = false;
+                    DefPage.NoDefsView.IsVisible = true;
                 }
             }
             Page.IsBusy = false;
@@ -63,22 +62,21 @@ namespace AiRTech.Views.ViewModels
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs)
         {
             Page.IsBusy = true;
-            var p = Page as DefinitionsPage;
-            var d = p.DefListView.SelectedItem as Definition;
+            var d = DefPage.DefListView.SelectedItem as Definition;
             if (d == null)
             {
                 return;
             }
             try
             {
-                var view = p.DefViews[d.Title];
+                var view = DefPage.DefViews[d.Title];
                 CoreManager.Current.App.NavigateToModal(view);
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Err: " + e);
             }
-            p.DefListView.SelectedItem = -1;
+            DefPage.DefListView.SelectedItem = -1;
             Page.IsBusy = false;
         }
 
@@ -91,6 +89,7 @@ namespace AiRTech.Views.ViewModels
                     if (!Page.IsBusy)
                     {
                         Page.IsBusy = true;
+                        DefPage.DefViews.Clear();
                         Subject.Base.LoadDefinitionsFromServerAndSave();
                         Page.IsBusy = false;
                     }

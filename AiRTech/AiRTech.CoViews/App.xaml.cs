@@ -206,6 +206,12 @@ namespace AiRTech
             }
         }
 
+        public override void NavigateToSearchPage(NavPageType callingPage, Subject subject)
+        {
+            var title = "Wyszukaj " + (callingPage == NavPageType.DefinitionsPage ? "Definicje" : "Wzory");
+            NavigateTo(NavPageType.SearchPage, title, false, subject);
+        }
+
         private async void NavigateTo(NavPageType pageType, string title = null, bool inner = true, Subject subject = null)
         {
             var newPage = GetPage<Page>(pageType, title, subject);
@@ -240,7 +246,8 @@ namespace AiRTech
                 if (pageType != NavPageType.SubjectPage
                     && pageType != NavPageType.DefinitionsPage
                     && pageType != NavPageType.FormulasPage
-                    && pageType != NavPageType.SolverPage)
+                    && pageType != NavPageType.SolverPage
+                    && pageType != NavPageType.SearchPage)
                 {
                     page = GetMainPage(pageType);
                 }
@@ -316,6 +323,9 @@ namespace AiRTech
                     break;
                 case NavPageType.SolverPage:
                     type = typeof(SolverPage);
+                    break;
+                case NavPageType.SearchPage:
+                    type = typeof(SearchPage);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(pageType), pageType, null);

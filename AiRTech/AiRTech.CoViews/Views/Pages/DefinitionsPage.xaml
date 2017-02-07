@@ -23,6 +23,7 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ScrollView
+        x:Name="Sv"
         HorizontalOptions="FillAndExpand"
         Orientation="Vertical"
         VerticalOptions="FillAndExpand">

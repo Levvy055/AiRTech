@@ -52,8 +52,8 @@
     <Language Code="chr-cher" InMinimumRequirementSet="true" />
     <Language Code="chr-cher-us" InMinimumRequirementSet="true" />
     <Language Code="chr-latn" InMinimumRequirementSet="true" />
-    <Language Code="Entries" InMinimumRequirementSet="true" />
-    <Language Code="Entries-cz" InMinimumRequirementSet="true" />
+    <Language Code="cs" InMinimumRequirementSet="true" />
+    <Language Code="cs-cz" InMinimumRequirementSet="true" />
     <Language Code="cy" InMinimumRequirementSet="true" />
     <Language Code="cy-gb" InMinimumRequirementSet="true" />
     <Language Code="da" InMinimumRequirementSet="true" />
@@ -282,12 +282,12 @@
     <Language Code="sr" InMinimumRequirementSet="true" />
     <Language Code="sr-cyrl" InMinimumRequirementSet="true" />
     <Language Code="sr-cyrl-ba" InMinimumRequirementSet="true" />
-    <Language Code="sr-cyrl-Entries" InMinimumRequirementSet="true" />
+    <Language Code="sr-cyrl-cs" InMinimumRequirementSet="true" />
     <Language Code="sr-cyrl-me" InMinimumRequirementSet="true" />
     <Language Code="sr-cyrl-rs" InMinimumRequirementSet="true" />
     <Language Code="sr-latn" InMinimumRequirementSet="true" />
     <Language Code="sr-latn-ba" InMinimumRequirementSet="true" />
-    <Language Code="sr-latn-Entries" InMinimumRequirementSet="true" />
+    <Language Code="sr-latn-cs" InMinimumRequirementSet="true" />
     <Language Code="sr-latn-me" InMinimumRequirementSet="true" />
     <Language Code="sr-latn-rs" InMinimumRequirementSet="true" />
     <Language Code="sv" InMinimumRequirementSet="true" />
@@ -361,6 +361,7 @@
     <MainPackageIdentityName>23967Levvy.AiRTechApp</MainPackageIdentityName>
     <ReservedNames>
       <ReservedName>AiR Tech App</ReservedName>
+      <ReservedName>AiR Tech</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>

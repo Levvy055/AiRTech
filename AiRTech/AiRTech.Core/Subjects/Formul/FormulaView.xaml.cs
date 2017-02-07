@@ -43,6 +43,12 @@ namespace AiRTech.Core.Subjects.Formul
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 Aspect = Aspect.AspectFill
             };
+            var tgr = new TapGestureRecognizer()
+            {
+                Command = new Command(OnImageTap),
+                CommandParameter = _fml.ImageSource
+            };
+            img.GestureRecognizers.Add(tgr);
             Sl.Children.Add(img);
             if (fml.InEqs != null && fml.InEqs.Length > 0)
             {
@@ -94,10 +100,17 @@ namespace AiRTech.Core.Subjects.Formul
             if (!string.IsNullOrWhiteSpace(id.Img))
             {
                 var path = Path.Combine(WebCore.FnFmlsDir, WebCore.FnImgDir, id.Img);
+                var s = await ImageResourceExtension.GetImageFromUri(path);
                 var image = new Image
                 {
-                    Source = await ImageResourceExtension.GetImageFromUri(path)
+                    Source = s
                 };
+                var tgr = new TapGestureRecognizer()
+                {
+                    Command = new Command(OnImageTap),
+                    CommandParameter = s
+                };
+                image.GestureRecognizers.Add(tgr);
                 stackLayout = new StackLayout
                 {
                     Orientation = StackOrientation.Vertical,
@@ -106,6 +119,15 @@ namespace AiRTech.Core.Subjects.Formul
                 stackLayout.Children.Add(image);
             }
             return stackLayout;
+        }
+
+        private void OnImageTap(object obj)
+        {
+            if (obj is ImageSource imageSource)
+            {
+                var mip = new ModalImagePage(imageSource);
+                CoreManager.Current.App.NavigateToModal(mip);
+            }
         }
 
         public string Title { get; private set; }
