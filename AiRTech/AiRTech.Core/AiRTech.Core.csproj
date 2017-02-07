@@ -47,11 +47,8 @@
     <Compile Include="Misc\ModalImagePage.xaml.cs">
       <DependentUpon>ModalImagePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Misc\PanContainer.xaml.cs">
-      <DependentUpon>PanContainer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Misc\PinchToZoomContainer.xaml.cs">
-      <DependentUpon>PinchToZoomContainer.xaml</DependentUpon>
+    <Compile Include="Misc\ZoomContainer.xaml.cs">
+      <DependentUpon>ZoomContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Net\WebCore.cs" />
     <Compile Include="NavPageType.cs" />
@@ -211,19 +208,13 @@
     <EmbeddedResource Include="Resources\subjects.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Misc\PinchToZoomContainer.xaml">
+    <EmbeddedResource Include="Misc\ZoomContainer.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Misc\ModalImagePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Misc\PanContainer.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

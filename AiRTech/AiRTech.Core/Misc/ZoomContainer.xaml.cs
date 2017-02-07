@@ -9,18 +9,45 @@ using Xamarin.Forms;
 
 namespace AiRTech.Core.Misc
 {
-    public partial class PinchToZoomContainer : ContentView
+    public partial class ZoomContainer : ContentView
     {
         double currentScale = 1;
         double startScale = 1;
         double xOffset = 0;
         double yOffset = 0;
+        double x, y;
 
-        public PinchToZoomContainer()
+        public ZoomContainer()
         {
             var pinchGesture = new PinchGestureRecognizer();
+            var panGesture = new PanGestureRecognizer();
+            var tapGesture = new TapGestureRecognizer();
+
             pinchGesture.PinchUpdated += OnPinchUpdated;
+            panGesture.PanUpdated += OnPanUpdated;
+            tapGesture.Tapped += Tapped;
+
             GestureRecognizers.Add(pinchGesture);
+            GestureRecognizers.Add(panGesture);
+            GestureRecognizers.Add(tapGesture);
+        }
+
+        private void OnPanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            switch (e.StatusType)
+            {
+                case GestureStatus.Running:
+                    // Translate and ensure we don't pan beyond the wrapped user interface element bounds.
+                    Content.TranslationX = Math.Max(Math.Min(0, x + e.TotalX), -Math.Abs(Content.Width - AiRTechApp.ScreenWidth));
+                    Content.TranslationY = Math.Max(Math.Min(0, y + e.TotalY), -Math.Abs(Content.Height - AiRTechApp.ScreenHeight));
+                    break;
+
+                case GestureStatus.Completed:
+                    // Store the translation applied during the pan
+                    x = Content.TranslationX;
+                    y = Content.TranslationY;
+                    break;
+            }
         }
 
         void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
@@ -70,6 +97,11 @@ namespace AiRTech.Core.Misc
                 xOffset = Content.TranslationX;
                 yOffset = Content.TranslationY;
             }
+        }
+
+        private void Tapped(object sender, EventArgs e)
+        {
+            CoreManager.Current.App.NavigateBack();
         }
     }
 }

@@ -25,6 +25,7 @@ namespace AiRTech.Core
         public abstract void NavigateToModal(ContentPage modal);
         public abstract void NavigateToPage(Page page, bool removePrevious = false);
         public abstract void NavigateToMain(NavPageType pageType, string title);
+        public abstract void NavigateBack();
         public abstract void NavigateToSubject(Subject subject, string title);
         public abstract void NavigateToDefinition(string title, Subject subject);
         public abstract void NavigateToFormulaList(Subject subject, string title);

@@ -165,6 +165,11 @@ namespace AiRTech
             NavigateTo(pageType, "AiRTech", false);
         }
 
+        public override void NavigateBack()
+        {
+            NavPage.PopAsync();
+        }
+
         public override void NavigateToSubject(Subject subject, string title)
         {
             NavigateTo(NavPageType.SubjectPage, title, true, subject);

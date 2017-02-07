@@ -16,11 +16,9 @@ namespace AiRTech.Core.Misc
             {
                 Padding = new Thickness(20),
                 Children = {
-                    new PanContainer {
-                        Content = new PinchToZoomContainer {
-                                Content = new Image {
-                                    Source = iS
-                                }
+                    new ZoomContainer {
+                        Content = new Image {
+                            Source = iS
                         }
                     }
                 }
