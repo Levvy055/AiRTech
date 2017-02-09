@@ -26,12 +26,12 @@ namespace AiRTech.Core
         public abstract void NavigateToPage(Page page, bool removePrevious = false);
         public abstract void NavigateToMain(NavPageType pageType, string title);
         public abstract void NavigateBack();
-        public abstract void NavigateToSubject(Subject subject, string title);
-        public abstract void NavigateToDefinition(string title, Subject subject);
-        public abstract void NavigateToFormulaList(Subject subject, string title);
-        public abstract void NavigateToFormula(string title, Subject subject);
-        public abstract void NavigateToSolverList(Subject subject, string title);
-        public abstract void NavigateToSolver(Subject subject, string solverName);
+        public abstract void NavigateToSubject(string title, Subject subject);
+        public abstract void NavigateToDefinition(string name, Subject subject);
+        public abstract void NavigateToFormulaList(string title, Subject subject);
+        public abstract void NavigateToFormula(string name, Subject subject);
+        public abstract void NavigateToSolverList(string title, Subject subject);
+        public abstract void NavigateToSolver(string solverName, Subject subject);
         public abstract void NavigateToSearchPage(NavPageType callingPage, Subject subject);
         public IDialogManager DialogManager { get; protected set; }
         public CoreManager DataCore { get; protected set; }

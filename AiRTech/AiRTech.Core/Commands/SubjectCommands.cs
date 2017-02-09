@@ -20,7 +20,7 @@ namespace AiRTech.Core.Commands
                         return;
                     }
                     Debug.WriteLine("Subject Item Selected: " + s.Name);
-                    CoreManager.Current.App.NavigateToSubject(s, s.Name);
+                    CoreManager.Current.App.NavigateToSubject(s.Name, s);
                 });
             }
         }
@@ -56,7 +56,7 @@ namespace AiRTech.Core.Commands
                     }
                     Debug.WriteLine("Formulas: " + s.Name);
                     await s.Base.LoadFormulas();
-                    CoreManager.Current.App.NavigateToFormulaList(s, s.Name);
+                    CoreManager.Current.App.NavigateToFormulaList(s.Name, s);
                 });
             }
         }
@@ -73,7 +73,7 @@ namespace AiRTech.Core.Commands
                         return;
                     }
                     Debug.WriteLine("Solver: " + s.Name);
-                    CoreManager.Current.App.NavigateToSolverList(s, string.Empty);
+                    CoreManager.Current.App.NavigateToSolverList(string.Empty, s);
                 });
             }
         }

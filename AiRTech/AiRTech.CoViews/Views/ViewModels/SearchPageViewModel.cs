@@ -1,7 +1,12 @@
-﻿using System;
+﻿using AiRTech.Core;
+using AiRTech.Core.Misc;
+using AiRTech.Core.Subjects;
+using AiRTech.Views.Pages;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,79 +18,57 @@ namespace AiRTech.Views.ViewModels
 {
     public class SearchPageViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Item> Items { get; }
-        public ObservableCollection<Grouping<string, Item>> ItemsGrouped { get; }
+        private Subject _subject;
+        private IEnumerable<Item> _list;
 
-        public SearchPageViewModel()
+        public SearchPageViewModel(Subject subject)
         {
-            Items = new ObservableCollection<Item>(new[]
-            {
-                new Item { Text = "Baboon", Detail = "Africa & Asia" },
-                new Item { Text = "Capuchin Monkey", Detail = "Central & South America" },
-                new Item { Text = "Blue Monkey", Detail = "Central & East Africa" },
-                new Item { Text = "Squirrel Monkey", Detail = "Central & South America" },
-                new Item { Text = "Golden Lion Tamarin", Detail= "Brazil" },
-                new Item { Text = "Howler Monkey", Detail = "South America" },
-                new Item { Text = "Japanese Macaque", Detail = "Japan" },
-            });
-
-            var sorted = from item in Items
-                         orderby item.Text
-                         group item by item.Text[0].ToString() into itemGroup
-                         select new Grouping<string, Item>(itemGroup.Key, itemGroup);
-
-            ItemsGrouped = new ObservableCollection<Grouping<string, Item>>(sorted);
-
-            RefreshDataCommand = new Command(
-                async () => await RefreshData());
+            _subject = subject;
+            Header = "Wyniki:";
+            Footer = "Koniec";
+            RefreshData();
         }
 
-        public ICommand RefreshDataCommand { get; }
-
-        async Task RefreshData()
+        public async void RefreshData()
         {
-            IsBusy = true;
-            //Load Data Here
-            await Task.Delay(2000);
-
-            IsBusy = false;
+            if (SearchPage.SearchFilter == NavPageType.DefinitionsPage)
+            {
+                _list = await CoreManager.Current.FileHandler.GetDefinitions(_subject.Base.SubjectType);
+            }
+            else
+            {
+                _list = await CoreManager.Current.FileHandler.GetFormulas(_subject.Base.SubjectType);
+            }
+            foreach (var item in _list)
+            {
+                Items.Add(item);
+            }
+            OnPropertyChanged(nameof(Items));
         }
 
-        bool busy;
-        public bool IsBusy
+        public void Clear()
         {
-            get { return busy; }
-            set
+            Items.Clear();
+        }
+
+        public void SearchFor(string txt)
+        {
+            Clear();
+            foreach (var item in _list)
             {
-                busy = value;
-                OnPropertyChanged();
-                ((Command)RefreshDataCommand).ChangeCanExecute();
+                if (item.Title.ToLower().Contains(txt))
+                {
+                    Items.Add(item);
+                }
             }
         }
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged([CallerMemberName]string propertyName = "") =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        public class Item
-        {
-            public string Text { get; set; }
-            public string Detail { get; set; }
-
-            public override string ToString() => Text;
-        }
-
-        public class Grouping<K, T> : ObservableCollection<T>
-        {
-            public K Key { get; private set; }
-
-            public Grouping(K key, IEnumerable<T> items)
-            {
-                Key = key;
-                foreach (var item in items)
-                    this.Items.Add(item);
-            }
-        }
+        public ObservableCollection<Item> Items { get; } = new ObservableCollection<Item>();
+        public string Header { get; }
+        public string Footer { get; }
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

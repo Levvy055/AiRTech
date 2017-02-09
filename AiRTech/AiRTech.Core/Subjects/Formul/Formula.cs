@@ -8,13 +8,8 @@ using Xamarin.Forms;
 
 namespace AiRTech.Core.Subjects.Formul
 {
-    public class Formula : IComparable
+    public class Formula : Item, IComparable
     {
-        public void LinkDeserializedComponents(SubjectType subjectType)
-        {
-
-        }
-
         #region Equality
         public override bool Equals(object o)
         {
@@ -51,13 +46,10 @@ namespace AiRTech.Core.Subjects.Formul
                 return string.Compare(Title, otherFormula.Title, StringComparison.Ordinal);
             throw new ArgumentException("Object is not a Formula");
         }
-
         #endregion
 
-        public string Title { get; set; }
         [JsonProperty("Syn")]
         public string[] Synonyms { get; set; }
-        public string Desc { get; set; }
         [JsonProperty("Eq")]
         public string EqFile { get; set; }
         [JsonProperty("Inner")]

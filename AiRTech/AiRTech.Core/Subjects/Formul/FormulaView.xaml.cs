@@ -121,7 +121,7 @@ namespace AiRTech.Core.Subjects.Formul
             return stackLayout;
         }
 
-        private void OnImageTap(object obj)
+        private static void OnImageTap(object obj)
         {
             if (obj is ImageSource imageSource)
             {

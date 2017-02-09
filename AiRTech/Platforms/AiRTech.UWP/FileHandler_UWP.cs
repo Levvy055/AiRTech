@@ -78,10 +78,6 @@ namespace AiRTech.UWP
             {
                 return null;
             }
-            foreach (var f in list)
-            {
-                f.LinkDeserializedComponents(subjectType);
-            }
             return list;
         }
 

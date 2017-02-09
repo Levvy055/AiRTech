@@ -103,12 +103,7 @@ namespace AiRTech.Views.ViewModels
             {
                 return new Command(o =>
                 {
-                    if (!Page.IsBusy)
-                    {
-                        Page.IsBusy = true;
-                        Subject.Base.SearchDefinition();
-                        Page.IsBusy = false;
-                    }
+                    Subject.Base.SearchDefinition();
                 });
             }
         }

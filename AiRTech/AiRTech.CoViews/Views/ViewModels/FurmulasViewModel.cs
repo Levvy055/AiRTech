@@ -75,14 +75,31 @@ namespace AiRTech.Views.ViewModels
             FmlPage.FmlListView.SelectedItem = -1;
         }
 
+        public ICommand SearchCommand
+        {
+            get
+            {
+                return new Command(o =>
+                {
+                    Subject.Base.SearchFormula();
+
+                });
+            }
+        }
+
         public ICommand RefreshCommand
         {
             get
             {
                 return new Command(o =>
                 {
-                    FmlPage.FmlViews.Clear();
-                    Subject.Base.LoadFormulasFromServerAndSave();
+                    if (!Page.IsBusy)
+                    {
+                        Page.IsBusy = true;
+                        FmlPage.FmlViews.Clear();
+                        Subject.Base.LoadFormulasFromServerAndSave();
+                        Page.IsBusy = false;
+                    }
                 });
             }
         }

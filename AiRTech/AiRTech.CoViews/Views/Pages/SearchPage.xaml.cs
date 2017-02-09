@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using AiRTech.Core;
 
 namespace AiRTech.Views.Pages
 {
@@ -19,13 +20,13 @@ namespace AiRTech.Views.Pages
     {
         public SearchPage(Subject subject)
         {
-            InitializeComponent();
-            BindingContext = new SearchPageViewModel();
             Subject = subject;
+            ViewModel = new SearchPageViewModel(subject);
+            BindingContext = ViewModel;
+            InitializeComponent();
         }
 
-        void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
-            => ((ListView)sender).SelectedItem = null;
+        public SearchPageViewModel ViewModel { get; set; }
 
         async void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
@@ -37,6 +38,23 @@ namespace AiRTech.Views.Pages
             ((ListView)sender).SelectedItem = null;
         }
 
+        private void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+            => ((ListView)sender).SelectedItem = null;
+
+        private void SearchEntry_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                ViewModel.Clear();
+            }
+            else
+            {
+                ViewModel.SearchFor(e.NewTextValue.ToLower());
+            }
+        }
+
         public Subject Subject { get; private set; }
+
+        public static NavPageType SearchFilter { get; set; }
     }
 }

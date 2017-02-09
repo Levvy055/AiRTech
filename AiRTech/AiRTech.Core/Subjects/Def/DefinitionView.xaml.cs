@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AiRTech.Core.Misc;
+using System;
 using System.Diagnostics;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -45,7 +46,6 @@ namespace AiRTech.Core.Subjects.Def
         {
             try
             {
-
                 var v = new StackLayout();
                 if (id.Layout == InDefLayout.TextOverImage && id.Image == null)
                 {
@@ -174,13 +174,30 @@ namespace AiRTech.Core.Subjects.Def
 
         private static Image CreateImage(InDef id)
         {
-            return new Image
+            var iS = id.ImageSource;
+            var img= new Image
             {
-                Source = id.ImageSource,
+                Source = iS,
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 Aspect = Aspect.AspectFill
             };
+            var tgr = new TapGestureRecognizer()
+            {
+                Command = new Command(OnImageTap),
+                CommandParameter = iS
+            };
+            img.GestureRecognizers.Add(tgr);
+            return img;
+        }
+
+        private static void OnImageTap(object obj)
+        {
+            if (obj is ImageSource imageSource)
+            {
+                var mip = new ModalImagePage(imageSource);
+                CoreManager.Current.App.NavigateToModal(mip);
+            }
         }
 
         private View CreateSolverButton(string solverName)
@@ -207,7 +224,7 @@ namespace AiRTech.Core.Subjects.Def
         {
             var c = new Command(() =>
             {
-                CoreManager.Current.App.NavigateToSolver(_subject, solverName);
+                CoreManager.Current.App.NavigateToSolver(solverName, _subject);
             });
             return c;
         }

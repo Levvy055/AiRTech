@@ -2,68 +2,71 @@
 <ContentPage
     x:Class="AiRTech.Views.Pages.SearchPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="ListView">
-    <ListView
-        CachingStrategy="RecycleElement"
-        GroupDisplayBinding="{Binding Key}"
-        GroupShortNameBinding="{Binding Key}"
-        HasUnevenRows="true"
-        IsGroupingEnabled="true"
-        IsPullToRefreshEnabled="true"
-        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-        ItemSelected="Handle_ItemSelected"
-        ItemTapped="Handle_ItemTapped"
-        ItemsSource="{Binding ItemsGrouped}"
-        RefreshCommand="{Binding RefreshDataCommand}">
-        <ListView.Header>
-            <StackLayout
-                Padding="10"
-                BackgroundColor="#dadada"
-                HorizontalOptions="FillAndExpand"
-                Orientation="Horizontal">
-                <Label
-                    FontAttributes="Bold"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <StackLayout Orientation="Vertical">
+        <Entry
+            x:Name="SearchEntry"
+            Placeholder="Wyszukaj ..."
+            TextChanged="SearchEntry_OnTextChanged" />
+        <ListView
+            HasUnevenRows="True"
+            IsGroupingEnabled="False"
+            IsPullToRefreshEnabled="False"
+            ItemSelected="Handle_ItemSelected"
+            ItemTapped="Handle_ItemTapped"
+            ItemsSource="{Binding Items, Mode=TwoWay}">
+            <ListView.Header>
+                <StackLayout
+                    Padding="10"
+                    BackgroundColor="#dadada"
                     HorizontalOptions="FillAndExpand"
-                    HorizontalTextAlignment="Center"
-                    Text="Header"
-                    TextColor="Black" />
-            </StackLayout>
-        </ListView.Header>
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <TextCell Detail="{Binding Detail}" Text="{Binding Text}" />
-            </DataTemplate>
-        </ListView.ItemTemplate>
-
-        <!--  Custom View Cells  -->
-        <!--
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout>
-            <Label Text="{Binding Text}"
-                   Style="{DynamicResource ListItemTextStyle}" />
-            <Label Text="{Binding Detail}"
-                   Style="{DynamicResource ListItemDetailTextStyle}"/>
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-        -->
-        <ListView.Footer>
-            <StackLayout
-                Padding="10"
-                BackgroundColor="#dadada"
-                HorizontalOptions="FillAndExpand"
-                Orientation="Horizontal">
-                <Label
-                    FontAttributes="Bold"
+                    Orientation="Vertical"
+                    VerticalOptions="Center">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Header}"
+                        TextColor="Black"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+                </StackLayout>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout
+                            Margin="0,3,0,3"
+                            BackgroundColor="CadetBlue"
+                            VerticalOptions="Center">
+                            <Label
+                                Style="{DynamicResource ListItemTextStyle}"
+                                Text="{Binding Title}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                            <Label
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                Text="{Binding Desc}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer>
+                <StackLayout
+                    Padding="10"
+                    BackgroundColor="#dadada"
                     HorizontalOptions="FillAndExpand"
-                    HorizontalTextAlignment="Center"
-                    Text="Footer"
-                    TextColor="Black" />
-            </StackLayout>
-        </ListView.Footer>
-    </ListView>
+                    Orientation="Horizontal">
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Footer}"
+                        TextColor="Black" />
+                </StackLayout>
+            </ListView.Footer>
+        </ListView>
+    </StackLayout>
 </ContentPage>

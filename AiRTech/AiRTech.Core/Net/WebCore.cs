@@ -47,10 +47,6 @@ namespace AiRTech.Core.Net
             {
                 return null;
             }
-            foreach (var f in list)
-            {
-                f.LinkDeserializedComponents(subjectType);
-            }
             return list;
         }
 

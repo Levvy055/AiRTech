@@ -59,13 +59,10 @@ namespace AiRTech
             try
             {
 #if DEBUG
-                //NavigateToMain(NavPageType.SubjectsPage, "Subjects");
-                //var s = Subject.Subjects[SubjectType.ELEMENTY_OPTYKI_I_AKUSTYKI];
-                //NavigateToSubject(s, "EOiA");
-                //NavigateTo(typeof(DefinitionsPage), "Podstawy Teorii Sygnałów", true, s);
-                //NavigateTo(typeof(SolverPage), "Podstawy Teorii Sygnałów", true, s);
-                //var np = GetPage(typeof(SolverPage), "Podstawy Teorii Sygnałów", s) as SolverPage;
-                //np?.NavigateTo(3);
+                NavigateToMain(NavPageType.SubjectsPage, "Subjects");
+                var s = Subject.Subjects[SubjectType.MECHANIKA];
+                NavigateToSubject("Mechana", s);
+                NavigateToFormulaList("Mechana", s);
 #else
                 ((MasterDetailPage)MainPage).IsPresented = true;
 #endif
@@ -170,17 +167,17 @@ namespace AiRTech
             NavPage.PopAsync();
         }
 
-        public override void NavigateToSubject(Subject subject, string title)
+        public override void NavigateToSubject(string title, Subject subject)
         {
             NavigateTo(NavPageType.SubjectPage, title, true, subject);
         }
 
-        public override void NavigateToDefinition(string title, Subject subject)
+        public override void NavigateToDefinition(string name, Subject subject)
         {
-            NavigateTo(NavPageType.DefinitionsPage, title, true, subject);
+            NavigateTo(NavPageType.DefinitionsPage, name, true, subject);
         }
 
-        public override void NavigateToFormulaList(Subject subject, string title)
+        public override void NavigateToFormulaList(string title, Subject subject)
         {
             NavigateTo(NavPageType.FormulasPage, title, true, subject);
         }
@@ -191,13 +188,13 @@ namespace AiRTech
             np?.NavigateToFormula(name);
         }
 
-        public override void NavigateToSolverList(Subject subject, string title)
+        public override void NavigateToSolverList(string title, Subject subject)
         {
             var np = GetPage<SolverPage>(NavPageType.SolverPage, subject.Name, subject);
             np?.NavigateToMain();
         }
 
-        public override void NavigateToSolver(Subject subject, string solverName)
+        public override void NavigateToSolver(string solverName, Subject subject)
         {
             var np = GetPage<SolverPage>(NavPageType.SolverPage, subject.Name, subject);
             var sv = ViewHandler.GetSolverView(subject.Base.SubjectType, solverName);
@@ -214,7 +211,8 @@ namespace AiRTech
         public override void NavigateToSearchPage(NavPageType callingPage, Subject subject)
         {
             var title = "Wyszukaj " + (callingPage == NavPageType.DefinitionsPage ? "Definicje" : "Wzory");
-            NavigateTo(NavPageType.SearchPage, title, false, subject);
+            SearchPage.SearchFilter = callingPage;
+            NavigateTo(NavPageType.SearchPage, title, true, subject);
         }
 
         private async void NavigateTo(NavPageType pageType, string title = null, bool inner = true, Subject subject = null)

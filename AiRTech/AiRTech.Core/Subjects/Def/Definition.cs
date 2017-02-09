@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace AiRTech.Core.Subjects.Def
 {
-    public class Definition : IComparable
+    public class Definition : Item, IComparable
     {
 
         #region Equality
@@ -39,11 +39,6 @@ namespace AiRTech.Core.Subjects.Def
             }
         }
 
-        public static int GetHashCode(Definition obj)
-        {
-            return obj.GetHashCode();
-        }
-
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;
@@ -54,8 +49,6 @@ namespace AiRTech.Core.Subjects.Def
         }
         #endregion
 
-        public string Title { get; set; }
-        public string Desc { get; set; }
         public InDef[] Inner { get; set; }
         [JsonProperty(PropertyName = "Calcs")]
         public string SolverNames { get; set; }

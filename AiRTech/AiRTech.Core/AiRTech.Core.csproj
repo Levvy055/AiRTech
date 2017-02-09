@@ -43,6 +43,7 @@
     <Compile Include="Extensions\DoubleExtensions.cs" />
     <Compile Include="IDialogManager.cs" />
     <Compile Include="Misc\GenericDictionary.cs" />
+    <Compile Include="Misc\Grouping.cs" />
     <Compile Include="Misc\ImageResourceExtension.cs" />
     <Compile Include="Misc\ModalImagePage.xaml.cs">
       <DependentUpon>ModalImagePage.xaml</DependentUpon>
@@ -64,6 +65,7 @@
     <Compile Include="Subjects\Impl\ElementsOfOpticsAndAcoustics.cs" />
     <Compile Include="Subjects\Impl\Mechanics.cs" />
     <Compile Include="Subjects\Impl\SignalTheoryBasics.cs" />
+    <Compile Include="Subjects\Item.cs" />
     <Compile Include="Subjects\Solv\Components\SvButton.cs" />
     <Compile Include="Subjects\Solv\Components\SvEmpty.cs" />
     <Compile Include="Subjects\Solv\Components\SvGrid.cs" />

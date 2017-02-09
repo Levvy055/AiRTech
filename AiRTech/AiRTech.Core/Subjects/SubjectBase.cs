@@ -127,6 +127,11 @@ namespace AiRTech.Core.Subjects
             CoreManager.Current.App.NavigateToSearchPage(NavPageType.DefinitionsPage, Subject);
         }
 
+        public void SearchFormula()
+        {
+            CoreManager.Current.App.NavigateToSearchPage(NavPageType.FormulasPage, Subject);
+        }
+
         public void Sort()
         {
             Definitions.Sort();
