@@ -62,7 +62,7 @@ namespace AiRTech.Core.Subjects.Formul
             {
                 if (string.IsNullOrWhiteSpace(EqFile))
                 {
-                    EqFile = "";
+                    return ImageResourceExtension.DefaultEmptyImage;
                 }
                 var path = Path.Combine(WebCore.FnFmlsDir, WebCore.FnImgDir, EqFile);
                 var imageSource = ImageResourceExtension.GetImageFromUri(path).Result;

@@ -18,12 +18,12 @@ namespace AiRTech.Core.Subjects.Formul
         {
             _subject = subject;
             _fml = fml;
-            Title = fml.Title;
-            BindingContext = fml;
+            Title = _fml.Title;
+            BindingContext = _fml;
             InitializeComponent();
-            if (fml.Synonyms != null && fml.Synonyms.Length > 0)
+            if (_fml.Synonyms != null && _fml.Synonyms.Length > 0)
             {
-                var txt = string.Join(", ", fml.Synonyms);
+                var txt = string.Join(", ", _fml.Synonyms);
                 var sLab = new Label
                 {
                     FormattedText = new FormattedString
@@ -36,21 +36,25 @@ namespace AiRTech.Core.Subjects.Formul
                 };
                 Sl.Children.Add(sLab);
             }
-            var img = new Image
+            if (!string.IsNullOrWhiteSpace(_fml.EqFile))
             {
-                Source = fml.ImageSource,
-                VerticalOptions = LayoutOptions.Fill,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                Aspect = Aspect.AspectFill
-            };
-            var tgr = new TapGestureRecognizer()
-            {
-                Command = new Command(OnImageTap),
-                CommandParameter = _fml.ImageSource
-            };
-            img.GestureRecognizers.Add(tgr);
-            Sl.Children.Add(img);
-            if (fml.InEqs != null && fml.InEqs.Length > 0)
+                var iS = _fml.ImageSource;
+                var img = new Image
+                {
+                    Source = iS,
+                    VerticalOptions = LayoutOptions.Fill,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    Aspect = Aspect.AspectFill
+                };
+                var tgr = new TapGestureRecognizer()
+                {
+                    Command = new Command(OnImageTap),
+                    CommandParameter = iS
+                };
+                img.GestureRecognizers.Add(tgr);
+                Sl.Children.Add(img);
+            }
+            if (_fml.InEqs != null && _fml.InEqs.Length > 0)
             {
                 CreateInner();
             }
@@ -62,13 +66,14 @@ namespace AiRTech.Core.Subjects.Formul
             {
                 try
                 {
-                    Sl.Children.Add(await CreateViewForInnerFormulaComp(eq));
+                    var sl = await CreateViewForInnerFormulaComp(eq);
+                    Sl.Children.Add(sl);
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e);
                     CoreManager.Current.App.DialogManager.ShowWarningDialog("Błąd w pobranej zawartości",
-                        "Nie można utworzyć elementu definicji " + _fml.Title);
+                        "Nie można utworzyć elementu wzoru " + _fml.Title);
                 }
             }
         }
@@ -76,27 +81,33 @@ namespace AiRTech.Core.Subjects.Formul
         private async Task<StackLayout> CreateViewForInnerFormulaComp(InEq id)
         {
             var stackLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-            stackLayout.Children.Add(new Label
+            if (!string.IsNullOrWhiteSpace(id.Sign))
             {
-                FormattedText = new FormattedString
+                stackLayout.Children.Add(new Label
                 {
-                    Spans = { new Span { Text = id.Sign,
+                    FormattedText = new FormattedString
+                    {
+                        Spans = { new Span { Text = id.Sign,
                     FontAttributes = FontAttributes.Bold } }
-                }
-            });
-            stackLayout.Children.Add(new Label
+                    }
+                });
+            }
+            if (!string.IsNullOrWhiteSpace(id.Desc))
             {
-                FormattedText = new FormattedString
+                stackLayout.Children.Add(new Label
                 {
-                    Spans = { new Span
+                    FormattedText = new FormattedString
+                    {
+                        Spans = { new Span
                     {
                         Text = " - "
                     }, new Span
                     {
                         Text = id.Desc
                     } }
-                }
-            });
+                    }
+                });
+            }
             if (!string.IsNullOrWhiteSpace(id.Img))
             {
                 var path = Path.Combine(WebCore.FnFmlsDir, WebCore.FnImgDir, id.Img);
