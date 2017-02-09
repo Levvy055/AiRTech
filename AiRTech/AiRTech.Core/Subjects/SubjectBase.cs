@@ -74,12 +74,12 @@ namespace AiRTech.Core.Subjects
                 }
                 CoreManager.Current.App.ClearDefinitions(Subject);
                 CoreManager.Current.FileHandler.UpdateDefinitions(newDefList, SubjectType);
-                await LoadDefinitionsFromFile();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
             }
+            await LoadDefinitionsFromFile();
         }
 
         protected async Task LoadFormulasFromFile()
@@ -114,12 +114,12 @@ namespace AiRTech.Core.Subjects
                 }
                 CoreManager.Current.App.ClearFormulas(Subject);
                 CoreManager.Current.FileHandler.UpdateFormulas(newDefList, SubjectType);
-                await LoadFormulasFromFile();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
             }
+            await LoadFormulasFromFile();
         }
 
         public void SearchDefinition()

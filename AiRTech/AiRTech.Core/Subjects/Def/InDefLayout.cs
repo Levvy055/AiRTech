@@ -11,6 +11,7 @@ namespace AiRTech.Core.Subjects.Def
         TextUnderImage,
         TextOverImage,
         List,
-        HeaderAndText
+        HeaderAndText,
+        OList
     }
 }

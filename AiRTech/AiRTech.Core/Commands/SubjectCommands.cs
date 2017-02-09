@@ -37,7 +37,7 @@ namespace AiRTech.Core.Commands
                         return;
                     }
                     Debug.WriteLine("DefinitionView: " + s.Name);
-                    CoreManager.Current.App.NavigateToDefinition(s.Name, s);
+                    CoreManager.Current.App.NavigateToDefinitionList(s.Name, s);
                     s.Base.LoadDefinitions();
                 });
             }

@@ -62,7 +62,8 @@ namespace AiRTech
                 NavigateToMain(NavPageType.SubjectsPage, "Subjects");
                 var s = Subject.Subjects[SubjectType.MECHANIKA];
                 NavigateToSubject("Mechana", s);
-                NavigateToFormulaList("Mechana", s);
+                //NavigateToFormulaList("Mechana", s);
+                //NavigateToDefinitionList("Mechana", s);
 #else
                 ((MasterDetailPage)MainPage).IsPresented = true;
 #endif
@@ -172,7 +173,7 @@ namespace AiRTech
             NavigateTo(NavPageType.SubjectPage, title, true, subject);
         }
 
-        public override void NavigateToDefinition(string name, Subject subject)
+        public override void NavigateToDefinitionList(string name, Subject subject)
         {
             NavigateTo(NavPageType.DefinitionsPage, name, true, subject);
         }

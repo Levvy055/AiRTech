@@ -27,7 +27,7 @@ namespace AiRTech.Core
         public abstract void NavigateToMain(NavPageType pageType, string title);
         public abstract void NavigateBack();
         public abstract void NavigateToSubject(string title, Subject subject);
-        public abstract void NavigateToDefinition(string name, Subject subject);
+        public abstract void NavigateToDefinitionList(string name, Subject subject);
         public abstract void NavigateToFormulaList(string title, Subject subject);
         public abstract void NavigateToFormula(string name, Subject subject);
         public abstract void NavigateToSolverList(string title, Subject subject);

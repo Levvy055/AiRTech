@@ -3,6 +3,7 @@ using AiRTech.Core.Misc;
 using AiRTech.Core.Net;
 using Newtonsoft.Json;
 using Xamarin.Forms;
+using System.Collections.Generic;
 
 namespace AiRTech.Core.Subjects.Def
 {
@@ -38,7 +39,8 @@ namespace AiRTech.Core.Subjects.Def
 
         public string Text { get; set; }
         public string Header { get; set; }
-        public string List { get; set; }
+        public string[] List { get; set; }
+        public Dictionary<string,string> OList { get; set; }
         public InDefLayout Layout { get; set; } = InDefLayout.TextOverImage;
         public string Image { get; set; }
 

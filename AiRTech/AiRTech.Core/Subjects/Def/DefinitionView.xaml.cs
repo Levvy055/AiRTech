@@ -49,9 +49,17 @@ namespace AiRTech.Core.Subjects.Def
                 var v = new StackLayout();
                 if (id.Layout == InDefLayout.TextOverImage && id.Image == null)
                 {
-                    if (!string.IsNullOrWhiteSpace(id.Header))
+                    if (id.List != null)
                     {
-                        id.Layout = !string.IsNullOrWhiteSpace(id.List) ? InDefLayout.List : InDefLayout.HeaderAndText;
+                        id.Layout = InDefLayout.List;
+                    }
+                    else if (id.OList != null)
+                    {
+                        id.Layout = InDefLayout.OList;
+                    }
+                    else if (!string.IsNullOrWhiteSpace(id.Header))
+                    {
+                        id.Layout = InDefLayout.HeaderAndText;
                     }
                 }
                 switch (id.Layout)
@@ -76,6 +84,14 @@ namespace AiRTech.Core.Subjects.Def
                         break;
                     case InDefLayout.HeaderAndText:
 
+                        break;
+                    case InDefLayout.OList:
+                        v.Orientation = StackOrientation.Vertical;
+                        if (!string.IsNullOrWhiteSpace(id.Header))
+                        {
+                            v.Children.Add(CreateHeader(id));
+                        }
+                        v.Children.Add(CreateOList(id));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -164,7 +180,7 @@ namespace AiRTech.Core.Subjects.Def
         private View CreateList(InDef id)
         {
             var fs = new FormattedString();
-            foreach (var str in id.List.Split('|'))
+            foreach (var str in id.List)
             {
                 fs.Spans.Add(new Span { Text = "-> ", FontAttributes = FontAttributes.Bold });
                 fs.Spans.Add(new Span { Text = str + Environment.NewLine });
@@ -172,10 +188,21 @@ namespace AiRTech.Core.Subjects.Def
             return new Label { FormattedText = fs };
         }
 
+        private View CreateOList(InDef id)
+        {
+            var fs = new FormattedString();
+            foreach (var p in id.OList)
+            {
+                fs.Spans.Add(new Span { Text = p.Key+": ", FontAttributes = FontAttributes.Bold });
+                fs.Spans.Add(new Span { Text = p.Value + Environment.NewLine });
+            }
+            return new Label { FormattedText = fs };
+        }
+
         private static Image CreateImage(InDef id)
         {
             var iS = id.ImageSource;
-            var img= new Image
+            var img = new Image
             {
                 Source = iS,
                 VerticalOptions = LayoutOptions.Fill,
