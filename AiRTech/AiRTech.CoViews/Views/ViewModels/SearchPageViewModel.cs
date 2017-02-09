@@ -20,6 +20,7 @@ namespace AiRTech.Views.ViewModels
     {
         private Subject _subject;
         private IEnumerable<Item> _list;
+        private bool _active;
 
         public SearchPageViewModel(Subject subject)
         {
@@ -39,26 +40,50 @@ namespace AiRTech.Views.ViewModels
             {
                 _list = await CoreManager.Current.FileHandler.GetFormulas(_subject.Base.SubjectType);
             }
-            foreach (var item in _list)
+            if (_list != null && _list.Any())
             {
-                Items.Add(item);
+                foreach (var item in _list)
+                {
+                    Items.Add(item);
+                }
+                OnPropertyChanged(nameof(Items));
+                Active = true;
             }
-            OnPropertyChanged(nameof(Items));
+            else
+            {
+                Active = false;
+            }
         }
 
-        public void Clear()
+        private void Clear()
         {
             Items.Clear();
+        }
+
+        public void ShowAll()
+        {
+            Clear();
+            if (_list != null && _list.Any())
+            {
+                foreach (var item in _list)
+                {
+                    Items.Add(item);
+                }
+                OnPropertyChanged(nameof(Items));
+            }
         }
 
         public void SearchFor(string txt)
         {
             Clear();
-            foreach (var item in _list)
+            if (_list != null)
             {
-                if (item.Title.ToLower().Contains(txt))
+                foreach (var item in _list)
                 {
-                    Items.Add(item);
+                    if (item.Title.ToLower().Contains(txt))
+                    {
+                        Items.Add(item);
+                    }
                 }
             }
         }
@@ -69,6 +94,15 @@ namespace AiRTech.Views.ViewModels
         public ObservableCollection<Item> Items { get; } = new ObservableCollection<Item>();
         public string Header { get; }
         public string Footer { get; }
+        public bool Active
+        {
+            get { return _active; }
+            set
+            {
+                _active = value;
+                OnPropertyChanged(nameof(Active));
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

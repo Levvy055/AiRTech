@@ -6,6 +6,7 @@
     <StackLayout Orientation="Vertical">
         <Entry
             x:Name="SearchEntry"
+            IsEnabled="{Binding Active}"
             Placeholder="Wyszukaj ..."
             TextChanged="SearchEntry_OnTextChanged" />
         <ListView

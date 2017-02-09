@@ -45,7 +45,7 @@ namespace AiRTech.Views.Pages
         {
             if (string.IsNullOrWhiteSpace(e.NewTextValue))
             {
-                ViewModel.Clear();
+                ViewModel.ShowAll();
             }
             else
             {
