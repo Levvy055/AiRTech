@@ -61,6 +61,10 @@ namespace AiRTech.Core.Subjects.Def
                     {
                         id.Layout = InDefLayout.HeaderAndText;
                     }
+                    else
+                    {
+                        id.Layout = InDefLayout.OnlyText;
+                    }
                 }
                 switch (id.Layout)
                 {
@@ -83,7 +87,8 @@ namespace AiRTech.Core.Subjects.Def
                         v.Children.Add(CreateList(id));
                         break;
                     case InDefLayout.HeaderAndText:
-
+                        v.Children.Add(CreateHeader(id));
+                        v.Children.Add(CreateText(id));
                         break;
                     case InDefLayout.OList:
                         v.Orientation = StackOrientation.Vertical;
@@ -92,6 +97,9 @@ namespace AiRTech.Core.Subjects.Def
                             v.Children.Add(CreateHeader(id));
                         }
                         v.Children.Add(CreateOList(id));
+                        break;
+                    case InDefLayout.OnlyText:
+                        v.Children.Add(CreateText(id));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -193,7 +201,7 @@ namespace AiRTech.Core.Subjects.Def
             var fs = new FormattedString();
             foreach (var p in id.OList)
             {
-                fs.Spans.Add(new Span { Text = p.Key+": ", FontAttributes = FontAttributes.Bold });
+                fs.Spans.Add(new Span { Text = p.Key + ": ", FontAttributes = FontAttributes.Bold });
                 fs.Spans.Add(new Span { Text = p.Value + Environment.NewLine });
             }
             return new Label { FormattedText = fs };
@@ -237,12 +245,12 @@ namespace AiRTech.Core.Subjects.Def
             return b;
         }
 
-        private View CreateFormulaButton(string solverName)
+        private View CreateFormulaButton(string formulaName)
         {
             var b = new Button
             {
-                Text = solverName,
-                Command = FormulaButton_Click(solverName)
+                Text = formulaName,
+                Command = FormulaButton_Click(formulaName)
             };
             return b;
         }
@@ -256,11 +264,11 @@ namespace AiRTech.Core.Subjects.Def
             return c;
         }
 
-        private ICommand FormulaButton_Click(string solverName)
+        private ICommand FormulaButton_Click(string formulaName)
         {
             var c = new Command(() =>
             {
-                CoreManager.Current.App.NavigateToFormula(solverName, _subject);
+                CoreManager.Current.App.NavigateToFormula(formulaName, _subject);
             });
             return c;
         }

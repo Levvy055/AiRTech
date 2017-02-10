@@ -51,7 +51,7 @@ namespace AiRTech.Core.Subjects.Def
             {
                 if (string.IsNullOrWhiteSpace(Image))
                 {
-                    Image = "";
+                    return ImageResourceExtension.DefaultEmptyImage;
                 }
                 var path = Path.Combine(WebCore.FnDefDir, WebCore.FnImgDir, Image);
                 var imageSource = ImageResourceExtension.GetImageFromUri(path).Result;

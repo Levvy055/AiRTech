@@ -10,6 +10,7 @@ using AiRTech.Core.Subjects.Formul;
 using AiRTech.UWP;
 using Newtonsoft.Json;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 [assembly: Dependency(typeof(FileHandler_UWP))]
 namespace AiRTech.UWP
@@ -125,7 +126,14 @@ namespace AiRTech.UWP
 
         public void RemoveFile(string path)
         {
-            File.Delete(path);
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
 
         public Stream GetFileStream(string path, bool readOnly = false)

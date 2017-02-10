@@ -3,6 +3,8 @@ using AiRTech.Core.Subjects;
 using AiRTech.Core.Subjects.Formul;
 using AiRTech.Views.ViewModels;
 using Xamarin.Forms;
+using AiRTech.Views.Other;
+using AiRTech.Core;
 
 namespace AiRTech.Views.Pages
 {
@@ -28,8 +30,10 @@ namespace AiRTech.Views.Pages
                 if (f != null && f.Title == name)
                 {
                     FmlListView.SelectedItem = f;
+                    return;
                 }
             }
+            CoreManager.Current.App.DialogManager.ShowWarningDialog("Brak wzoru!", "Brak podanego wzoru: " + name);
         }
 
         public Subject Subject { get; set; }

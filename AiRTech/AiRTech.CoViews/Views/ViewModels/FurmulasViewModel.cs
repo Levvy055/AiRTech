@@ -17,15 +17,19 @@ namespace AiRTech.Views.ViewModels
     {
         public FurmulasViewModel(FormulasPage page) : base(page)
         {
+            IsBusy = true;
             Title = "Wzory";
             NoFormula = "Brak wzorów";
             Subject.Base.PropertyChanged += (sender, args) =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    IsBusy = true;
                     SubjectOnPropertyChanged(sender, args);
+                    IsBusy = false;
                 });
             };
+            IsBusy = false;
         }
 
         private void SubjectOnPropertyChanged(object sender, PropertyChangedEventArgs args)
@@ -58,9 +62,11 @@ namespace AiRTech.Views.ViewModels
 
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
+            IsBusy = true;
             var d = FmlPage.FmlListView.SelectedItem as Formula;
             if (d == null)
             {
+                IsBusy = false;
                 return;
             }
             try
@@ -73,6 +79,7 @@ namespace AiRTech.Views.ViewModels
                 Debug.WriteLine("Err: " + e);
             }
             FmlPage.FmlListView.SelectedItem = -1;
+            IsBusy = false;
         }
 
         public ICommand SearchCommand
@@ -93,12 +100,12 @@ namespace AiRTech.Views.ViewModels
             {
                 return new Command(o =>
                 {
-                    if (!Page.IsBusy)
+                    if (!IsBusy)
                     {
-                        Page.IsBusy = true;
+                        IsBusy = true;
                         FmlPage.FmlViews.Clear();
                         Subject.Base.LoadFormulasFromServerAndSave();
-                        Page.IsBusy = false;
+                        IsBusy = false;
                     }
                 });
             }

@@ -10,6 +10,7 @@ using AiRTech.Droid;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 using Environment = System.Environment;
+using System.Diagnostics;
 
 [assembly: Dependency(typeof(FileHandler_Android))]
 namespace AiRTech.Droid
@@ -129,7 +130,14 @@ namespace AiRTech.Droid
 
         public void RemoveFile(string path)
         {
-            File.Delete(path);
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
 
         public Stream GetFileStream(string path, bool readOnly = false)

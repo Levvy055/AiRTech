@@ -16,22 +16,24 @@ namespace AiRTech.Views.ViewModels
 
         public DefinitionsViewModel(DefinitionsPage page) : base(page)
         {
-            Page.IsBusy = true;
+            IsBusy = true;
             Title = "Definicje";
             NoDefs = "Brak definicji";
             Subject.Base.PropertyChanged += (sender, args) =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    IsBusy = true;
                     SubjectOnPropertyChanged(sender, args);
+                    IsBusy = false;
                 });
             };
-            Page.IsBusy = false;
+            IsBusy = false;
         }
 
         private void SubjectOnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            Page.IsBusy = true;
+            IsBusy = true;
             if (args.PropertyName == nameof(Definitions) && DefPage?.DefListView != null)
             {
                 var defs = Definitions.ToArray();
@@ -56,15 +58,16 @@ namespace AiRTech.Views.ViewModels
                     DefPage.NoDefsView.IsVisible = true;
                 }
             }
-            Page.IsBusy = false;
+            IsBusy = false;
         }
 
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs)
         {
-            Page.IsBusy = true;
+            IsBusy = true;
             var d = DefPage.DefListView.SelectedItem as Definition;
             if (d == null)
             {
+                IsBusy = false;
                 return;
             }
             try
@@ -77,7 +80,7 @@ namespace AiRTech.Views.ViewModels
                 Debug.WriteLine("Err: " + e);
             }
             DefPage.DefListView.SelectedItem = -1;
-            Page.IsBusy = false;
+            IsBusy = false;
         }
 
         public ICommand RefreshCommand
@@ -86,12 +89,14 @@ namespace AiRTech.Views.ViewModels
             {
                 return new Command(o =>
                 {
-                    if (!Page.IsBusy)
+                    if (!IsBusy)
                     {
-                        Page.IsBusy = true;
+                        IsBusy = true;
                         DefPage.DefViews.Clear();
                         Subject.Base.LoadDefinitionsFromServerAndSave();
-                        Page.IsBusy = false;
+                        IsBusy = false;
+                        CoreManager.Current.App.NavigateBack();
+                        CoreManager.Current.App.NavigateToDefinitionList(DefPage.Subject.Name, DefPage.Subject);
                     }
                 });
             }
