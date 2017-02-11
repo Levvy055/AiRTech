@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using AiRTech.Core.Subjects.Def;
 using AiRTech.Core.Subjects.Formul;
 using AiRTech.Core.Subjects.Solv;
-using Xamarin.Forms;
 using AiRTech.Core.Properties;
 
 namespace AiRTech.Core.Subjects
@@ -26,21 +25,15 @@ namespace AiRTech.Core.Subjects
 
         public void LoadDefinitions()
         {
-            LoadDefinitionsFromFile().ContinueWith(task =>
-            {
-                LoadDefinitionsFromServerAndSave();
-            });
+            Task.Run(LoadDefinitionsFromFile).Wait();
+            LoadDefinitionsFromServerAndSave();
         }
 
-        public async Task LoadFormulas()
+        public void LoadFormulas()
         {
-            await LoadFormulasFromFile().ContinueWith(task =>
-            {
-                LoadFormulasFromServerAndSave();
-            });
+            Task.Run(LoadFormulasFromFile).Wait();
+            LoadFormulasFromServerAndSave();
         }
-
-        protected abstract void UpdateDependencies();
 
         protected async Task LoadDefinitionsFromFile()
         {
@@ -55,6 +48,27 @@ namespace AiRTech.Core.Subjects
                         Definitions.Add(def);
                     }
                     OnPropertyChanged(nameof(Definitions));
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
+        protected async Task LoadFormulasFromFile()
+        {
+            try
+            {
+                var fmlList = await CoreManager.Current.FileHandler.GetFormulas(SubjectType);
+                if (fmlList != null)
+                {
+                    Formulas.Clear();
+                    foreach (var f in fmlList)
+                    {
+                        Formulas.Add(f);
+                    }
+                    OnPropertyChanged(nameof(Formulas));
                 }
             }
             catch (Exception e)
@@ -82,27 +96,6 @@ namespace AiRTech.Core.Subjects
             await LoadDefinitionsFromFile();
         }
 
-        protected async Task LoadFormulasFromFile()
-        {
-            try
-            {
-                var fmlList = await CoreManager.Current.FileHandler.GetFormulas(SubjectType);
-                if (fmlList != null)
-                {
-                    Formulas.Clear();
-                    foreach (var f in fmlList)
-                    {
-                        Formulas.Add(f);
-                    }
-                    OnPropertyChanged(nameof(Formulas));
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-        }
-
         public async void LoadFormulasFromServerAndSave()
         {
             try
@@ -121,6 +114,8 @@ namespace AiRTech.Core.Subjects
             }
             await LoadFormulasFromFile();
         }
+
+        protected abstract void UpdateDependencies();
 
         public void SearchDefinition()
         {

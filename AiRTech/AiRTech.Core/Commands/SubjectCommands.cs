@@ -37,7 +37,7 @@ namespace AiRTech.Core.Commands
                         return;
                     }
                     Debug.WriteLine("DefinitionView: " + s.Name);
-                    CoreManager.Current.App.NavigateToDefinitionList(s.Name, s);
+                    CoreManager.Current.App.NavigateToDefinitionList(s);
                     s.Base.LoadDefinitions();
                 });
             }
@@ -47,7 +47,7 @@ namespace AiRTech.Core.Commands
         {
             get
             {
-                return new Command(async o =>
+                return new Command(o =>
                 {
                     var s = o as Subject;
                     if (s == null)
@@ -55,8 +55,8 @@ namespace AiRTech.Core.Commands
                         return;
                     }
                     Debug.WriteLine("Formulas: " + s.Name);
-                    await s.Base.LoadFormulas();
-                    CoreManager.Current.App.NavigateToFormulaList(s.Name, s);
+                    s.Base.LoadFormulas();
+                    CoreManager.Current.App.NavigateToFormulaList(s);
                 });
             }
         }
@@ -73,7 +73,7 @@ namespace AiRTech.Core.Commands
                         return;
                     }
                     Debug.WriteLine("Solver: " + s.Name);
-                    CoreManager.Current.App.NavigateToSolverList(string.Empty, s);
+                    CoreManager.Current.App.NavigateToSolverList(s);
                 });
             }
         }

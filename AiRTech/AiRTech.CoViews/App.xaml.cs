@@ -173,26 +173,32 @@ namespace AiRTech
             NavigateTo(NavPageType.SubjectPage, title, true, subject);
         }
 
-        public override void NavigateToDefinitionList(string name, Subject subject)
+        public override void NavigateToDefinitionList(Subject subject)
         {
-            NavigateTo(NavPageType.DefinitionsPage, name, true, subject);
+            NavigateTo(NavPageType.DefinitionsPage, subject.Name, true, subject);
         }
 
-        public override void NavigateToFormulaList(string title, Subject subject)
+        public override void NavigateToDefinition(string name, Subject subject)
         {
-            NavigateTo(NavPageType.FormulasPage, title, true, subject);
+            var np = GetPage<DefinitionsPage>(NavPageType.DefinitionsPage, subject.Name, subject);
+            np.NavigateToDefinition(name);
+        }
+
+        public override void NavigateToFormulaList(Subject subject)
+        {
+            NavigateTo(NavPageType.FormulasPage, subject.Name, true, subject);
         }
 
         public override void NavigateToFormula(string name, Subject subject)
         {
             var np = GetPage<FormulasPage>(NavPageType.FormulasPage, subject.Name, subject);
-            np?.NavigateToFormula(name);
+            np.NavigateToFormula(name);
         }
 
-        public override void NavigateToSolverList(string title, Subject subject)
+        public override void NavigateToSolverList(Subject subject)
         {
             var np = GetPage<SolverPage>(NavPageType.SolverPage, subject.Name, subject);
-            np?.NavigateToMain();
+            np.NavigateToMain();
         }
 
         public override void NavigateToSolver(string solverName, Subject subject)
@@ -280,7 +286,7 @@ namespace AiRTech
             return !MainPages.ContainsKey(pageType) ? CreatePage(pageType) : MainPages[pageType];
         }
 
-        private T GetPageForSubject<T>(NavPageType pageType, Subject subject)
+        /*private T GetPageForSubject<T>(NavPageType pageType, Subject subject)
         {
             var page = GetPageForSubject(pageType, subject);
             if (page != null)
@@ -288,7 +294,7 @@ namespace AiRTech
                 return (T)Convert.ChangeType(page, typeof(T));
             }
             return default(T);
-        }
+        }*/
 
         private Page GetPageForSubject(NavPageType pageType, Subject subject)
         {
@@ -338,15 +344,14 @@ namespace AiRTech
             {
                 page = Activator.CreateInstance(type) as Page;
                 MainPages.Add(pageType, page);
-                return page;
             }
             else
             {
                 page = Activator.CreateInstance(type, subject) as Page;
                 var subjectType = subject.Base.SubjectType;
                 SubjectPages[subjectType].Add(pageType, page);
-                return page;
             }
+            return page;
         }
 
         private NavigationPage NavPage { get; set; }

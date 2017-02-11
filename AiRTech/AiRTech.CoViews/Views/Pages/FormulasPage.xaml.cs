@@ -14,16 +14,17 @@ namespace AiRTech.Views.Pages
         public FormulasPage(Subject subject)
         {
             Subject = subject;
-            var fmlsVm = new FurmulasViewModel(this);
-            BindingContext = fmlsVm;
+            ViewModel = new FormulasViewModel(this);
+            BindingContext = ViewModel;
             InitializeComponent();
             Subject.Base.Sort();
-            FmlListView.ItemSelected += fmlsVm.MlistOnItemSelected;
+            FmlListView.ItemSelected += ViewModel.MlistOnItemSelected;
         }
 
-        public async void NavigateToFormula(string name)
+        public void NavigateToFormula(string name)
         {
-            await Subject.Base.LoadFormulas();
+            Subject.Base.LoadFormulas();
+            ViewModel.Update();
             foreach (var fnc in FmlListView.ItemsSource)
             {
                 var f = fnc as Formula;
@@ -39,6 +40,7 @@ namespace AiRTech.Views.Pages
         public Subject Subject { get; set; }
         public Dictionary<string, ContentPage> FmlViews { get; } = new Dictionary<string, ContentPage>();
         public ListView FmlListView => Mlist;
+        public FormulasViewModel ViewModel { get; set; }
         public View NoFmlsView => NoFmlsLabel;
     }
 }

@@ -79,7 +79,7 @@
     </Compile>
     <Compile Include="Views\ViewComponents\MenuPageItem.cs" />
     <Compile Include="Views\ViewModels\DefinitionsViewModel.cs" />
-    <Compile Include="Views\ViewModels\FurmulasViewModel.cs" />
+    <Compile Include="Views\ViewModels\FormulasViewModel.cs" />
     <Compile Include="Views\ViewModels\SearchPageViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectViewModel.cs" />
     <Compile Include="Views\ViewModels\SubjectsViewModel.cs" />

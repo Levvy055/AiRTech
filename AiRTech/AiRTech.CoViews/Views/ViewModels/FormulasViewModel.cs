@@ -13,9 +13,9 @@ using Xamarin.Forms;
 
 namespace AiRTech.Views.ViewModels
 {
-    public class FurmulasViewModel : ViewModelBase
+    public class FormulasViewModel : ViewModelBase
     {
-        public FurmulasViewModel(FormulasPage page) : base(page)
+        public FormulasViewModel(FormulasPage page) : base(page)
         {
             IsBusy = true;
             Title = "Wzory";
@@ -36,27 +36,32 @@ namespace AiRTech.Views.ViewModels
         {
             if (args.PropertyName == nameof(Formulas) && FmlPage?.FmlListView != null)
             {
-                var fmls = Formulas.ToArray();
-                FmlPage.FmlListView.ItemsSource = fmls;
-                if (fmls != null && fmls.Length > 0)
+                Update();
+            }
+        }
+
+        public  void Update()
+        {
+            var fmls = Formulas.ToArray();
+            FmlPage.FmlListView.ItemsSource = fmls;
+            if (fmls != null && fmls.Length > 0)
+            {
+                FmlPage.FmlListView.IsVisible = true;
+                FmlPage.NoFmlsView.IsVisible = false;
+                foreach (var def in fmls)
                 {
-                    FmlPage.FmlListView.IsVisible = true;
-                    FmlPage.NoFmlsView.IsVisible = false;
-                    foreach (var def in fmls)
+                    if (!FmlPage.FmlViews.ContainsKey(def.Title))
                     {
-                        if (!FmlPage.FmlViews.ContainsKey(def.Title))
-                        {
-                            var sd = new FormulaView(def, Subject);
-                            var sdp = new ContentPage { Title = def.Title, Content = sd };
-                            FmlPage.FmlViews.Add(def.Title, sdp);
-                        }
+                        var sd = new FormulaView(def, Subject);
+                        var sdp = new ContentPage {Title = def.Title, Content = sd};
+                        FmlPage.FmlViews.Add(def.Title, sdp);
                     }
                 }
-                else
-                {
-                    FmlPage.FmlListView.IsVisible = false;
-                    FmlPage.NoFmlsView.IsVisible = true;
-                }
+            }
+            else
+            {
+                FmlPage.FmlListView.IsVisible = false;
+                FmlPage.NoFmlsView.IsVisible = true;
             }
         }
 
@@ -69,14 +74,10 @@ namespace AiRTech.Views.ViewModels
                 IsBusy = false;
                 return;
             }
-            try
+            if (FmlPage.FmlViews.ContainsKey(d.Title))
             {
                 var view = FmlPage.FmlViews[d.Title];
                 CoreManager.Current.App.NavigateToModal(view);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Err: " + e);
             }
             FmlPage.FmlListView.SelectedItem = -1;
             IsBusy = false;

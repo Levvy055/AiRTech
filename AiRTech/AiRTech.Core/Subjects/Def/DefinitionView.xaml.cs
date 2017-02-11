@@ -105,7 +105,6 @@ namespace AiRTech.Core.Subjects.Def
                         throw new ArgumentOutOfRangeException();
                 }
                 return v;
-
             }
             catch (Exception e)
             {

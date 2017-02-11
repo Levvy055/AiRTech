@@ -26,15 +26,21 @@ namespace AiRTech.Views.Pages
             InitializeComponent();
         }
 
-        public SearchPageViewModel ViewModel { get; set; }
-
-        async void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void Handle_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (e.SelectedItem == null)
+            var item = e.SelectedItem as Item;
+            if (item == null)
             {
                 return;
             }
-            await DisplayAlert("Selected", e.SelectedItem.ToString(), "OK");
+            if (SearchFilter == NavPageType.DefinitionsPage)
+            {
+                CoreManager.Current.App.NavigateToDefinition(item.Title, Subject);
+            }
+            else if (SearchFilter == NavPageType.FormulasPage)
+            {
+                CoreManager.Current.App.NavigateToFormula(item.Title, Subject);
+            }
             ((ListView)sender).SelectedItem = null;
         }
 
@@ -54,6 +60,8 @@ namespace AiRTech.Views.Pages
         }
 
         public Subject Subject { get; private set; }
+
+        public SearchPageViewModel ViewModel { get; set; }
 
         public static NavPageType SearchFilter { get; set; }
     }

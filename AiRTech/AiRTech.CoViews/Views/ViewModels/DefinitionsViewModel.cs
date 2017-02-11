@@ -36,29 +36,34 @@ namespace AiRTech.Views.ViewModels
             IsBusy = true;
             if (args.PropertyName == nameof(Definitions) && DefPage?.DefListView != null)
             {
-                var defs = Definitions.ToArray();
-                DefPage.DefListView.ItemsSource = defs;
-                if (defs != null && defs.Length > 0)
-                {
-                    DefPage.DefListView.IsVisible = true;
-                    DefPage.NoDefsView.IsVisible = false;
-                    foreach (var def in defs)
-                    {
-                        if (!DefPage.DefViews.ContainsKey(def.Title))
-                        {
-                            var sd = new DefinitionView(def, Subject);
-                            var sdp = new ContentPage { Title = def.Title, Content = sd };
-                            DefPage.DefViews.Add(def.Title, sdp);
-                        }
-                    }
-                }
-                else
-                {
-                    DefPage.DefListView.IsVisible = false;
-                    DefPage.NoDefsView.IsVisible = true;
-                }
+                Update();
             }
             IsBusy = false;
+        }
+
+        public void Update()
+        {
+            var defs = Definitions.ToArray();
+            DefPage.DefListView.ItemsSource = defs;
+            if (defs != null && defs.Length > 0)
+            {
+                DefPage.DefListView.IsVisible = true;
+                DefPage.NoDefsView.IsVisible = false;
+                foreach (var def in defs)
+                {
+                    if (!DefPage.DefViews.ContainsKey(def.Title))
+                    {
+                        var sd = new DefinitionView(def, Subject);
+                        var sdp = new ContentPage {Title = def.Title, Content = sd};
+                        DefPage.DefViews.Add(def.Title, sdp);
+                    }
+                }
+            }
+            else
+            {
+                DefPage.DefListView.IsVisible = false;
+                DefPage.NoDefsView.IsVisible = true;
+            }
         }
 
         public void MlistOnItemSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs)
@@ -96,7 +101,7 @@ namespace AiRTech.Views.ViewModels
                         Subject.Base.LoadDefinitionsFromServerAndSave();
                         IsBusy = false;
                         CoreManager.Current.App.NavigateBack();
-                        CoreManager.Current.App.NavigateToDefinitionList(DefPage.Subject.Name, DefPage.Subject);
+                        CoreManager.Current.App.NavigateToDefinitionList(DefPage.Subject);
                     }
                 });
             }
