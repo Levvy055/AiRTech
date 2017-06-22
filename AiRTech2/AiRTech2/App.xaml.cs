@@ -12,15 +12,16 @@ namespace AiRTech2
         {
             InitializeComponent();
             SetMainPage();
+            Core = new CoreManager();
         }
 
         public static void SetMainPage()
         {
-            Current.MainPage = new TabbedPage
+            MPage = new TabbedPage
             {
                 Children =
                 {
-                    new NavigationPage(new ItemsPage())
+                    new NavigationPage(new CategoriesPage())
                     {
                         Title = "Home",
                         Icon = Device.OnPlatform("tab_feed.png",null,null)
@@ -37,6 +38,12 @@ namespace AiRTech2
                     },
                 }
             };
+            Current.MainPage = MPage;
         }
+
+        public static CoreManager Core { get; set; }
+        public static TabbedPage MPage { get; private set; }
+        public int ScreenWidth { get; set; }
+        public int ScreenHeight { get; set; }
     }
 }

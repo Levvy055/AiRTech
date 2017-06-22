@@ -7,14 +7,14 @@ using Xamarin.Forms;
 
 namespace AiRTech2.Views
 {
-    public partial class ItemsPage : ContentPage
+    public partial class CategoriesPage : ContentPage
     {
-        ItemsViewModel _viewModel;
+        CategoriesViewModel _viewModel;
 
-        public ItemsPage()
+        public CategoriesPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new ItemsViewModel();
+            BindingContext = _viewModel = new CategoriesViewModel();
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -24,14 +24,8 @@ namespace AiRTech2.Views
             { return; }
 
             await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
-
-            // Manually deselect item
+            
             ItemsListView.SelectedItem = null;
-        }
-
-        async void AddItem_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new NewItemPage());
         }
 
         protected override void OnAppearing()
@@ -42,6 +36,11 @@ namespace AiRTech2.Views
             {
                 _viewModel.LoadItemsCommand.Execute(null);
             }
+        }
+
+        private void ChangeSort_Clicked(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
