@@ -11,7 +11,7 @@ namespace AiRTech2.ViewModels
         /// <summary>
         /// Get the azure service instance
         /// </summary>
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IDataStore<Category> DataStore => DependencyService.Get<IDataStore<Category>>();
 
         /// <summary>
         /// Private backing field to hold the title

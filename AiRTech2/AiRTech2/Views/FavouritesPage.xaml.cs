@@ -7,14 +7,14 @@ using Xamarin.Forms;
 
 namespace AiRTech2.Views
 {
-    public partial class CategoriesPage : ContentPage
+    public partial class FavouritesPage : ContentPage
     {
-        private CategoriesViewModel _viewModel;
+        private FavouritesViewModel _viewModel;
 
-        public CategoriesPage()
+        public FavouritesPage()
         {
             InitializeComponent();
-            BindingContext = _viewModel = new CategoriesViewModel();
+            BindingContext = _viewModel = new FavouritesViewModel();
         }
 
         async void OnCategorySelected(object sender, SelectedItemChangedEventArgs args)

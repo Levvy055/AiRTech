@@ -10,12 +10,12 @@ using Xamarin.Forms;
 
 namespace AiRTech2.ViewModels
 {
-    public class CategoriesViewModel : BaseViewModel
+    public class FavouritesViewModel : BaseViewModel
     {
         public ObservableRangeCollection<Category> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public CategoriesViewModel()
+        public FavouritesViewModel()
         {
             Title = "Browse";
             Items = new ObservableRangeCollection<Category>();

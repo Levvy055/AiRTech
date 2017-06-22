@@ -21,12 +21,12 @@ namespace AiRTech2
             {
                 Children =
                 {
-                    new NavigationPage(new CategoriesPage())
+                    new NavigationPage(new FavouritesPage())
                     {
-                        Title = "Home",
+                        Title = "Favourites",
                         Icon = Device.OnPlatform("tab_feed.png",null,null)
                     },
-                    new NavigationPage(new AboutPage())
+                    new NavigationPage(new CategoriesPage())
                     {
                         Title = "Categories",
                         Icon = Device.OnPlatform("tab_about.png",null,null)
