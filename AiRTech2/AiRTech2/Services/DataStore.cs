@@ -35,7 +35,11 @@ namespace AiRTech2.Services
 
             _categories = new List<Category>
             {
-                new Category { Title = "Podstawowe parametry sygnałów:", Description=""},
+                new Category { Title = "Podstawowe parametry sygnałów:", Description="", Subjects = new List<Subject>
+                {
+                    new Subject{Title = "Składowa stała"},
+                    new Subject{Title = "Składowa przemienna"},
+                }},
                 new Category { Title = "Szeregi i transformacje Fouriera", Description=""},
                 new Category { Title = "DFT i FFT", Description=""},
                 new Category { Title = "Próbkowanie sygnałów", Description=""},

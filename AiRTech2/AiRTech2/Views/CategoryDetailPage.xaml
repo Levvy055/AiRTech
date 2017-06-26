@@ -3,8 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AiRTech2.Views.CategoryDetailPage"
              Title="{Binding Title}">
-	<StackLayout Spacing="20" Padding="15">
-		<Label Text="{Binding Category.Title}" FontSize="Medium"/>
-        <Label Text="{Binding Category.Description}" FontSize="Small"/>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Change Sort Type" Clicked="ChangeSort_Clicked" />
+    </ContentPage.ToolbarItems>
+    <StackLayout Spacing="20" Padding="15">
+            <Label Text="{Binding Category.Title}" FontSize="Medium"/>
+            <Label Text="{Binding Category.Description}" FontSize="Small"/>
+        </StackLayout>
+    <StackLayout>
+        <ListView x:Name="ItemsListView"
+                      ItemsSource="{Binding Items}"
+                      VerticalOptions="FillAndExpand"
+                      HasUnevenRows="true"
+                      RefreshCommand="{Binding LoadItemsCommand}"
+                      IsPullToRefreshEnabled="true"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                      ItemSelected="OnSubjectSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Title}"
+                                       LineBreakMode="NoWrap"
+                                       Style="{DynamicResource ListItemTextStyle}"
+                                       FontSize="16"/>
+                            <Label Text="{Binding Description}"
+                                       LineBreakMode="NoWrap"
+                                       Style="{DynamicResource ListItemDetailTextStyle}"
+                                       FontSize="13"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 </ContentPage>
