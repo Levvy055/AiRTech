@@ -58,8 +58,7 @@
     <Compile Include="Models\BaseDataObject.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IDataStore.cs" />
-    <Compile Include="Services\MockDataStore.cs" />
+    <Compile Include="Services\DataStore.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\FavouritesViewModel.cs" />

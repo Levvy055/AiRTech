@@ -12,17 +12,17 @@ namespace AiRTech2.ViewModels
 {
     public class CategoriesViewModel : BaseViewModel
     {
-        public ObservableRangeCollection<Category> Items { get; set; }
-        public Command LoadItemsCommand { get; set; }
+        public ObservableRangeCollection<Category> Items { get; }
+        public Command LoadItemsCommand { get; }
 
         public CategoriesViewModel()
         {
-            Title = "Browse";
+            Title = "Wybierz kategorie";
             Items = new ObservableRangeCollection<Category>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             }
 
-        async Task ExecuteLoadItemsCommand()
+        private async Task ExecuteLoadItemsCommand()
         {
             if (IsBusy)
                 return;
@@ -32,7 +32,7 @@ namespace AiRTech2.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await DataStore.GetCategoriesAsync(true);
                 Items.ReplaceRange(items);
             }
             catch (Exception ex)

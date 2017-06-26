@@ -1,23 +1,18 @@
 ﻿using AiRTech2.Helpers;
-using AiRTech2.Models;
 using AiRTech2.Services;
-
 using Xamarin.Forms;
 
 namespace AiRTech2.ViewModels
 {
     public class BaseViewModel : ObservableObject
     {
-        /// <summary>
-        /// Get the azure service instance
-        /// </summary>
-        public IDataStore<Category> DataStore => DependencyService.Get<IDataStore<Category>>();
+        public static readonly DataStore DataStore = new DataStore();
 
         /// <summary>
         /// Private backing field to hold the title
         /// </summary>
-        string _title = string.Empty;
-        bool _isBusy = false;
+        private string _title = string.Empty;
+        private bool _isBusy = false;
 
         public bool IsBusy
         {
