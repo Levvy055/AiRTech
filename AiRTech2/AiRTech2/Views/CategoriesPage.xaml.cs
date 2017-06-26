@@ -40,7 +40,7 @@ namespace AiRTech2.Views
 
         private void ChangeSort_Clicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            //TODO: implement
         }
     }
 }
