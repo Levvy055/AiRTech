@@ -4,7 +4,7 @@
              x:Class="AiRTech2.Views.CategoryDetailPage"
              Title="{Binding Title}">
 	<StackLayout Spacing="20" Padding="15">
-		<Label Text="{Binding Category.Text}" FontSize="Medium"/>
+		<Label Text="{Binding Category.Title}" FontSize="Medium"/>
         <Label Text="{Binding Category.Description}" FontSize="Small"/>
     </StackLayout>
 </ContentPage>

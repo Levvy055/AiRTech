@@ -8,7 +8,7 @@ namespace AiRTech2.ViewModels
 
         public CategoryDetailViewModel(Category category)
         {
-            Title = category.Text;
+            Title = category.Title;
             Category = category;
         }
 

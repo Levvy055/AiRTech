@@ -20,12 +20,12 @@ namespace AiRTech2.ViewModels
             Title = "Wybierz kategorie";
             Items = new ObservableRangeCollection<Category>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            }
+        }
 
         private async Task ExecuteLoadItemsCommand()
         {
             if (IsBusy)
-                return;
+            { return; }
 
             IsBusy = true;
 

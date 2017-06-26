@@ -13,7 +13,7 @@ namespace AiRTech2.Services
     {
         private bool _isInitialized;
         private List<Category> _items;
-        
+
         public async Task<Category> GetCategoryAsync(string id)
         {
             await InitializeAsync();
@@ -35,12 +35,12 @@ namespace AiRTech2.Services
 
             _items = new List<Category>
             {
-                new Category { Id = Guid.NewGuid().ToString(), Text = "Buy some cat food", Description="The cats are hungry"},
-                new Category { Id = Guid.NewGuid().ToString(), Text = "Learn F#", Description="Seems like a functional idea"},
-                new Category { Id = Guid.NewGuid().ToString(), Text = "Learn to play guitar", Description="Noted"},
-                new Category { Id = Guid.NewGuid().ToString(), Text = "Buy some new candles", Description="Pine and cranberry for that winter feel"},
-                new Category { Id = Guid.NewGuid().ToString(), Text = "Complete holiday shopping", Description="Keep it a secret!"},
-                new Category { Id = Guid.NewGuid().ToString(), Text = "Finish a todo list", Description="Done"},
+                new Category { Title = "Buy some cat food", Description="The cats are hungry"},
+                new Category { Title = "Learn F#", Description="Seems like a functional idea"},
+                new Category { Title = "Learn to play guitar", Description="Noted"},
+                new Category { Title = "Buy some new candles", Description="Pine and cranberry for that winter feel"},
+                new Category { Title = "Complete holiday shopping", Description="Keep it a secret!"},
+                new Category { Title = "Finish a todo list", Description="Done"},
             };
 
             _isInitialized = true;

@@ -9,7 +9,7 @@ namespace AiRTech2.Views
 {
     public partial class CategoriesPage : ContentPage
     {
-        private CategoriesViewModel _viewModel;
+        private readonly CategoriesViewModel _viewModel;
 
         public CategoriesPage()
         {

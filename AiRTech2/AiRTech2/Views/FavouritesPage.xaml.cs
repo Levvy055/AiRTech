@@ -9,7 +9,7 @@ namespace AiRTech2.Views
 {
     public partial class FavouritesPage : ContentPage
     {
-        private FavouritesViewModel _viewModel;
+        private readonly FavouritesViewModel _viewModel;
 
         public FavouritesPage()
         {
