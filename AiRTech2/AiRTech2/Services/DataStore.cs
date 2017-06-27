@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using AiRTech2.Models;
-
+using AiRTech2.Models.Subjects;
+using AiRTech2.Views.Subjects.BasicSignalParams;
 using Xamarin.Forms;
 
 namespace AiRTech2.Services
@@ -16,34 +17,34 @@ namespace AiRTech2.Services
 
         public async Task<Category> GetCategoryAsync(string id)
         {
-            await InitializeAsync();
+            Initialize();
 
             return await Task.FromResult(_categories.FirstOrDefault(s => s.Id == id));
         }
 
         public async Task<IEnumerable<Category>> GetCategoriesAsync(bool forceRefresh = false)
         {
-            await InitializeAsync();
+            Initialize();
 
             return await Task.FromResult(_categories);
         }
 
-        public async Task InitializeAsync()
+        public void Initialize()
         {
             if (_isInitialized)
             { return; }
 
             _categories = new List<Category>
             {
-                new Category { Title = "Podstawowe parametry sygnałów:", Description="", Subjects = new List<Subject>
+                new Category { Title = "Podstawowe parametry sygnałów", Page = new BasicSignalParamsPage(), Subjects = new List<Subject>
                 {
-                    new Subject{Title = "Składowa stała"},
-                    new Subject{Title = "Składowa przemienna"},
+                    new Subject{Title = "Składowa stała", En = EnBasicSignalParams.Dc},
+                    new Subject{Title = "Składowa przemienna", En = EnBasicSignalParams.Ac},
                 }},
-                new Category { Title = "Szeregi i transformacje Fouriera", Description=""},
-                new Category { Title = "DFT i FFT", Description=""},
-                new Category { Title = "Próbkowanie sygnałów", Description=""},
-                new Category { Title = "Kwantowanie sygnałów", Description=""},
+                new Category { Title = "Szeregi i transformacje Fouriera"},
+                new Category { Title = "DFT i FFT"},
+                new Category { Title = "Próbkowanie sygnałów"},
+                new Category { Title = "Kwantowanie sygnałów"},
                 new Category { Title = "Binarne stałoprzecinkowe reprezentacje próbek sygnałów", Description=""},
                 new Category { Title = "Binarne ułamkowe reprezentacje próbek sygnałów", Description=""},
                 new Category { Title = "Przekształcenie Z", Description=""},
