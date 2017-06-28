@@ -33,7 +33,7 @@ namespace AiRTech2.Views
             if (item == null)
             { return; }
 
-            Page.GoToView(item.En);
+            Page.GoToView(item);
             await Navigation.PushAsync(Page);
 
             ItemsListView.SelectedItem = null;
