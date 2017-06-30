@@ -14,6 +14,8 @@ namespace AiRTech2.ViewModels.Subjects
             Title = subject.Title + " - " + BaseTitle;
         }
 
+        public abstract SubjectViewModel Clone();
+
         protected string BaseTitle { get; set; }
     }
 }

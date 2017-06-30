@@ -14,18 +14,10 @@ namespace AiRTech2.Services
     {
         private bool _isInitialized;
         private List<Category> _categories;
-
-        public async Task<Category> GetCategoryAsync(string id)
-        {
-            Initialize();
-
-            return await Task.FromResult(_categories.FirstOrDefault(s => s.Id == id));
-        }
-
+        
         public async Task<IEnumerable<Category>> GetCategoriesAsync(bool forceRefresh = false)
         {
             Initialize();
-
             return await Task.FromResult(_categories);
         }
 
@@ -40,6 +32,8 @@ namespace AiRTech2.Services
                 {
                     new Subject{Title = "Składowa stała", En = EnBasicSignalParams.Dc},
                     new Subject{Title = "Składowa przemienna", En = EnBasicSignalParams.Ac},
+                    new Subject{Title = "Energia sygnału | próbki", En = EnBasicSignalParams.EnergyOfSample},
+                    new Subject{Title = "Moc sygnału", En = EnBasicSignalParams.Power},
                 }},
                 new Category { Title = "Szeregi i transformacje Fouriera"},
                 new Category { Title = "DFT i FFT"},

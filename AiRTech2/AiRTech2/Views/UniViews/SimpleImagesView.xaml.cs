@@ -12,11 +12,10 @@ namespace AiRTech2.Views.UniViews
     {
         private readonly SubjectViewModel _viewModel;
 
-        public SimpleImagesView(SubjectViewModel viewModel, params string[] images)
+        public SimpleImagesView(params string[] images)
         {
-            BindingContext = _viewModel = viewModel;
             InitializeComponent();
-            LoadImages(images);
+            //LoadImages(images);
         }
 
         private void LoadImages(IReadOnlyCollection<string> images)

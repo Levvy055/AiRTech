@@ -7,7 +7,9 @@
     <ContentView.Content>
         <StackLayout>
             <Label Text="{Binding Title}" />
-            <StackLayout x:Name="ImageContainer"/>
+            <ScrollView>
+                <StackLayout x:Name="ImageContainer"/>
+            </ScrollView>
         </StackLayout>
     </ContentView.Content>
 </ContentView>

@@ -22,5 +22,12 @@ namespace AiRTech2.ViewModels.Subjects.BasicSignalParams
 
         }
 
+        public override SubjectViewModel Clone()
+        {
+            return new BasicSignalParamsViewModel
+            {
+
+            };
+        }
     }
 }

@@ -12,6 +12,6 @@ namespace AiRTech2.Views.Subjects
     {
         public static string ImgPath = "AiRTech2.Resources.Images.Subjects.";
 
-        public abstract void GoToView(Subject subject);
+        public abstract void ChangeViewTo(Subject subject);
     }
 }

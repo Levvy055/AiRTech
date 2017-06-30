@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Linq;
 using AiRTech2.Models;
 using AiRTech2.ViewModels;
 using AiRTech2.Views.Subjects;
@@ -19,7 +20,7 @@ namespace AiRTech2.Views
         public CategoryDetailPage(CategoryDetailViewModel viewModel) : this()
         {
             BindingContext = _viewModel = viewModel;
-            Page=_viewModel.Category.Page;
+            Page = _viewModel.Category.Page;
         }
 
         private void ChangeSort_Clicked(object sender, EventArgs e)
@@ -33,7 +34,7 @@ namespace AiRTech2.Views
             if (item == null)
             { return; }
 
-            Page.GoToView(item);
+            Page.ChangeViewTo(item);
             await Navigation.PushAsync(Page);
 
             ItemsListView.SelectedItem = null;
