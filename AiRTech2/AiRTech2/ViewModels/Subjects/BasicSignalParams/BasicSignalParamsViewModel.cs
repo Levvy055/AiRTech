@@ -9,21 +9,18 @@ using Xamarin.Forms;
 
 namespace AiRTech2.ViewModels.Subjects.BasicSignalParams
 {
-    public class BasicSignalParamsViewModel : BaseViewModel
+    public class BasicSignalParamsViewModel : SubjectViewModel
     {
         public BasicSignalParamsViewModel()
         {
-            Title = "Podstawowe parametry sygnału";
-            Items = new ObservableRangeCollection<ContentView>();
+            Title = BaseTitle = "Podstawowe parametry sygnału";
         }
 
-        public ObservableRangeCollection<ContentView> Items { get; }
-
-        public void Update(Subject subject)
+        public override void Update(Subject subject)
         {
-            var i = Title.IndexOf("-", StringComparison.Ordinal);
-            i = i < 0 ? Title.Length : i;
-            Title = Title.Substring(0, i) + " - " + subject.Title;
+            base.Update(subject);
+
         }
+
     }
 }

@@ -70,7 +70,10 @@ namespace AiRTech2.Misc
             return imageSource;
         }
 
-        public string Source { get; set; }
+        public string Source
+        {
+            get; set;
+        }
 
         public static ImageSource DefaultEmptyImage =>
             _defaultEmptyImage ??
