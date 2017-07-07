@@ -6,9 +6,9 @@
              HorizontalOptions="Fill" VerticalOptions="Fill">
     <ContentView.Content>
         <StackLayout>
-            <Label Text="{Binding Title}" />
-            <ScrollView>
-                <StackLayout x:Name="ImageContainer"/>
+            <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="15" HorizontalTextAlignment="Center"/>
+            <ScrollView HorizontalOptions="CenterAndExpand">
+                <StackLayout x:Name="ImageContainer" HorizontalOptions="Fill"/>
             </ScrollView>
         </StackLayout>
     </ContentView.Content>

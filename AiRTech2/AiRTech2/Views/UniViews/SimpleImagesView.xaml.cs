@@ -15,7 +15,7 @@ namespace AiRTech2.Views.UniViews
         public SimpleImagesView(params string[] images)
         {
             InitializeComponent();
-            //LoadImages(images);
+            LoadImages(images);
         }
 
         private void LoadImages(IReadOnlyCollection<string> images)

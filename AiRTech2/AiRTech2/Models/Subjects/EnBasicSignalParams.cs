@@ -2,7 +2,8 @@
 {
     public enum EnBasicSignalParams
     {
-        Dc,Ac,EnergyOfSample,Power
+        Dc,Ac,EnergyOfSample,Power,
+        NaN
     }
     
 }

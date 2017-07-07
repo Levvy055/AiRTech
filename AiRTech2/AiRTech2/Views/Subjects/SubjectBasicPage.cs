@@ -10,7 +10,6 @@ namespace AiRTech2.Views.Subjects
 {
     public abstract class SubjectBasicPage : ContentPage
     {
-        public static string ImgPath = "AiRTech2.Resources.Images.Subjects.";
 
         public abstract void ChangeViewTo(Subject subject);
     }

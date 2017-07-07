@@ -9,13 +9,13 @@ namespace AiRTech2.ViewModels.Subjects
 {
     public abstract class SubjectViewModel : BaseViewModel
     {
+        public static string ImgPath = "AiRTech2.Resources.Images.Subjects.";
+
         public virtual void Update(Subject subject)
         {
-            Title = subject.Title + " - " + BaseTitle;
+            Title = subject.Title;
         }
-
-        public abstract SubjectViewModel Clone();
-
+        
         protected string BaseTitle { get; set; }
     }
 }
