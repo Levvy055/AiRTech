@@ -9,8 +9,7 @@ namespace AiRTech2.ViewModels
 {
     public class CategoryDetailViewModel : BaseViewModel
     {
-        int _quantity = 1;
-
+        
         public CategoryDetailViewModel(Category category)
         {
             Title = "Wybierz zagadnienie | Kat. "+category.Title;
@@ -51,11 +50,6 @@ namespace AiRTech2.ViewModels
         }
 
         public Category Category { get; }
-        public int Quantity
-        {
-            get => _quantity;
-            set => SetProperty(ref _quantity, value);
-        }
         public ObservableRangeCollection<Subject> Items { get; }
         public Command LoadItemsCommand { get; }
     }

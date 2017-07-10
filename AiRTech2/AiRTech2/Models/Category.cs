@@ -9,6 +9,7 @@ namespace AiRTech2.Models
         private string _description = string.Empty;
         private List<Subject> _subjects;
         private SubjectBasicPage _page;
+        private string _quantity = "Soon";
 
         public string Description
         {
@@ -18,12 +19,28 @@ namespace AiRTech2.Models
         public List<Subject> Subjects
         {
             get => _subjects;
-            set => SetProperty(ref _subjects, value);
+            set
+            {
+                if (value != null && value.Count > 0)
+                {
+                    Quantity = value.Count.ToString();
+                }
+                else
+                {
+                    Quantity = "Soon";
+                }
+                SetProperty(ref _subjects, value);
+            }
         }
-
-        public SubjectBasicPage Page {
+        public SubjectBasicPage Page
+        {
             get => _page;
             set => SetProperty(ref _page, value);
+        }
+        public string Quantity
+        {
+            get => _quantity;
+            set => SetProperty(ref _quantity, value);
         }
     }
 }

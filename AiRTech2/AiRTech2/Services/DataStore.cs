@@ -14,7 +14,7 @@ namespace AiRTech2.Services
     {
         private bool _isInitialized;
         private List<Category> _categories;
-        
+
         public async Task<IEnumerable<Category>> GetCategoriesAsync(bool forceRefresh = false)
         {
             Initialize();
@@ -28,7 +28,8 @@ namespace AiRTech2.Services
 
             _categories = new List<Category>
             {
-                new Category { Title = "Podstawowe parametry sygnałów", Page = new BasicSignalParamsPage(), Subjects = new List<Subject>
+                new Category { Title = "Podstawowe parametry sygnałów",
+                    Page = new BasicSignalParamsPage(), Subjects = new List<Subject>
                 {
                     new Subject{Title = "Składowa stała", En = EnBasicSignalParams.Dc},
                     new Subject{Title = "Składowa przemienna", En = EnBasicSignalParams.Ac},
