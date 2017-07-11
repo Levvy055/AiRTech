@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E9378BD2-FC5F-465C-B630-E8A14E1C8289}"
 EndProject
@@ -367,6 +367,8 @@ Global
 		{840B579F-A3FA-4EBA-A3DB-E31FF01D031B}.Debug|x86.Build.0 = Debug|x86
 		{840B579F-A3FA-4EBA-A3DB-E31FF01D031B}.Debug|x86.Deploy.0 = Debug|x86
 		{840B579F-A3FA-4EBA-A3DB-E31FF01D031B}.Release|Any CPU.ActiveCfg = Release|x86
+		{840B579F-A3FA-4EBA-A3DB-E31FF01D031B}.Release|Any CPU.Build.0 = Release|x86
+		{840B579F-A3FA-4EBA-A3DB-E31FF01D031B}.Release|Any CPU.Deploy.0 = Release|x86
 		{840B579F-A3FA-4EBA-A3DB-E31FF01D031B}.Release|ARM.ActiveCfg = Release|ARM
 		{840B579F-A3FA-4EBA-A3DB-E31FF01D031B}.Release|ARM.Build.0 = Release|ARM
 		{840B579F-A3FA-4EBA-A3DB-E31FF01D031B}.Release|ARM.Deploy.0 = Release|ARM
@@ -733,6 +735,8 @@ Global
 		{8BFE29D8-3E24-413C-8D84-AF55549701FE}.Debug|x86.Build.0 = Debug|x86
 		{8BFE29D8-3E24-413C-8D84-AF55549701FE}.Debug|x86.Deploy.0 = Debug|x86
 		{8BFE29D8-3E24-413C-8D84-AF55549701FE}.Release|Any CPU.ActiveCfg = Release|x86
+		{8BFE29D8-3E24-413C-8D84-AF55549701FE}.Release|Any CPU.Build.0 = Release|x86
+		{8BFE29D8-3E24-413C-8D84-AF55549701FE}.Release|Any CPU.Deploy.0 = Release|x86
 		{8BFE29D8-3E24-413C-8D84-AF55549701FE}.Release|ARM.ActiveCfg = Release|ARM
 		{8BFE29D8-3E24-413C-8D84-AF55549701FE}.Release|ARM.Build.0 = Release|ARM
 		{8BFE29D8-3E24-413C-8D84-AF55549701FE}.Release|ARM.Deploy.0 = Release|ARM

@@ -1,6 +1,6 @@
 ﻿using AiRTech2.Views;
-
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -38,6 +38,7 @@ namespace AiRTech2
                     },
                 }
             };
+            Xamarin.Forms.PlatformConfiguration.AndroidSpecific.TabbedPage.SetIsSwipePagingEnabled(MPage, false);
             Current.MainPage = MPage;
         }
 
